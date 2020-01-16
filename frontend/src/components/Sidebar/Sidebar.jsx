@@ -72,8 +72,24 @@ class Sidebar extends React.Component {
         </div>
         <div className="sidebar-wrapper" ref={this.sidebar}>
           <Nav>
-            {this.props.routes.map((prop, key) => {
+            <li>
+              <NavLink to='/admin/'>
+                Uptime
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to='/admin/backendcoverage'> 
+                Backend Coverage
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to='/admin/frontendperformance'>
+                Frontend Performance
+              </NavLink>
+            </li>
+            {/* {this.props.routes.map((prop, key) => {
               return (
+                
                 <li
                   className={
                     this.activeRoute(prop.path) +
@@ -91,7 +107,7 @@ class Sidebar extends React.Component {
                   </NavLink>
                 </li>
               );
-            })}
+            })} */}
           </Nav>
         </div>
       </div>

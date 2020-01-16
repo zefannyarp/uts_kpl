@@ -31,8 +31,8 @@ import {
 } from "reactstrap";
 
 class Tables extends React.Component {
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
     this.state ={
         users:[],
         name: null,
@@ -73,7 +73,7 @@ class Tables extends React.Component {
                       <td></td>
                       <td></td>
                     <td className="text-right">
-                    <Link to={`/dashboard`}>
+                    <Link to='/admin/uptime2'>
                     <button className="btn btn-primary">Details</button>
                     </Link></td>
                     </tr>

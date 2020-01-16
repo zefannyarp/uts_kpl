@@ -16,23 +16,61 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import Dashboard from "views/Dashboard.jsx";
+import Frontendperformance from "views/Dashboard.jsx";
 // import Notifications from "views/Notifications.jsx";
 // import Icons from "views/Icons.jsx";
-import Typography from "views/Typography.jsx";
-import Uptime from "views/Tables.jsx";
+import Backendcoverage from "views/Typography.jsx";
+import Tables from "views/Tables.jsx";
+import Uptime2 from "views/Uptime2";
+import UtamaUT from "views/UtamaUT";
+import Generate from "views/Generate";
 // import Maps from "views/Map.jsx";
 // import UserPage from "views/User.jsx";
 // import UpgradeToPro from "views/Upgrade.jsx";
 
 var routes = [
   {
-    path: "/dashboard",
-    name: "Dashboard",
-    icon: "nc-icon nc-bank",
-    component: Dashboard,
+    path: "/uptime",
+    name: "Uptime",
+    icon: "nc-icon nc-tile-56",
+    component: Tables,
     layout: "/admin"
   },
+  {
+    path: "/frontendperformance",
+    name: "Frontend performance",
+    icon: "nc-icon nc-bank",
+    component: Frontendperformance,
+    layout: "/admin"
+  },
+  {
+    path: "/Backendcoverage",
+    name: "Backend coverage",
+    icon: "nc-icon nc-caps-small",
+    component: Backendcoverage,
+    layout: "/admin"
+  },
+  {
+    path: "/uptime2",
+    name: "Uptime",
+    component: Uptime2,
+    layout: "/admin"
+  },
+  {
+    path: "/",
+    name: "Uptime",
+    component: UtamaUT,
+    layout: "/admin"
+  },
+  {
+    path: "/generate",
+    name: "Uptime",
+    component: Generate,
+    layout: "/admin"
+  },
+
+
+
   // {
   //   path: "/icons",
   //   name: "Icons",
@@ -61,20 +99,7 @@ var routes = [
   //   component: UserPage,
   //   layout: "/admin"
   // },
-  {
-    path: "/uptime",
-    name: "Uptime",
-    icon: "nc-icon nc-tile-56",
-    component: Uptime,
-    layout: "/admin"
-  },
-  {
-    path: "/typography",
-    name: "Typography",
-    icon: "nc-icon nc-caps-small",
-    component: Typography,
-    layout: "/admin"
-  },
+ 
   // {
   //   pro: true,
   //   path: "/upgrade",
@@ -84,4 +109,6 @@ var routes = [
   //   layout: "/admin"
   // }
 ];
+
+
 export default routes;
