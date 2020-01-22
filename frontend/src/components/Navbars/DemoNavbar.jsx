@@ -71,12 +71,16 @@ class Header extends React.Component {
   }
   getBrand() {
     let brandName = "Default Brand";
-    routes.map((prop, key) => {
-      if (window.location.href.indexOf(prop.layout + prop.path) !== -1) {
-        brandName = prop.name;
-      }
-      return null;
-    });
+    
+    let pathName = this.props.location.pathname;
+    let pathPrefix = this.props.match.path;
+    let keyword = pathName.slice(pathPrefix.length);
+    
+    routes
+      .filter((route) => route.path == keyword)
+      .map((route) => {
+        brandName = route.name;
+      })
     return brandName;
   }
   openSidebar() {

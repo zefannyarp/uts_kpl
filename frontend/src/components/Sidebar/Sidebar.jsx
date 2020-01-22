@@ -71,9 +71,15 @@ class Sidebar extends React.Component {
           </a>
         </div>
         <div className="sidebar-wrapper" ref={this.sidebar}>
+          
           <Nav>
+             <li>
+              <NavLink to='/admin/dashboard'>
+                Main Menu
+              </NavLink>
+              </li>
             <li>
-              <NavLink to='/admin/'>
+              <NavLink to='/admin/uptime0'>
                 Uptime
               </NavLink>
             </li>
