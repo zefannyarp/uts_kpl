@@ -15,8 +15,6 @@ class UptimeController extends Controller
     {
         $start_date = $request->input('start_date');
         $end_date = $request->input('end_date');
-        $start_date = strtotime($start_date) * 1000;
-        $end_date = strtotime($end_date) * 1000;
 
         $headers = array(
             'kbn-xsrf' => true,
@@ -137,6 +135,8 @@ class UptimeController extends Controller
         $kocak = $poop['hits'];
         $males = $kocak['total'];
         $a = $kocak['hits'];
+
+        $response =
 
         $start_date = substr($start_date, 0, -3); // to cut the milli
         $end_date = substr($end_date, 0, -3);

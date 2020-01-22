@@ -23,6 +23,7 @@ class Generate extends React.Component {
             id: null,
             total_error: null,
             dateRange: false
+
         };
 
         this.toggleDateRange = this.toggleDateRange.bind(this);
@@ -45,23 +46,11 @@ class Generate extends React.Component {
     //     };
     handleClick = event => {
         event.preventDefault();
-
-        const Data = {
-            start_date: new Date(this.state.start_date).getTime().toString(),
-            end_date: new Date(this.state.end_date).getTime().toString()
-        };
-        console.log(Data);
         axios
-            .post(
-                "http://127.0.0.1:8000/api/summary",
-                { Data },
-                {
-                    headers: {
-                        "Access-Control-Allow-Origin": "*",
-                        "Content-Type": "application/json"
-                    }
-                }
-            )
+            .post("http://127.0.0.1:8000/api/summary",{
+                start_date: new Date(this.state.start_date).getTime().toString(),
+                end_date: new Date(this.state.end_date).getTime().toString()
+            })
             .then(response => {
                 console.log(response);
                 let users = this.state.users;
