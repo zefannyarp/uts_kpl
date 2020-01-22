@@ -12,6 +12,8 @@ class UptimeDetail extends Model
 
     public $table = 'uptime_details';
 
+    // this is comment
+
     public function Summary()
     {
         return $this->belongsTo(Uptime::class);
