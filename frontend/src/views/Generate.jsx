@@ -16,14 +16,14 @@ class Generate extends React.Component {
     constructor() {
         super();
         this.state = {
-            users: [],
+            response: [],
             start_date: null,
             end_date: null,
             downtime: null,
             id: null,
             total_error: null,
-            dateRange: false
-
+            dateRange: false,
+            record: null
         };
 
         this.toggleDateRange = this.toggleDateRange.bind(this);
@@ -53,12 +53,22 @@ class Generate extends React.Component {
             })
             .then(response => {
                 console.log(response);
-                let users = this.state.users;
-                users.push(response.data);
-                this.setState({});
+                this.setState({record: response.data});
             })
             .catch(err => console.log(err));
     };
+    // componentWillMount() {
+    //     let config = { crossDomain: true };
+    //     let url = "http://127.0.0.1:8000/api/history";
+    //     axios
+    //         .get(url, { headers: { "Content-Type": "application/json" } })
+    //         .then(users => {
+    //             this.setState({
+    //                 users: users.data
+    //             });
+    //             console.log(users);
+    //         });
+    // }
     toggleDateRange() {
         this.setState({ dateRange: !this.state.dateRange });
     }
@@ -72,6 +82,7 @@ class Generate extends React.Component {
     }
 
     render() {
+        const { response } = this.state;
         return (
             <div className="content">
                 <Row>
@@ -146,6 +157,7 @@ class Generate extends React.Component {
                                             <div class="col-sm-10">
                                                 <input
                                                     type="date"
+                                                    
                                                     class="form-control"
                                                     id="inputEmail3"
                                                     onChange={e => {
@@ -171,6 +183,7 @@ class Generate extends React.Component {
                                             <div class="col-sm-10">
                                                 <input
                                                     type="date"
+                                                    
                                                     class="form-control"
                                                     id="inputEmail3"
                                                     onChange={e => {
@@ -183,9 +196,7 @@ class Generate extends React.Component {
                                             </div>
                                         </div>
                                     </fieldset>
-                                    <button onClick={this.handleClick}>
-                                        View Data
-                                    </button>
+
                                 </form>
                                 <form
                                     method="post"
@@ -203,7 +214,7 @@ class Generate extends React.Component {
                                 </form> */}
 
                                     <tr className="text-primary">
-                                        <Link to={"/admin/uptime"}>
+                                        
                                             <button
                                                 type="button"
                                                 class="btn btn-primary btn-lg btn-block"
@@ -211,13 +222,65 @@ class Generate extends React.Component {
                                             >
                                                 View Data
                                             </button>
-                                        </Link>
+                                    
                                     </tr>
                                 </form>
                             </div>
                         </div>
                     </Col>
                 </Row>
+                {this.state.record && (
+                    <Row>
+                        <Col md="12">
+                            <Card>
+                                
+                                <CardBody>
+                                    <Table responsive>
+                                        <thead className="text-primary">
+                                            <tr>
+                                                <th scope="col">START</th>
+                                                <th scope="col">END</th>
+                                                <th scope="col">TOTAL ERROR</th>
+                                                <th scope="col">DOWNTIME</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {response.map((user, index) => {
+                                                return (
+                                                    <tr key={index}>
+                                                        <td>
+                                                            {user.start_date}
+                                                        </td>
+                                                        <td>{user.end_date}</td>
+                                                        <td>
+                                                            {user.total_error}
+                                                        </td>
+                                                        <td>{user.downtime}</td>
+                                                        {/* <Link
+                                                            to={`/admin/uptime2/${user.id}`}
+                                                        >
+                                                            <button className="btn btn-primary">
+                                                                Details
+                                                            </button>
+                                                        </Link> */}
+                                                    </tr>
+                                                );
+                                            })}
+                                        </tbody>
+                                    </Table>
+                                    <button
+                                        type="button"
+                                        class="btn btn-primary btn-lg"
+                                    >
+                                        Save Data
+                                    </button>
+                                </CardBody>
+                            
+                            </Card>
+                        </Col>
+                    </Row>
+                )}
+                
             </div>
         );
     }
