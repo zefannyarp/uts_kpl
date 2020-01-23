@@ -15,6 +15,6 @@ use Illuminate\Http\Request;
 */
 
 Route::post('summary', 'UptimeController@getUptimeSummary');
-Route::post('details', 'UptimeController@getUptimeDetails');
+Route::get('uptime/{id}', 'UptimeController@getUptimeDetails');
 Route::get('history', 'UptimeController@getUptimeHistory');
 Route::post('save', 'UptimeController@saveDataToDatabase');

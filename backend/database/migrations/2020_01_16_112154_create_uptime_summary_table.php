@@ -19,7 +19,6 @@ class CreateUptimeSummaryTable extends Migration
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->integer('total_error');
-            $table->integer('downtime');
         });
     }
 
