@@ -8,9 +8,10 @@ class UptimeDetail extends Model
 {
     protected $primaryKey = 'summary_id';
     protected $guarded;
+    const ATTRIBUTE_SUMMARY_ID = 'uptime_summary_id';
     const ATTRIBUTE_DATE_TIME = 'date_time';
-    const ATTRIBUTE_REQUEST = 'request';
-    const ATTRIBUTE_SUMMARY_ID = 'summary_id';
+    const ATTRIBUTE_REQUEST = 'request_name';
+
 
     protected $fillable = [
         self::ATTRIBUTE_DATE_TIME,
