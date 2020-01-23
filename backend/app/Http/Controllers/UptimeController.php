@@ -134,7 +134,6 @@ class UptimeController extends Controller
         $poop = json_decode($json->getBody(), 1);
         $kocak = $poop['hits'];
         $males = $kocak['total'];
-        $a = $kocak['hits'];
 
         $start_date = substr($start_date, 0, -3); // to cut the milli
         $end_date = substr($end_date, 0, -3);
@@ -146,17 +145,16 @@ class UptimeController extends Controller
         $uptime->setAttribute(Uptime::ATTRIBUTE_TOTAL_ERROR, $males);
         $uptime->save();
 
-        foreach ($a as $b) {
-            $e = $b['_source'];
-            $c = $e['@timestamp'];
-            $c = substr($c, 0, -7);
-            $c = Carbon::parse()->format('Y-m-d H:i');
+        foreach ($kocak['hits'] as $hit) {
+            $e = $hit['_source'];
+            $f = $e['@timestamp'];
+            $c = substr($f, 0, -7);
             $d = $e['request'];
 
             UptimeDetail::firstOrCreate([
-                'summary_id' => $uptime->getAttribute('id'),
-                'date_time' => $c,
-                'request' => $d
+                UptimeDetail::ATTRIBUTE_SUMMARY_ID => $uptime->getAttribute('id'),
+                UptimeDetail::ATTRIBUTE_DATE_TIME => $c,
+                UptimeDetail::ATTRIBUTE_REQUEST => $d
             ]);
         }
 
@@ -178,6 +176,10 @@ class UptimeController extends Controller
             'total_error' => $males,
             'downtime' => $downtime
         ];
+
+//        $uptime->setAttribute(Uptime::ATTRIBUTE_DOWNTIME, $downtime);
+//        $uptime->save();
+//        dd($uptime);
 
         return response()->json($response, 200);
     }

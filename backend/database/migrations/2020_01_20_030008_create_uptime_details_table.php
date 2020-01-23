@@ -15,12 +15,12 @@ class CreateUptimeDetailsTable extends Migration
     {
         Schema::create('uptime_details', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('summary_id')->unsigned();
+            $table->bigInteger('uptime_summary_id')->unsigned();
             $table->timestamps();
             $table->dateTime('date_time');
-            $table->text('request');
+            $table->text('request_name');
 
-            $table->foreign('summary_id')
+            $table->foreign('uptime_summary_id')
                 ->references('id')
                 ->on('uptime_summary')
                 ->onDelete('cascade');
