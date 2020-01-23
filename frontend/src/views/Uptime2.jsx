@@ -18,6 +18,14 @@ class Uptime2 extends React.Component {
         super();
         this.state = {
             users: [],
+            start_date: null,
+            end_date: null,
+            downtime: null,
+            id: null,
+            total_error: null,
+            record: null,
+            datetime: null,
+            request: null,
             name: null,
             username: null,
             body: null,
@@ -25,20 +33,21 @@ class Uptime2 extends React.Component {
             title: null
         };
     }
-    componentDidMount() {
-        let { match } = this.props;
-        console.log(match.params.id);
-        const { id } = this.props.match.params;
-        let url = `http://127.0.0.1:8000/api/articles/${id}`;
+    // componentDidMount() {
+    //     let { match } = this.props;
+    //     console.log(match.params.id);
+    //     const { id } = this.props.match.params;
+    //     let url = `http://127.0.0.1:8000/api/articles/${id}`;
 
-        axios
-            .get(url, { headers: { "Content-Type": "application/json" } })
-            .then(users => {
-                this.setState({
-                    users: users.data
-                });
-            });
-    }
+    //     axios
+    //         .get(url, { headers: { "Content-Type": "application/json" } })
+    //         .then(users => {
+    //             this.setState({
+    //                 users: users.data
+    //             });
+    //         });
+    // }
+
     render() {
         const { users } = this.state;
         return (
@@ -56,39 +65,30 @@ class Uptime2 extends React.Component {
                                     <Table responsive>
                                         <thead className="text-primary">
                                             <tr>
-                                                <th>Time</th>
-                                                <th></th>
-                                                <th>DownTime</th>
-                                                <th className="text-right">
-                                                    Action
-                                                </th>
+                                                <th scope="col">Time</th>
+
+                                                <th scope="col">Request</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {/* {users.map((user, index) => {
-                                                return (
-                                                    <tr key={index}>
-                                                        <td>{user.title}</td>
-                                                        <td>{user.body}</td>
-                                                        <td></td> */}
                                             <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td className="text-right">
-                                                    <Link to={"/admin/uptime0"}>
-                                                        <button
-                                                            className="btn btn-primary"
-                                                            size="sm"
-                                                        >
-                                                            Menu
-                                                        </button>
-                                                    </Link>
+                                                <td scope="col">
+                                                    {this.state.users.title}
+                                                </td>
+                                                <td scope="col">
+                                                    {this.state.users.body}
                                                 </td>
                                             </tr>
-                                            {/* ); })} */}
                                         </tbody>
                                     </Table>
+                                    <Link to={"/admin/uptime0"}>
+                                        <button
+                                            type="button"
+                                            class="btn btn-primary btn-lg"
+                                        >
+                                            Back To Menu
+                                        </button>
+                                    </Link>
                                 </CardBody>
                             </Card>
                         </Col>
@@ -98,5 +98,13 @@ class Uptime2 extends React.Component {
         );
     }
 }
-
+//         const { users } = this.state;
+//         return (
+//             <>
+//                 <h1>{users.title}</h1>
+//                 <p>{users.body}</p>
+//             </>
+//         );
+//     }
+// }
 export default Uptime2;

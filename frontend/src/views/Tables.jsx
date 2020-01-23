@@ -40,7 +40,12 @@ class Tables extends React.Component {
             end_date: null,
             downtime: null,
             id: null,
-            total_error: null
+            total_error: null,
+            name: null,
+            username: null,
+            body: null,
+            id: null,
+            title: null
         };
     }
     componentWillMount() {
@@ -57,6 +62,7 @@ class Tables extends React.Component {
     }
     render() {
         const { users } = this.state;
+        console.log(users);
         return (
             <>
                 <div className="content">
@@ -75,12 +81,24 @@ class Tables extends React.Component {
                                                 <th scope="col">Start</th>
                                                 <th scope="col">End</th>
                                                 <th scope="col">Total Error</th>
+                                                <th scope="col">Down Time</th>
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {users.map((user, index) => {
                                                 return (
+                                                    // <tr key={index}>
+                                                    //     <td>{user.id}</td>
+                                                    //     <td>{user.title}</td>
+                                                    //     <td>{user.body}</td>
+                                                    //     <Link
+                                                    //         to={`/admin/uptime2/${user.id}`}
+                                                    //     >
+                                                    //         <button className="btn btn-primary">
+                                                    //             Details
+                                                    //         </button>
+                                                    //     </Link>
                                                     <tr key={index}>
                                                         <td>
                                                             {user.start_date}
@@ -89,8 +107,9 @@ class Tables extends React.Component {
                                                         <td>
                                                             {user.total_error}
                                                         </td>
+                                                        <td>{user.downtime}</td>
                                                         <Link
-                                                            to={`/admin/uptime2/${user.id}`}
+                                                            to={`/admin/uptime2`}
                                                         >
                                                             <button className="btn btn-primary">
                                                                 Details
