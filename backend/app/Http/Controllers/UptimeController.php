@@ -178,7 +178,7 @@ class UptimeController extends Controller
         $uptimeReport->setAttribute(UptimeReport::ATTRIBUTE_DOWNTIME, $downtime);
         $uptimeReport->save();
 
-        $promotion = DB::table('uptime_summary')->latest('id')->first();
+        $promotion = DB::table('uptime_report')->latest('id')->first();
         return json_encode($promotion);
 //        return UptimeReport::
 //        $response = [
@@ -207,6 +207,6 @@ class UptimeController extends Controller
 
     public function getUptimeHistory()
     {
-        return Uptime::all();
+        return UptimeReport::all();
     }
 }
