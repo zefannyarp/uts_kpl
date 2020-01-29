@@ -39,14 +39,14 @@ var routes = [
     },
 
     {
-        path: "/backendcoverage",
+        path: "/backend-coverage",
         name: "Backend coverage",
         icon: "nc-icon nc-caps-small",
         component: Backendcoverage,
         layout: "/admin"
     },
     {
-        path: "/uptime0",
+        path: "/uptime-menu",
         name: "Uptime",
         component: UtamaUT,
         layout: "/admin"
@@ -60,7 +60,7 @@ var routes = [
     },
 
     {
-        path: "/uptime2",
+        path: "/details-uptime/:id",
         name: "Uptime",
         component: Uptime2,
         layout: "/admin"
@@ -74,7 +74,7 @@ var routes = [
     },
 
     {
-        path: "/frontendperformance",
+        path: "/frontend-performance",
         name: "Frontend Performance",
         component: Frontendperformance,
         layout: "/admin"
