@@ -19,11 +19,12 @@ class Uptime extends Model
     ];
 
     public $table = 'uptime_summary';
+
     protected $guarded;
 
     public function uptime()
     {
-        $this->hasMany(UptimeDetail::class, UptimeDetail::ATTRIBUTE_SUMMARY_ID, 'id');
+        $this->hasMany(UptimeDetail::class, UptimeDetail::ATTRIBUTE_UPTIME_SUMMARY_ID, 'id');
     }
 
     public function uptime_report()

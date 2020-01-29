@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\UptimeController;
-use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +12,11 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::post('summary', 'UptimeController@getUptimeSummary');
+Route::post('uptime', 'UptimeController@getUptimeSummary');
 Route::get('uptime/{id}', 'UptimeController@getUptimeDetails');
 Route::get('history', 'UptimeController@getUptimeHistory');
 Route::post('save', 'UptimeController@saveDataToDatabase');
+
+Route::get('frontend', 'FrontendPerformanceController@getData');
+
+
