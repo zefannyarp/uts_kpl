@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import PaginacionTabla from "./User.jsx";
 
 // reactstrap components
 import {
@@ -24,29 +25,26 @@ class Uptime2 extends React.Component {
             id: null,
             total_error: null,
             record: null,
-            datetime: null,
-            request: null,
-            name: null,
-            username: null,
-            body: null,
-            id: null,
-            title: null
+            date_time: null,
+            request_name: null,
+            nocolumns: 3
         };
     }
-    // componentDidMount() {
-    //     let { match } = this.props;
-    //     console.log(match.params.id);
-    //     const { id } = this.props.match.params;
-    //     let url = `http://127.0.0.1:8000/api/articles/${id}`;
 
-    //     axios
-    //         .get(url, { headers: { "Content-Type": "application/json" } })
-    //         .then(users => {
-    //             this.setState({
-    //                 users: users.data
-    //             });
-    //         });
-    // }
+    componentDidMount() {
+        let { match } = this.props;
+        console.log(match.params.id);
+        const { id } = this.props.match.params;
+        let url = `http://127.0.0.1:8000/api/uptime/${id}`;
+
+        axios
+            .get(url, { headers: { "Content-Type": "application/json" } })
+            .then(users => {
+                this.setState({
+                    users: users.data
+                });
+            });
+    }
 
     render() {
         const { users } = this.state;
@@ -58,30 +56,60 @@ class Uptime2 extends React.Component {
                             <Card>
                                 <CardHeader>
                                     <CardTitle tag="h4">
-                                        Uptime Dashboard per Hari
+                                        Uptime Dashboard in Hour
                                     </CardTitle>
                                 </CardHeader>
                                 <CardBody>
                                     <Table responsive>
                                         <thead className="text-primary">
                                             <tr>
-                                                <th scope="col">Time</th>
+                                                <th scope="col">Id</th>
+                                                <th scope="col">Date/Time</th>
 
                                                 <th scope="col">Request</th>
                                             </tr>
                                         </thead>
+                                        <PaginacionTabla
+                                            itemsperpage={
+                                                this.state.itemsperpage
+                                            }
+                                            nocolumns={this.state.nocolumns}
+                                            items={users.map((user, index) => {
+                                                return (
+                                                    <tr key={index}>
+                                                        <td scope="col">
+                                                            {user.id}
+                                                        </td>
+                                                        <td scope="col">
+                                                            {user.date_time}
+                                                        </td>
+                                                        <td scope="col">
+                                                            {user.request_name}
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })}
+                                            pagesspan={3}
+                                        />
                                         <tbody>
-                                            <tr>
-                                                <td scope="col">
-                                                    {this.state.users.title}
-                                                </td>
-                                                <td scope="col">
-                                                    {this.state.users.body}
-                                                </td>
-                                            </tr>
+                                            {/* {users.map((user, index) => {
+                                                return (
+                                                    <tr key={index}>
+                                                        <td scope="col">
+                                                            {user.id}
+                                                        </td>
+                                                        <td scope="col">
+                                                            {user.date_time}
+                                                        </td>
+                                                        <td scope="col">
+                                                            {user.request_name}
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })} */}
                                         </tbody>
                                     </Table>
-                                    <Link to={"/admin/uptime0"}>
+                                    <Link to={"/admin/uptime-menu"}>
                                         <button
                                             type="button"
                                             class="btn btn-primary btn-lg"
@@ -98,13 +126,4 @@ class Uptime2 extends React.Component {
         );
     }
 }
-//         const { users } = this.state;
-//         return (
-//             <>
-//                 <h1>{users.title}</h1>
-//                 <p>{users.body}</p>
-//             </>
-//         );
-//     }
-// }
 export default Uptime2;

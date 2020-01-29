@@ -2,21 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 // reactstrap components
-import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardTitle,
-    Table,
-    Row,
-    Col
-} from "reactstrap";
+import { Card, CardBody, Table, Row, Col } from "reactstrap";
 
 class Generate extends React.Component {
     constructor() {
         super();
         this.state = {
-            response: [],
+            users: [],
             start_date: null,
             end_date: null,
             downtime: null,
@@ -83,7 +75,7 @@ class Generate extends React.Component {
     }
 
     render() {
-        const { response } = this.state;
+        const { user } = this.state;
         console.log(this.state);
         return (
             <div className="content">
@@ -253,12 +245,12 @@ class Generate extends React.Component {
                                             </tr>
                                         </tbody>
                                     </Table>
-                                    <Link to={"/admin/uptime"}>
+                                    <Link to={`/admin/uptime`}>
                                         <button
                                             type="button"
                                             class="btn btn-primary btn-lg"
                                         >
-                                            Save Data
+                                            Go
                                         </button>
                                     </Link>
                                 </CardBody>
