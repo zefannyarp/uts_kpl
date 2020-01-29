@@ -16,7 +16,4 @@ Route::post('uptime', 'UptimeController@getUptimeSummary');
 Route::get('uptime/{id}', 'UptimeController@getUptimeDetails');
 Route::get('history', 'UptimeController@getUptimeHistory');
 Route::post('save', 'UptimeController@saveDataToDatabase');
-
 Route::get('frontend', 'FrontendPerformanceController@getData');
-
-
