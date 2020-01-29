@@ -1,6 +1,6 @@
 import React from "react";
 // react plugin used to create charts
-import { Line, Pie } from "react-chartjs-2";
+import { Pie } from "react-chartjs-2";
 // reactstrap components
 import {
     Card,

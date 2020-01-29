@@ -1,5 +1,5 @@
 import React from "react";
-import { Line, Pie } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 
 import {
     Card,
@@ -13,7 +13,7 @@ import {
 
 import { dashboardNASDAQChart } from "variables/charts.jsx";
 
-class Dashboard extends React.Component {
+class Notification extends React.Component {
     render() {
         return (
             <>
@@ -57,4 +57,4 @@ class Dashboard extends React.Component {
     }
 }
 
-export default Dashboard;
+export default Notification;

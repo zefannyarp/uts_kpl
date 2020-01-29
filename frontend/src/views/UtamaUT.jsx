@@ -2,15 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 // reactstrap components
-import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardTitle,
-    Table,
-    Row,
-    Col
-} from "reactstrap";
+import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
 
 class UtamaUT extends React.Component {
     constructor() {
@@ -39,7 +31,7 @@ class UtamaUT extends React.Component {
                                         <Link to={"/admin/uptime"}>
                                             <button
                                                 type="button"
-                                                class="btn btn-primary btn-lg btn-block"
+                                                className="btn btn-primary btn-lg btn-block"
                                             >
                                                 Report
                                             </button>
@@ -49,7 +41,7 @@ class UtamaUT extends React.Component {
                                         <Link to={"/admin/generate"}>
                                             <button
                                                 type="button"
-                                                class="btn btn-primary btn-lg btn-block"
+                                                className="btn btn-primary btn-lg btn-block"
                                             >
                                                 Generate Report
                                             </button>

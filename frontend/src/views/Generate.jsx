@@ -2,21 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 // reactstrap components
-import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardTitle,
-    Table,
-    Row,
-    Col
-} from "reactstrap";
+import { Card, CardBody, Table, Row, Col } from "reactstrap";
 
 class Generate extends React.Component {
     constructor() {
         super();
         this.state = {
-            response: [],
+            users: [],
             start_date: null,
             end_date: null,
             downtime: null,
@@ -30,51 +22,52 @@ class Generate extends React.Component {
         this.handleTypeChange = this.handleTypeChange.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.setDefaultDate = this.setDefaultDate.bind(this);
         // this.saveDatatoAPI = this.saveDatatoAPI.bind(this);
     }
+
+    componentDidMount() {
+        this.setDefaultDate();
+    }
+
+    setDefaultDate() {
+        let date = new Date();
+        let end_date = date.setDate(date.getDate());
+        let start_date = date.setDate(date.getDate() - 6);
+        this.setState({
+            start_date: start_date,
+            end_date: end_date
+        });
+    }
+
     handleChange = event => {
         this.setState({ start_date: event.target.value });
         this.setState({ end_date: event.target.value });
     };
-    // saveDatatoAPI(e) {
-    //     debugger;
-    //     e.preventDefault();
-    //     const url = "http://127.0.0.1:8000/api/summary";
-    //     const Data = {
-    //         start_date: this.state.start_date,
-    //         end_date: this.state.end_date
-    //     };
+
     handleClick = event => {
         event.preventDefault();
         axios
-            .post("http://127.0.0.1:8000/api/summary",{
-                start_date: new Date(this.state.start_date).getTime().toString(),
+            .post("http://127.0.0.1:8000/api/summary", {
+                start_date: new Date(this.state.start_date)
+                    .getTime()
+                    .toString(),
                 end_date: new Date(this.state.end_date).getTime().toString()
             })
             .then(response => {
                 console.log(response);
-                this.setState({record: response.data});
+                this.setState({ record: response.data });
             })
             .catch(err => console.log(err));
     };
-    // componentWillMount() {
-    //     let config = { crossDomain: true };
-    //     let url = "http://127.0.0.1:8000/api/history";
-    //     axios
-    //         .get(url, { headers: { "Content-Type": "application/json" } })
-    //         .then(users => {
-    //             this.setState({
-    //                 users: users.data
-    //             });
-    //             console.log(users);
-    //         });
-    // }
+
     toggleDateRange() {
         this.setState({ dateRange: !this.state.dateRange });
     }
 
     handleTypeChange(e) {
         if (e.target.value === "sevendays") {
+            this.setDefaultDate();
             this.setState({ dateRange: false });
         } else {
             this.setState({ dateRange: true });
@@ -82,7 +75,8 @@ class Generate extends React.Component {
     }
 
     render() {
-        const { response } = this.state;
+        const { user } = this.state;
+        console.log(this.state);
         return (
             <div className="content">
                 <Row>
@@ -157,7 +151,6 @@ class Generate extends React.Component {
                                             <div class="col-sm-10">
                                                 <input
                                                     type="date"
-                                                    
                                                     class="form-control"
                                                     id="inputEmail3"
                                                     onChange={e => {
@@ -183,7 +176,6 @@ class Generate extends React.Component {
                                             <div class="col-sm-10">
                                                 <input
                                                     type="date"
-                                                    
                                                     class="form-control"
                                                     id="inputEmail3"
                                                     onChange={e => {
@@ -196,33 +188,19 @@ class Generate extends React.Component {
                                             </div>
                                         </div>
                                     </fieldset>
-
                                 </form>
                                 <form
                                     method="post"
                                     onSubmit={e => this.handleSubmit(e)}
                                 >
-                                    {/* <label>
-                                        Person Name:
-                                        <input
-                                            type="text"
-                                            name="name"
-                                            onChange={this.handleChange}
-                                        />
-                                    </label>
-                                    <button type="submit">Add</button>
-                                </form> */}
-
                                     <tr className="text-primary">
-                                        
-                                            <button
-                                                type="button"
-                                                class="btn btn-primary btn-lg btn-block"
-                                                onClick={this.handleClick}
-                                            >
-                                                View Data
-                                            </button>
-                                    
+                                        <button
+                                            type="button"
+                                            class="btn btn-primary btn-lg btn-block"
+                                            onClick={this.handleClick}
+                                        >
+                                            View Data
+                                        </button>
                                     </tr>
                                 </form>
                             </div>
@@ -231,9 +209,9 @@ class Generate extends React.Component {
                 </Row>
                 {this.state.record && (
                     <Row>
+                        {console.log(this.state.record)}
                         <Col md="12">
                             <Card>
-                                
                                 <CardBody>
                                     <Table responsive>
                                         <thead className="text-primary">
@@ -245,42 +223,41 @@ class Generate extends React.Component {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {response.map((user, index) => {
-                                                return (
-                                                    <tr key={index}>
-                                                        <td>
-                                                            {user.start_date}
-                                                        </td>
-                                                        <td>{user.end_date}</td>
-                                                        <td>
-                                                            {user.total_error}
-                                                        </td>
-                                                        <td>{user.downtime}</td>
-                                                        {/* <Link
-                                                            to={`/admin/uptime2/${user.id}`}
-                                                        >
-                                                            <button className="btn btn-primary">
-                                                                Details
-                                                            </button>
-                                                        </Link> */}
-                                                    </tr>
-                                                );
-                                            })}
+                                            <tr>
+                                                <td scope="col">
+                                                    {
+                                                        this.state.record
+                                                            .start_date
+                                                    }
+                                                </td>
+                                                <td scope="col">
+                                                    {this.state.record.end_date}
+                                                </td>
+                                                <td scope="col">
+                                                    {
+                                                        this.state.record
+                                                            .total_error
+                                                    }
+                                                </td>
+                                                <td scope="col">
+                                                    {this.state.record.downtime}
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </Table>
-                                    <button
-                                        type="button"
-                                        class="btn btn-primary btn-lg"
-                                    >
-                                        Save Data
-                                    </button>
+                                    <Link to={`/admin/uptime`}>
+                                        <button
+                                            type="button"
+                                            class="btn btn-primary btn-lg"
+                                        >
+                                            Go
+                                        </button>
+                                    </Link>
                                 </CardBody>
-                            
                             </Card>
                         </Col>
                     </Row>
                 )}
-                
             </div>
         );
     }

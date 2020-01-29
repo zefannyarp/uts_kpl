@@ -1,21 +1,3 @@
-/*!
-
-=========================================================
-* Paper Dashboard React - v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-dashboard-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-
-* Licensed under MIT (https://github.com/creativetimofficial/paper-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -41,6 +23,11 @@ class Tables extends React.Component {
             downtime: null,
             id: null,
             total_error: null
+            // name: null,
+            // username: null,
+            // body: null,
+            // id: null,
+            // title: null
         };
     }
     componentWillMount() {
@@ -57,9 +44,22 @@ class Tables extends React.Component {
     }
     render() {
         const { users } = this.state;
+        console.log(users);
         return (
             <>
                 <div className="content">
+                    <div class="card">
+                        <ul class="list-group list-group-flush">
+                            <li className="list-group-item">PIC : Tiara</li>
+                            <li className="list-group-item">
+                                KPI : 99,9% 6 bulan
+                            </li>
+                            <li className="list-group-item">
+                                Legends : Down Time is 50x count at one minutes
+                                > 100 or garasi.id is not accessible by public{" "}
+                            </li>
+                        </ul>
+                    </div>
                     <Row>
                         <Col md="12">
                             <Card>
@@ -72,9 +72,11 @@ class Tables extends React.Component {
                                     <Table responsive>
                                         <thead className="text-primary">
                                             <tr>
+                                                <th scope="col">Id</th>
                                                 <th scope="col">Start</th>
                                                 <th scope="col">End</th>
                                                 <th scope="col">Total Error</th>
+                                                <th scope="col">Down Time</th>
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
@@ -82,6 +84,7 @@ class Tables extends React.Component {
                                             {users.map((user, index) => {
                                                 return (
                                                     <tr key={index}>
+                                                        <td>{user.id}</td>
                                                         <td>
                                                             {user.start_date}
                                                         </td>
@@ -89,8 +92,9 @@ class Tables extends React.Component {
                                                         <td>
                                                             {user.total_error}
                                                         </td>
+                                                        <td>{user.downtime}</td>
                                                         <Link
-                                                            to={`/admin/uptime2/${user.id}`}
+                                                            to={`/admin/details-uptime/${user.id}`}
                                                         >
                                                             <button className="btn btn-primary">
                                                                 Details

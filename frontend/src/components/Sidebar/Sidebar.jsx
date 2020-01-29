@@ -1,21 +1,3 @@
-/*!
-
-=========================================================
-* Paper Dashboard React - v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-dashboard-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-
-* Licensed under MIT (https://github.com/creativetimofficial/paper-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { Nav } from "reactstrap";
@@ -27,73 +9,60 @@ import PerfectScrollbar from "perfect-scrollbar";
 var ps;
 
 class Sidebar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.activeRoute.bind(this);
-    this.sidebar = React.createRef();
-  }
-  // verifies if routeName is the one active (in browser input)
-  activeRoute(routeName) {
-    return this.props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
-  }
-  componentDidMount() {
-    if (navigator.platform.indexOf("Win") > -1) {
-      ps = new PerfectScrollbar(this.sidebar.current, {
-        suppressScrollX: true,
-        suppressScrollY: false
-      });
+    constructor(props) {
+        super(props);
+        this.activeRoute.bind(this);
+        this.sidebar = React.createRef();
     }
-  }
-  componentWillUnmount() {
-    if (navigator.platform.indexOf("Win") > -1) {
-      ps.destroy();
+    // verifies if routeName is the one active (in browser input)
+    activeRoute(routeName) {
+        return this.props.location.pathname.indexOf(routeName) > -1
+            ? "active"
+            : "";
     }
-  }
-  render() {
-    return (
-      <div
-        className="sidebar"
-        data-color={this.props.bgColor}
-        data-active-color={this.props.activeColor}
-      >
-        <div className="logo">
-          <a
-           
-            className="simple-text logo-mini"
-          >
-           
-          </a>
-          <a
-            
-            className="simple-text logo-normal"
-          >
-            KPI Dashboard
-          </a>
-        </div>
-        <div className="sidebar-wrapper" ref={this.sidebar}>
-          
-          <Nav>
-             <li>
-              <NavLink to='/admin/dashboard'>
-                Main Menu
-              </NavLink>
-              </li>
-            <li>
-              <NavLink to='/admin/uptime0'>
-                Uptime
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to='/admin/backendcoverage'> 
-                Backend Coverage
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to='/admin/frontendperformance'>
-                Frontend Performance
-              </NavLink>
-            </li>
-            {/* {this.props.routes.map((prop, key) => {
+    componentDidMount() {
+        if (navigator.platform.indexOf("Win") > -1) {
+            ps = new PerfectScrollbar(this.sidebar.current, {
+                suppressScrollX: true,
+                suppressScrollY: false
+            });
+        }
+    }
+    componentWillUnmount() {
+        if (navigator.platform.indexOf("Win") > -1) {
+            ps.destroy();
+        }
+    }
+    render() {
+        return (
+            <div
+                className="sidebar"
+                data-color={this.props.bgColor}
+                data-active-color={this.props.activeColor}
+            >
+                <div className="logo">
+                    <a className="simple-text logo-mini"></a>
+                    <a className="simple-text logo-normal">KPI Dashboard</a>
+                </div>
+                <div className="sidebar-wrapper" ref={this.sidebar}>
+                    <Nav>
+                        <li>
+                            <NavLink to="/admin/dashboard">Main Menu</NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/admin/uptime-menu">Uptime</NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/admin/backend-coverage">
+                                Backend Coverage
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/admin/frontend-performance">
+                                Frontend Performance
+                            </NavLink>
+                        </li>
+                        {/* {this.props.routes.map((prop, key) => {
               return (
                 
                 <li
@@ -114,11 +83,11 @@ class Sidebar extends React.Component {
                 </li>
               );
             })} */}
-          </Nav>
-        </div>
-      </div>
-    );
-  }
+                    </Nav>
+                </div>
+            </div>
+        );
+    }
 }
 
 export default Sidebar;
