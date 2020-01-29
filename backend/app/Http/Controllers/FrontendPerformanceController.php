@@ -42,15 +42,15 @@ class FrontendPerformanceController extends Controller
         $dateRange->setEndDate("today");
 
         // Create the Metrics object.
-        $sessions = new Google_Service_AnalyticsReporting_Metric();
-        $sessions->setExpression("ga:avgPageLoadTime");
-        $sessions->setAlias("pageloadtime");
+        $avgPageLoadTime = new Google_Service_AnalyticsReporting_Metric();
+        $avgPageLoadTime->setExpression("ga:avgPageLoadTime");
+        $avgPageLoadTime->setAlias("avgPageLoadTime");
 
         // Create the ReportRequest object.
         $request = new Google_Service_AnalyticsReporting_ReportRequest();
         $request->setViewId($VIEW_ID);
         $request->setDateRanges($dateRange);
-        $request->setMetrics(array($sessions));
+        $request->setMetrics(array($avgPageLoadTime));
 
         $body = new Google_Service_AnalyticsReporting_GetReportsRequest();
         $body->setReportRequests(array($request));
@@ -72,6 +72,10 @@ class FrontendPerformanceController extends Controller
 
         $frontend_performance = DB::table('frontend_performance')->latest('id')->first();
         return json_encode($frontend_performance);
+    }
+
+    public function getHistory(){
+       return Frontend::all();
     }
 }
 
