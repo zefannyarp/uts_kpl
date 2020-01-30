@@ -29,13 +29,13 @@ var routes = [
     },
     {
         path: "/uptime-menu",
-        name: "Uptime",
+        name: "UptimeReport",
         component: UtamaUT,
         layout: "/admin"
     },
     {
         path: "/uptime",
-        name: "Uptime",
+        name: "UptimeReport",
         icon: "nc-icon nc-tile-56",
         component: Tables,
         layout: "/admin"
@@ -43,14 +43,14 @@ var routes = [
 
     {
         path: "/details-uptime/:id",
-        name: "Uptime",
+        name: "UptimeReport",
         component: Uptime2,
         layout: "/admin"
     },
 
     {
         path: "/generate",
-        name: "Uptime",
+        name: "UptimeReport",
         component: Generate,
         layout: "/admin"
     },

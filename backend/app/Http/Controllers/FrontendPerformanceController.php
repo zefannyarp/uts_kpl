@@ -12,11 +12,10 @@ use Google_Service_AnalyticsReporting_DateRange;
 use Google_Service_AnalyticsReporting_GetReportsRequest;
 use Google_Service_AnalyticsReporting_Metric;
 use Google_Service_AnalyticsReporting_ReportRequest;
-use Illuminate\Support\Facades\DB;
 
 class FrontendPerformanceController extends Controller
 {
-    public function getData(Frontend $frontend)
+    public function getAveragePageLoadTime(Frontend $frontend)
     {
         // Use the developers console and download your service account
         // credentials in JSON format. Place them in this directory or
@@ -29,9 +28,6 @@ class FrontendPerformanceController extends Controller
         $client->setAuthConfig($KEY_FILE_LOCATION);
         $client->setScopes(['https://www.googleapis.com/auth/analytics.readonly']);
         $analytics = new Google_Service_AnalyticsReporting($client);
-
-//        $start_date = $request->input('start_date');
-//        $end_date = $request->input('end_date');
 
         // Replace with your view ID, for example XXXX.
         $VIEW_ID = "154433676";
@@ -63,19 +59,28 @@ class FrontendPerformanceController extends Controller
         $huhu = $wukwuw['0'];
         $wokwow = $huhu['values'];
         $hehe = $wokwow['0'];
-        $tanggal = Carbon::now();
-        $tanggal = Carbon::parse($tanggal)->format('Y-m-d H:i:s');
 
-        $frontend->setAttribute(Frontend::ATTRIBUTE_DATE_TIME, $tanggal);
+        $start_date = Carbon::parse($dateRange->startDate)->format('Y-m-d H:i:s');
+        $end_date = Carbon::parse($dateRange->endDate)->format('Y-m-d H:i:s');
+
+        $frontend->setAttribute(Frontend::ATTRIBUTE_START_DATE, $start_date);
+        $frontend->setAttribute(Frontend::ATTRIBUTE_END_DATE, $end_date);
         $frontend->setAttribute(Frontend::ATTRIBUTE_AVERAGE_PAGE_LOAD_TIME, $hehe);
         $frontend->save();
 
-        $frontend_performance = DB::table('frontend_performance')->latest('id')->first();
-        return json_encode($frontend_performance);
+        $rispinsi = [
+            'id' => $frontend->getAttribute(Frontend::ATTRIBUTE_ID),
+            'start_date' => $frontend->getAttribute(Frontend::ATTRIBUTE_START_DATE),
+            'end_date' => $frontend->getAttribute(Frontend::ATTRIBUTE_END_DATE),
+            'avgPageLoadTime' => $frontend->getAttribute(Frontend::ATTRIBUTE_AVERAGE_PAGE_LOAD_TIME)
+        ];
+
+        return response()->json($rispinsi);
     }
 
-    public function getHistory(){
-       return Frontend::all();
+    public function ShowFrontendPerformanceHistory()
+    {
+        return Frontend::all();
     }
 }
 

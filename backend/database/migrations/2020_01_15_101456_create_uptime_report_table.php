@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFrontendPerformanceTable extends Migration
+class CreateUptimeReportTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,12 @@ class CreateFrontendPerformanceTable extends Migration
      */
     public function up()
     {
-        Schema::create('frontend_performance', function (Blueprint $table) {
+        Schema::create('uptime_report', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
             $table->timestamps();
             $table->dateTime('start_date');
             $table->dateTime('end_date');
-            $table->decimal('avgPageLoadTime');
-
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
+            $table->integer('total_error');
         });
     }
 
@@ -35,6 +29,6 @@ class CreateFrontendPerformanceTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('frontend_performance');
+        Schema::dropIfExists('uptime_report');
     }
 }

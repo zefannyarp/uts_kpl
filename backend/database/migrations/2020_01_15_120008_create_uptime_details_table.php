@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUptimeReportTable extends Migration
+class CreateUptimeDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,21 +13,20 @@ class CreateUptimeReportTable extends Migration
      */
     public function up()
     {
-        Schema::create('uptime_report', function (Blueprint $table) {
+        Schema::create('uptime_details', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('uptime_report_id');
             $table->timestamps();
-            $table->bigInteger('uptime_summary_id')->unsigned();
-            $table->dateTime('start_date');
-            $table->dateTime('end_date');
-            $table->integer('total_error');
-            $table->integer('downtime');
+            $table->dateTime('date_time');
+            $table->text('request_name');
 
-            $table->foreign('uptime_summary_id')
+            $table->foreign('uptime_report_id')
                 ->references('id')
-                ->on('uptime_summary')
+                ->on('uptime_report')
                 ->onDelete('cascade');
         });
     }
+
 
     /**
      * Reverse the migrations.
@@ -36,6 +35,6 @@ class CreateUptimeReportTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('uptime_report');
+        Schema::dropIfExists('uptime_details');
     }
 }
