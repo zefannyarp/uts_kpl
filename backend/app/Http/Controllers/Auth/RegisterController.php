@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class RegisterController extends Controller
 {
@@ -70,4 +74,39 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     }
+
+    public function action(Request $request, User $user)
+    {
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $password = $request->input('password');
+
+        try {
+            $this->validate($request, [
+                'name' => 'required|min:3',
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required|min:8',
+            ]);
+        } catch (ValidationException $e) {
+        }
+//        $user = User::create([
+//            'name' => $request->name,
+//            'email' => $request->email,
+//            'password' => bcrypt($request->password),
+//            'api_token' => Str::random(60),
+//        ]);
+
+        $user->setAttribute(User::ATTRIBUTE_NAME, $name);
+        $user->setAttribute(User::ATTRIBUTE_EMAIL, $email);
+        $user->setAttribute(User::ATTRIBUTE_PASSWORD, bcrypt($password));
+        $user->setAttribute(User::ATTRIBUTE_API_TOKEN, Str::random(60));
+        $user->save();
+
+        return (new UserResource($user))->additional([
+            'meta' => [
+                'token' => $user->api_token,
+            ]
+        ]);
+    }
+
 }

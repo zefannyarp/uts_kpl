@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Uptime;
-use App\UptimeDetail;
+use App\Http\Resources\UptimeSummaryResources;
 use App\UptimeReport;
+use App\UptimeDetail;
+use App\UptimeSummary;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 
 class UptimeController extends Controller
 {
-    public function getUptimeSummary(Request $request, Uptime $uptime, UptimeDetail $uptimeDetail, UptimeReport $uptimeReport)
+    public function getUptimeSummary(Request $request, UptimeReport $uptimeReport, UptimeDetail $uptimeDetail, UptimeSummary $uptimeSummary)
     {
         $start_date = $request->input('start_date');
         $end_date = $request->input('end_date');
@@ -25,7 +26,7 @@ class UptimeController extends Controller
             'NETOAPI_KEY' => env('NETO_API_KEY')
         );
 
-        $GetOrder = ('{
+        $query = ('{
                           "version": true,
                           "size": 500,
                           "sort": [
@@ -128,7 +129,7 @@ class UptimeController extends Controller
         $json = $client->post('https://kibana.garasi.id/_plugin/kibana/api/console/proxy?path=_search&method=POST',
             [
                 'headers' => $headers,
-                'body' => $GetOrder
+                'body' => $query
             ]
         );
 
@@ -141,10 +142,10 @@ class UptimeController extends Controller
         $start_date = date('Y-m-d H:i:s', $start_date);
         $end_date = date('Y-m-d H:i:s', $end_date);
 
-        $uptime->setAttribute(Uptime::ATTRIBUTE_START_DATE, $start_date);
-        $uptime->setAttribute(Uptime::ATTRIBUTE_END_DATE, $end_date);
-        $uptime->setAttribute(Uptime::ATTRIBUTE_TOTAL_ERROR, $males);
-        $uptime->save();
+        $uptimeReport->setAttribute(UptimeReport::ATTRIBUTE_START_DATE, $start_date);
+        $uptimeReport->setAttribute(UptimeReport::ATTRIBUTE_END_DATE, $end_date);
+        $uptimeReport->setAttribute(UptimeReport::ATTRIBUTE_TOTAL_ERROR, $males);
+        $uptimeReport->save();
 
         foreach ($kocak['hits'] as $hit) {
             $e = $hit['_source'];
@@ -153,9 +154,9 @@ class UptimeController extends Controller
             $d = $e['request'];
 
             UptimeDetail::firstOrCreate([
-                UptimeDetail::ATTRIBUTE_UPTIME_SUMMARY_ID => $uptime->getAttribute('id'),
+                UptimeDetail::ATTRIBUTE_UPTIME_REPORT_ID => $uptimeReport->getAttribute('id'),
                 UptimeDetail::ATTRIBUTE_DATE_TIME => $c,
-                UptimeDetail::ATTRIBUTE_REQUEST => $d
+                UptimeDetail::ATTRIBUTE_REQUEST_NAME => $d
             ]);
         }
 
@@ -171,42 +172,32 @@ class UptimeController extends Controller
                 $downtime = $downtime + 1;
         }
 
-        $uptimeReport->setAttribute(UptimeReport::ATTRIBUTE_UPTIME_SUMMARY_ID, $uptime->getAttribute('id'));
-        $uptimeReport->setAttribute(UptimeReport::ATTRIBUTE_START_DATE, $start_date);
-        $uptimeReport->setAttribute(UptimeReport::ATTRIBUTE_END_DATE, $end_date);
-        $uptimeReport->setAttribute(UptimeReport::ATTRIBUTE_TOTAL_ERROR, $males);
-        $uptimeReport->setAttribute(UptimeReport::ATTRIBUTE_DOWNTIME, $downtime);
-        $uptimeReport->save();
+        $uptimeSummary->setAttribute(UptimeSummary::ATTRIBUTE_USER_ID, auth()->id());
+        $uptimeSummary->setAttribute(UptimeSummary::ATTRIBUTE_UPTIME_REPORT_ID, $uptimeReport->getAttribute('id'));
+        $uptimeSummary->setAttribute(UptimeSummary::ATTRIBUTE_START_DATE, $start_date);
+        $uptimeSummary->setAttribute(UptimeSummary::ATTRIBUTE_END_DATE, $end_date);
+        $uptimeSummary->setAttribute(UptimeSummary::ATTRIBUTE_TOTAL_ERROR, $males);
+        $uptimeSummary->setAttribute(UptimeSummary::ATTRIBUTE_DOWNTIME, $downtime);
+        $uptimeSummary->save();
 
-        $promotion = DB::table('uptime_report')->latest('id')->first();
-        return json_encode($promotion);
-//        return UptimeReport::
-//        $response = [
-//            'start_date' => $start_date,
-//            'end_date' => $end_date,
-//            'total_error' => $males,
-//            'downtime' => $downtime
-//        ];
+        return new UptimeSummaryResources($uptimeSummary);
 
-//        $uptime->setAttribute(Uptime::ATTRIBUTE_DOWNTIME, $downtime);
-//        $uptime->save();
-//        dd($uptime);
-
-//        return response()->json($response, 200);
+//        $promotion = DB::table('uptime_report')->latest('id')->first();
+//        return json_encode($promotion);
     }
 
     public function getUptimeDetails($id, UptimeDetail $uptimeDetail)
     {
-        return UptimeDetail::where(UptimeDetail::ATTRIBUTE_UPTIME_SUMMARY_ID, $id)->get();
+        return UptimeDetail::where(UptimeDetail::ATTRIBUTE_UPTIME_REPORT_ID, $id)->get();
     }
 
-    public function saveDataToDatabase(Uptime $uptime, Request $request)
+    public function saveDataToDatabase(UptimeReport $uptime, Request $request)
     {
 
     }
 
     public function getUptimeHistory()
     {
-        return UptimeReport::all();
+        return UptimeSummary::all();
     }
 }

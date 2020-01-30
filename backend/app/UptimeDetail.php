@@ -6,23 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class UptimeDetail extends Model
 {
-    protected $primaryKey = 'summary_id';
     protected $guarded;
-    const ATTRIBUTE_UPTIME_SUMMARY_ID = 'uptime_summary_id';
-    const ATTRIBUTE_DATE_TIME = 'date_time';
-    const ATTRIBUTE_REQUEST = 'request_name';
 
+    const ATTRIBUTE_UPTIME_REPORT_ID = 'uptime_report_id';
+    const ATTRIBUTE_DATE_TIME = 'date_time';
+    const ATTRIBUTE_REQUEST_NAME = 'request_name';
 
     protected $fillable = [
         self::ATTRIBUTE_DATE_TIME,
-        self::ATTRIBUTE_REQUEST,
-        self::ATTRIBUTE_UPTIME_SUMMARY_ID,
+        self::ATTRIBUTE_REQUEST_NAME,
+        self::ATTRIBUTE_UPTIME_REPORT_ID,
     ];
 
     public $table = 'uptime_details';
 
-    public function uptime()
+    public function uptime_report()
     {
-        return $this->belongsTo(Uptime::class, self::ATTRIBUTE_UPTIME_SUMMARY_ID, 'id');
+        return $this->belongsTo(UptimeReport::class, self::ATTRIBUTE_UPTIME_REPORT_ID, 'id');
     }
 }
