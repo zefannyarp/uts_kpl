@@ -102,11 +102,18 @@ class RegisterController extends Controller
         $user->setAttribute(User::ATTRIBUTE_API_TOKEN, Str::random(60));
         $user->save();
 
-        return (new UserResource($user))->additional([
-            'meta' => [
-                'token' => $user->api_token,
-            ]
-        ]);
+        if(auth()->attempt($request->only('name', 'email', 'password'))) {
+            return (new UserResource($user))->additional([
+                'meta' => [
+                    'token' => $user->api_token,
+                    'status' => 201
+                ]
+            ]);
+        }
+
+        return response()->json([
+            'error' => 'Please match the requirements',
+        ], 401);
     }
 
 }

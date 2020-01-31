@@ -15,7 +15,7 @@ class CreateUptimeSummaryTable extends Migration
     {
         Schema::create('uptime_summary', function (Blueprint $table) {
             $table->bigIncrements('id');
-//            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('uptime_report_id');
             $table->timestamps();
             $table->dateTime('start_date');
@@ -23,10 +23,10 @@ class CreateUptimeSummaryTable extends Migration
             $table->integer('total_error');
             $table->integer('downtime');
 
-//            $table->foreign('user_id')
-//                ->references('id')
-//                ->on('users')
-//                ->onDelete('cascade');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
 
             $table->foreign('uptime_report_id')
                 ->references('id')

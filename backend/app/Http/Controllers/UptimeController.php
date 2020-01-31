@@ -172,7 +172,6 @@ class UptimeController extends Controller
                 $downtime = $downtime + 1;
         }
 
-        $uptimeSummary->setAttribute(UptimeSummary::ATTRIBUTE_USER_ID, auth()->id());
         $uptimeSummary->setAttribute(UptimeSummary::ATTRIBUTE_UPTIME_REPORT_ID, $uptimeReport->getAttribute('id'));
         $uptimeSummary->setAttribute(UptimeSummary::ATTRIBUTE_START_DATE, $start_date);
         $uptimeSummary->setAttribute(UptimeSummary::ATTRIBUTE_END_DATE, $end_date);
