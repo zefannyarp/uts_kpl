@@ -23,16 +23,12 @@ class CreateUsersTable extends Migration
                 ->unique()
                 ->nullable()
                 ->default(null);
+            $table->string('session_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('users');

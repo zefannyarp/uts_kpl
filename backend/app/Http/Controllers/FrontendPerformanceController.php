@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
 use App\Frontend;
+use App\User;
 use Carbon\Carbon;
 use Google_Client;
 use Google_Service_AnalyticsReporting;
@@ -15,8 +16,9 @@ use Google_Service_AnalyticsReporting_ReportRequest;
 
 class FrontendPerformanceController extends Controller
 {
-    public function getAveragePageLoadTime(Frontend $frontend)
+    public function getAveragePageLoadTime(Frontend $frontend, User $user)
     {
+
         // Use the developers console and download your service account
         // credentials in JSON format. Place them in this directory or
         // change the key file location if necessary.

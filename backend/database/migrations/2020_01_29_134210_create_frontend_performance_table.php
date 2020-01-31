@@ -15,16 +15,16 @@ class CreateFrontendPerformanceTable extends Migration
     {
         Schema::create('frontend_performance', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
+//            $table->unsignedBigInteger('user_id');
             $table->timestamps();
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->decimal('avgPageLoadTime');
-
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
+//
+//            $table->foreign('user_id')
+//                ->references('id')
+//                ->on('users')
+//                ->onDelete('cascade');
         });
     }
 
