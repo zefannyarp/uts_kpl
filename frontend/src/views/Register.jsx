@@ -6,7 +6,33 @@ import { CardHeader, CardBody, CardTitle, Row, Col, Card } from "reactstrap";
 class Register extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            errors: {},
+            name: null,
+            email: null,
+            password: null
+        };
     }
+
+    handleChange = event => {
+        this.setState({ name: event.target.value });
+        this.setState({ email: event.target.value });
+        this.setState({ password: event.target.value });
+    };
+    handleClick = event => {
+        event.preventDefault();
+        axios
+            .post("http://127.0.0.1:8000/api/register", {
+                name: new String(this.state.name),
+                email: new String(this.state.email),
+                password: new String(this.state.password)
+            })
+            .then(response => {
+                if (response.status && response.status === 201) {
+                    this.props.history.push("/login");
+                }
+            });
+    };
 
     render() {
         return (
@@ -30,7 +56,12 @@ class Register extends React.Component {
                                             type="text"
                                             className="form-control"
                                             id="exampleDropdownFormText1"
-                                            placeholder=""
+                                            placeholder="Name"
+                                            onChange={e => {
+                                                this.setState({
+                                                    name: e.target.value
+                                                });
+                                            }}
                                         ></input>
                                     </div>
                                     <div className="form-group">
@@ -42,6 +73,11 @@ class Register extends React.Component {
                                             className="form-control"
                                             id="exampleDropdownFormEmail1"
                                             placeholder="email@example.com"
+                                            onChange={e => {
+                                                this.setState({
+                                                    email: e.target.value
+                                                });
+                                            }}
                                         ></input>
                                     </div>
                                     <div className="form-group">
@@ -53,9 +89,14 @@ class Register extends React.Component {
                                             className="form-control"
                                             id="exampleDropdownFormPassword1"
                                             placeholder="Password"
+                                            onChange={e => {
+                                                this.setState({
+                                                    password: e.target.value
+                                                });
+                                            }}
                                         ></input>
                                     </div>
-                                    <div className="form-group">
+                                    {/* <div className="form-group">
                                         <label for="exampleDropdownFormPassword1">
                                             Confirm Password
                                         </label>
@@ -65,7 +106,7 @@ class Register extends React.Component {
                                             id="exampleDropdownFormPassword1"
                                             placeholder="Confirm Password"
                                         ></input>
-                                    </div>
+                                    </div> */}
 
                                     <div className="form-group">
                                         <div className="form-check">
@@ -76,14 +117,14 @@ class Register extends React.Component {
                                             ></input>
                                         </div>
                                     </div>
-                                    <Link to={`/Login`}>
-                                        <button
-                                            type="submit"
-                                            className="btn btn-primary"
-                                        >
-                                            Sign Up
-                                        </button>
-                                    </Link>
+
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary"
+                                        onClick={this.handleClick}
+                                    >
+                                        Sign Up
+                                    </button>
                                 </form>
                             </CardBody>
                         </Card>

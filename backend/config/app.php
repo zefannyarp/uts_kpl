@@ -174,7 +174,6 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Spatie\Analytics\AnalyticsServiceProvider::class,
         PulkitJalan\Google\GoogleServiceProvider::class
     ],
 
@@ -226,7 +225,6 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Analytics' => Spatie\Analytics\AnalyticsFacade::class,
         'Google' => PulkitJalan\Google\Facades\Google::class
     ],
 

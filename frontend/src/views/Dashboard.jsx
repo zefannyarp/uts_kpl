@@ -230,7 +230,7 @@ class Dashboard extends React.Component {
                             </Card>
                         </Col>
                     </Row>
-                    <Row>
+                    {/* <Row>
                         <Col md="4">
                             <Card>
                                 <CardHeader>
@@ -269,8 +269,9 @@ class Dashboard extends React.Component {
                                     </div>
                                 </CardFooter>
                             </Card>
-                        </Col>
-                        <Col md="8">
+                        </Col> */}
+                    <Row>
+                        <Col md="12">
                             <Card className="card-chart">
                                 <CardHeader>
                                     <CardTitle tag="h5">NASDAQ: AAPL</CardTitle>
@@ -289,9 +290,7 @@ class Dashboard extends React.Component {
                                 <CardFooter>
                                     <div className="chart-legend">
                                         <i className="fa fa-circle text-info" />{" "}
-                                        Tesla Model S{" "}
-                                        <i className="fa fa-circle text-warning" />{" "}
-                                        BMW 5 Series
+                                        Frontend Performance{" "}
                                     </div>
                                     <hr />
                                     <div className="card-stats">

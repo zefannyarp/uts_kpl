@@ -1,15 +1,13 @@
 import Frontendperformance from "views/Notifications";
-// import Notifications from "views/Notifications.jsx";
-// import Icons from "views/Icons.jsx";
 import Backendcoverage from "views/Typography.jsx";
 import Tables from "views/Tables.jsx";
 import Uptime2 from "views/Uptime2.jsx";
 import UtamaUT from "views/UtamaUT.jsx";
 import Generate from "views/Generate.jsx";
 import Dashboard from "views/Dashboard.jsx";
-// import Maps from "views/Map.jsx";
-// import UserPage from "views/User.jsx";
-// import UpgradeToPro from "views/Upgrade.jsx";
+import Login from "views/Login.jsx";
+import Register from "views/Register.jsx";
+import Loginadmin from "views/Loginadmin";
 
 var routes = [
     {
@@ -60,6 +58,24 @@ var routes = [
         name: "Frontend Performance",
         component: Frontendperformance,
         layout: "/admin"
+    },
+
+    {
+        path: "/login",
+        name: "Login",
+        component: Login
+    },
+
+    {
+        path: "/register",
+        name: "Register",
+        component: Register
+    },
+
+    {
+        path: "/loginadmin",
+        name: "Login admin",
+        component: Loginadmin
     }
 
     // {

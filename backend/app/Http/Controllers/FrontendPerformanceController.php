@@ -70,14 +70,8 @@ class FrontendPerformanceController extends Controller
         $frontend->setAttribute(Frontend::ATTRIBUTE_AVERAGE_PAGE_LOAD_TIME, $hehe);
         $frontend->save();
 
-        $rispinsi = [
-            'id' => $frontend->getAttribute(Frontend::ATTRIBUTE_ID),
-            'start_date' => $frontend->getAttribute(Frontend::ATTRIBUTE_START_DATE),
-            'end_date' => $frontend->getAttribute(Frontend::ATTRIBUTE_END_DATE),
-            'avgPageLoadTime' => $frontend->getAttribute(Frontend::ATTRIBUTE_AVERAGE_PAGE_LOAD_TIME)
-        ];
-
-        return response()->json($rispinsi);
+        $frontend_performance = DB::table('frontend_performance')->get();
+        return json_encode($frontend_performance);
     }
 
     public function ShowFrontendPerformanceHistory()

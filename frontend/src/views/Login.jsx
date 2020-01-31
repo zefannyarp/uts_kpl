@@ -6,7 +6,30 @@ import { CardHeader, CardBody, CardTitle, Row, Col, Card } from "reactstrap";
 class Login extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            users: [],
+            email: null,
+            password: null
+        };
     }
+    handleChange = event => {
+        this.setState({ email: event.target.value });
+        this.setState({ password: event.target.value });
+    };
+
+    handleClick = event => {
+        event.preventDefault();
+        axios
+            .post("http://127.0.0.1:8000/api/login", {
+                email: new String(this.state.email),
+                password: new String(this.state.password)
+            })
+            .then(response => {
+                if (response.status && response.status === 200) {
+                    this.props.history.push("/admin/dashboard");
+                }
+            });
+    };
 
     render() {
         return (
@@ -27,7 +50,12 @@ class Login extends React.Component {
                                             type="email"
                                             className="form-control"
                                             id="exampleDropdownFormEmail1"
-                                            placeholder="email@example.com"
+                                            placeholder="example@gmail.com"
+                                            onChange={e => {
+                                                this.setState({
+                                                    email: e.target.value
+                                                });
+                                            }}
                                         ></input>
                                     </div>
                                     <div className="form-group">
@@ -39,6 +67,11 @@ class Login extends React.Component {
                                             className="form-control"
                                             id="exampleDropdownFormPassword1"
                                             placeholder="Password"
+                                            onChange={e => {
+                                                this.setState({
+                                                    password: e.target.value
+                                                });
+                                            }}
                                         ></input>
                                     </div>
                                     <div className="form-group">
@@ -50,18 +83,18 @@ class Login extends React.Component {
                                             ></input>
                                         </div>
                                     </div>
-                                    <Link to={`/admin/dashboard`}>
-                                        <button
-                                            type="submit"
-                                            className="btn btn-primary"
-                                        >
-                                            Sign in
-                                        </button>
-                                    </Link>
+
+                                    <button
+                                        type="submit"
+                                        className="btn btn-primary"
+                                        onClick={this.handleClick}
+                                    >
+                                        Sign in
+                                    </button>
                                 </form>
                                 <div className="dropdown-divider"></div>
-                                <a className="dropdown-item" href="/Register">
-                                    New around here? Sign up
+                                <a className="dropdown-item" href="/loginadmin">
+                                    Admin?
                                 </a>
                             </CardBody>
                         </Card>
