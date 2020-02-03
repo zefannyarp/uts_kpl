@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
+use Auth;
 use App\Frontend;
 use App\User;
 use Carbon\Carbon;
@@ -13,12 +14,17 @@ use Google_Service_AnalyticsReporting_DateRange;
 use Google_Service_AnalyticsReporting_GetReportsRequest;
 use Google_Service_AnalyticsReporting_Metric;
 use Google_Service_AnalyticsReporting_ReportRequest;
-use Illuminate\Support\Facades\Auth;
 
 class FrontendPerformanceController extends Controller
 {
     public function getAveragePageLoadTime(Frontend $frontend, User $user)
     {
+        // if (!Auth::check()) {
+        //     return response()->json([
+        //         'unauthorized' => 'gaboleh ah'
+        //     ], 401);
+        // }
+    
         // Use the developers console and download your service account
         // credentials in JSON format. Place them in this directory or
         // change the key file location if necessary.
@@ -76,8 +82,8 @@ class FrontendPerformanceController extends Controller
             'end_date' => $frontend->getAttribute(Frontend::ATTRIBUTE_END_DATE),
             'avgPageLoadTime' => $frontend->getAttribute(Frontend::ATTRIBUTE_AVERAGE_PAGE_LOAD_TIME)
         ];
-
         return response()->json($rispinsi);
+        
     }
 
     public function ShowFrontendPerformanceHistory()

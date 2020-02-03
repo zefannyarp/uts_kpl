@@ -54,4 +54,8 @@ class AdminController extends Controller
             'user has been updated'
         ], 200);
     }
+    public function showUser()
+{
+    return User::all();
+}
 }

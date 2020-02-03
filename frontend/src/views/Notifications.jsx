@@ -118,7 +118,7 @@ class Dashboard extends React.Component {
     }
     render() {
         return (
-            <>
+            this.state.chartData && (
                 <div className="content">
                     <Row>
                         <Col md="12">
@@ -161,7 +161,7 @@ class Dashboard extends React.Component {
                         </Col>
                     </Row>
                 </div>
-            </>
+            )
         );
     }
 }

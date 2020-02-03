@@ -48,7 +48,7 @@ class Generate extends React.Component {
     handleClick = event => {
         event.preventDefault();
         axios
-            .post("http://127.0.0.1:8000/api/summary", {
+            .post("http://127.0.0.1:8000/api/uptime", {
                 start_date: new Date(this.state.start_date)
                     .getTime()
                     .toString(),

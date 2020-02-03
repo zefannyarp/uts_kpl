@@ -26,4 +26,7 @@ Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout');
 
 Route::get('session', 'UserController@show');
-
+Route::post('admin/add', 'AdminController@addUser');
+Route::post('admin/edit', 'AdminController@editUser');
+Route::post('admin/delete', 'AdminController@deleteUser');
+Route::get('admin/user', 'AdminController@showUser');

@@ -178,12 +178,14 @@ class UptimeController extends Controller
         $uptimeSummary->save();
 
         $response = [
-          'id' => $uptimeSummary->getAttribute(UptimeSummary::ATTRIBUTE_ID),
-          'start_date' => $uptimeSummary->getAttribute(UptimeSummary::ATTRIBUTE_START_DATE),
-          'end_date' => $uptimeSummary->getAttribute(UptimeSummary::ATTRIBUTE_END_DATE),
-          'total_error' => $uptimeSummary->getAttribute(UptimeSummary::ATTRIBUTE_TOTAL_ERROR),
-          'downtime' => $uptimeSummary->getAttribute(UptimeSummary::ATTRIBUTE_DOWNTIME)
+            'id' => $uptimeSummary->getAttribute(UptimeSummary::ATTRIBUTE_ID),
+            'start_date' => $uptimeSummary->getAttribute(UptimeSummary::ATTRIBUTE_START_DATE),
+            'end_date' => $uptimeSummary->getAttribute(UptimeSummary::ATTRIBUTE_END_DATE),
+            'total_error' => $uptimeSummary->getAttribute(UptimeSummary::ATTRIBUTE_TOTAL_ERROR),
+            'downtime' => $uptimeSummary->getAttribute(UptimeSummary::ATTRIBUTE_DOWNTIME),
         ];
+
+        return response()->json($response);
 
         return response()->json($response);
     }
