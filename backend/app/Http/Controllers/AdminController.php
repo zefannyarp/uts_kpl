@@ -23,15 +23,16 @@ class AdminController extends Controller
         return response()->json($user, 201);
     }
 
-    public function deleteUser($id)
+    public function deleteUser(User $user, $id)
     {
-        User::destroy(User::ATTRIBUTE_ID);
+        $user = User::findOrFail($id);
+        $user->delete();
         return response()->json([
-            'user has been deleted'
+            'message' => 'user has been deleted'
         ], 200);
     }
 
-    public function editUser(Request $request, User $user, $id)
+    public function updateUser(Request $request, User $user, $id)
     {
         $name = $request->input('name');
         $email = $request->input('email');
@@ -51,7 +52,17 @@ class AdminController extends Controller
             ]);
 
         return response()->json([
-            'user has been updated'
+            'message' => 'user has been updated'
         ], 200);
+    }
+
+    public function getUser()
+    {
+        return User::all();
+    }
+
+    public function showUser($id)
+    {
+        return User::findOrFail($id);
     }
 }

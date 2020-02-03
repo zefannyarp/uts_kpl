@@ -25,5 +25,9 @@ Route::post('register', 'Auth\RegisterController@action');
 Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout');
 
-Route::get('session', 'UserController@show');
+Route::post('admin/add', 'AdminController@addUser');
+Route::post('admin/update', 'AdminController@updateUser');
+Route::post('admin/delete/{id}', 'AdminController@deleteUser');
+Route::get('admin/user/{id}', 'AdminController@showUser');
+Route::get('admin/users', 'AdminController@getUser');
 

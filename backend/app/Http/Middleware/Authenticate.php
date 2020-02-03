@@ -9,12 +9,12 @@ use Illuminate\Support\Facades\Auth;
 
 class Authenticate extends Middleware
 {
-    protected function redirect($request, Closure $next, $role)
+    protected function redirect($request, Closure $next)
     {
-        if (! Auth::check()) {
+        if (! Auth::check())
             return route('login');
+        {
+            return $next($request);
         }
-
-        return $next($request);
     }
 }

@@ -21,8 +21,8 @@ class Login extends React.Component {
         event.preventDefault();
         axios
             .post("http://127.0.0.1:8000/api/login", {
-                email: new String(this.state.email),
-                password: new String(this.state.password)
+                email: String(this.state.email),
+                password: String(this.state.password)
             })
             .then(response => {
                 if (response.status && response.status === 200) {
