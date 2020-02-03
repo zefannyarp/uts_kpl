@@ -11,13 +11,13 @@
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-//Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth']], function () {
     Route::post('uptime', 'UptimeController@getUptimeSummary');
     Route::get('uptime/{id}', 'UptimeController@getUptimeDetails');
     Route::get('history', 'UptimeController@getUptimeHistory');
     Route::get('frontend', 'FrontendPerformanceController@getAveragePageLoadTime');
     Route::get('frontend/history', 'FrontendPerformanceController@ShowFrontendPerformanceHistory');
-//});
+});
 
 Route::get('login', 'Auth\LoginController@redirectTo')->name('login');
 

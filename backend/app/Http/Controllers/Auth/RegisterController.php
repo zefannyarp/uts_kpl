@@ -89,12 +89,6 @@ class RegisterController extends Controller
             ]);
         } catch (ValidationException $e) {
         }
-//        $user = User::create([
-//            'name' => $request->name,
-//            'email' => $request->email,
-//            'password' => bcrypt($request->password),
-//            'api_token' => Str::random(60),
-//        ]);
 
         $user->setAttribute(User::ATTRIBUTE_NAME, $name);
         $user->setAttribute(User::ATTRIBUTE_EMAIL, $email);

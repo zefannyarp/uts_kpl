@@ -23,7 +23,6 @@ class CreateUsersTable extends Migration
                 ->unique()
                 ->nullable()
                 ->default(null);
-            $table->string('session_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
