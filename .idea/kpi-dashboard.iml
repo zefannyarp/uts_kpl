@@ -33,6 +33,7 @@
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/jakub-onderka/php-console-highlighter" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/laravel/framework" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/laravel/tinker" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/vendor/laravel/ui" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/lcobucci/jwt" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/league/commonmark" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/league/commonmark-ext-table" />

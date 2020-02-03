@@ -113,6 +113,7 @@
       <path value="$PROJECT_DIR$/backend/vendor/symfony/polyfill-util" />
       <path value="$PROJECT_DIR$/backend/vendor/symfony/polyfill-php56" />
       <path value="$PROJECT_DIR$/backend/vendor/lcobucci/jwt" />
+      <path value="$PROJECT_DIR$/backend/vendor/laravel/ui" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />

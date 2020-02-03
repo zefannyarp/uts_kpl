@@ -43,39 +43,22 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function sendLoginResponse(Request $request)
+
+    public function login(Request $request)
     {
-        $request->session()->regenerate();
-        $previous_session = Auth::User()->session_id;
-        if ($previous_session) {
-            Session::getHandler()->destroy($previous_session);
-        }
+        $this->validate($request, [
+            'email' => 'required|email',
+            'password' => 'required|min:8',
+        ]);
 
-        Auth::user()->session_id = Session::getId();
-        Auth::user()->save();
-        $this->clearLoginAttempts($request);
-
-        return $this->authenticated($request, $this->guard()->user())
-            ?: redirect()->intended($this->redirectPath());
-
-    }
-
-    public function index(Request $request)
-    {
-        try {
-            $this->validate($request, [
-                'email' => 'required|email',
-                'password' => 'required|min:8',
-            ]);
-        } catch (ValidationException $e) {
-        }
-
-        if(auth()->attempt($request->only('email', 'password'))) {
+        if(Auth::attempt($request->only('email', 'password'))) {
             $currentUser = auth()->user();
+            Auth::login($currentUser);
             return (new UserResource($currentUser))->additional([
                 'meta' => [
                     'token' => $currentUser->api_token,
-                    'status' => 200
+                    'status' => 200,
+                    'current user' => Auth::user()
                 ]
             ]);
         }
@@ -90,5 +73,12 @@ class LoginController extends Controller
         return response()->json([
            'logout' => 'User has logged out'
         ]);
+    }
+
+    public function redirectTo()
+    {
+        return response()->json([
+           'unauthorized' => 'you have no rights to access this page'
+        ], 401);
     }
 }
