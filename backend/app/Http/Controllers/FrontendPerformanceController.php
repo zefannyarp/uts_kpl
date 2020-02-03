@@ -19,8 +19,6 @@ class FrontendPerformanceController extends Controller
 {
     public function getAveragePageLoadTime(Frontend $frontend, User $user)
     {
-        $user = Auth::user();
-        dd($user);
         // Use the developers console and download your service account
         // credentials in JSON format. Place them in this directory or
         // change the key file location if necessary.

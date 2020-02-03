@@ -16,7 +16,7 @@ import {
     // InputGroupAddon,
     // Input
 } from "reactstrap";
-
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import routes from "routes.js";
 
 class Header extends React.Component {
@@ -134,6 +134,13 @@ class Header extends React.Component {
                         <span className="navbar-toggler-bar navbar-kebab" />
                         <span className="navbar-toggler-bar navbar-kebab" />
                     </NavbarToggler>
+                    <form>
+                        <Link to={`/Login`}>
+                            <button type="button" class="btn btn-outline-dark">
+                                Logout
+                            </button>
+                        </Link>
+                    </form>
                     {/* <Collapse
                         isOpen={this.state.isOpen}
                         navbar
