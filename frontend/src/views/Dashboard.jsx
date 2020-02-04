@@ -41,7 +41,9 @@ class Dashboard extends React.Component {
                 this.setState({
                     users: users.data
                 });
-                console.log(users);
+            })
+            .catch(error => {
+                this.props.history.push("/login");
             });
     }
     render() {

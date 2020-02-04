@@ -8,6 +8,8 @@ import Dashboard from "views/Dashboard.jsx";
 import Login from "views/Login.jsx";
 import Register from "views/Register.jsx";
 import Loginadmin from "views/Loginadmin";
+import AdminMenu from "views/AdminMenu";
+import UserManage from "views/UserManage";
 
 var routes = [
     {
@@ -76,6 +78,16 @@ var routes = [
         path: "/loginadmin",
         name: "Login admin",
         component: Loginadmin
+    },
+    {
+        path: "/adminmenu",
+        name: "Admin menu",
+        component: AdminMenu
+    },
+    {
+        path: "/usermanage",
+        name: "User Manage ",
+        component: UserManage
     }
 
     // {

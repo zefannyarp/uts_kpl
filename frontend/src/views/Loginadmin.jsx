@@ -21,21 +21,34 @@ class Loginadmin extends React.Component {
         event.preventDefault();
         axios
             .post("http://127.0.0.1:8000/api/login", {
-                email: new String(this.state.email),
+                email: new String("admin"),
                 password: new String(this.state.password)
             })
             .then(response => {
                 if (response.status && response.status === 201) {
-                    this.props.history.push("/admin/dashboard");
+                    this.props.history.push("/adminmenu");
                 }
             });
     };
 
     render() {
         return (
-            <div className="content">
+            <div
+                className="content"
+                style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignitem: "center",
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    height: "30%",
+                    width: "50%",
+                    margin: "-15% 0 0 -25%"
+                }}
+            >
                 <Row>
-                    <Col md="4">
+                    <Col md="12">
                         <Card>
                             <CardHeader>
                                 <CardTitle tag="h5"> Login</CardTitle>

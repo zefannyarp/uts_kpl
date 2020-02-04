@@ -34,6 +34,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth' ], function () {
     Route::post('me', 'AuthController@me');
 });
 
+
 Route::post('register-admin', 'UsirController@registerAdmin');
 Route::post('register', 'UsirController@register');
 Route::post('login', 'UsirController@authenticate');
