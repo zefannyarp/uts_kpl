@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Providers\RouteServiceProvider;
@@ -13,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Tymon\JWTAuth\JWTAuth;
 
 class RegisterController extends Controller
 {
@@ -76,6 +76,27 @@ class RegisterController extends Controller
         ]);
     }
 
+    public function register(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|string|email|max:255|unique:users',
+            'name' => 'required',
+            'password'=> 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+        User::create([
+            'name' => $request->get('name'),
+            'email' => $request->get('email'),
+            'password' => bcrypt($request->get('password')),
+        ]);
+        $user = User::first();
+        $token = JWTAuth::fromUser($user);
+
+        return Response::json(compact('token'));
+    }
+
     public function action(Request $request, User $user)
     {
         $name = $request->input('name');
@@ -94,7 +115,7 @@ class RegisterController extends Controller
         $user->setAttribute(User::ATTRIBUTE_NAME, $name);
         $user->setAttribute(User::ATTRIBUTE_EMAIL, $email);
         $user->setAttribute(User::ATTRIBUTE_PASSWORD, bcrypt($password));
-        $user->setAttribute(User::ATTRIBUTE_API_TOKEN, Str::random(60));
+        $user->setAttribute(User::ATTRIBUTE_API_TOKEN, $user->getJWTIdentifier());
         $user->save();
 
         if(auth()->attempt($request->only('name', 'email', 'password'))) {

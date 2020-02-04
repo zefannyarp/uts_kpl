@@ -32,10 +32,4 @@ class UptimeSummary extends Model
     {
         $this->hasOne(UptimeReport::class, UptimeReport::ATTRIBUTE_ID, self::ATTRIBUTE_UPTIME_REPORT_ID);
     }
-
-//    public function user()
-//    {
-//        return $this->belongsTo(User::class, self::ATTRIBUTE_USER_ID, 'id');
-//    }
-
 }

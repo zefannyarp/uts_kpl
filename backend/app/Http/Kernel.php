@@ -53,7 +53,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \App\Http\Middleware\Authenticate::class,
+        'authz' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
@@ -66,6 +66,8 @@ class Kernel extends HttpKernel
         'cors' => \App\Http\Middleware\Cors::class,
         'checksinglesession' => \App\Http\Middleware\CheckSingleSession::class,
         'AuthResource' => \App\Http\Middleware\AuthResource::class,
+        'jwt.verify' => \App\Http\Middleware\JwtMiddleware::class,
+        'admin' => \App\Http\Middleware\IsAdmin::class,
     ];
 
     /**

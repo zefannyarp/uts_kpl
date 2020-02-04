@@ -2,19 +2,24 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Auth\AuthenticationException;
 use Closure;
-use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Illuminate\Contracts\Auth\Factory;
 use Illuminate\Support\Facades\Auth;
 
-class Authenticate extends Middleware
+class Authenticate
 {
-    protected function redirect($request, Closure $next)
+    protected $auth;
+
+    public function __construct(Factory $auth)
     {
-        if (! Auth::check())
-            return route('login');
-        {
-            return $next($request);
-        }
+        $this->auth = $auth;
+    }
+
+    public function handle($request, Closure $next, $guard = null, $field = null)
+    {
+        if (!Auth::check()){
+        return redirect(route('login'));
+    }
+        return $next($request);
     }
 }

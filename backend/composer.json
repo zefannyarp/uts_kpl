@@ -21,7 +21,7 @@
         "pulkitjalan/google-apiclient": "^4.0",
         "spatie/laravel-analytics": "^3.8",
         "spatie/laravel-cors": "^1.6",
-        "tymon/jwt-auth": "dev-develop"
+        "tymon/jwt-auth": "^1.0.0"
     },
     "require-dev": {
         "facade/ignition": "^1.4",

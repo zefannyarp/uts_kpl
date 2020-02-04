@@ -2,14 +2,22 @@
 
 namespace App;
 
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
+use Tymon\JWTAuth\Contracts\Validator;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
+    const ATTRIBUTE_ROLE = 'role';
     const ATTRIBUTE_ID = 'id';
     const ATTRIBUTE_NAME = 'name';
     const ATTRIBUTE_EMAIL = 'email';
@@ -17,6 +25,7 @@ class User extends Authenticatable
     const ATTRIBUTE_API_TOKEN = 'api_token';
 
     protected $fillable = [
+        self::ATTRIBUTE_ROLE,
         self::ATTRIBUTE_ID,
         self::ATTRIBUTE_NAME,
         self::ATTRIBUTE_EMAIL,
@@ -32,21 +41,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function generateToken(User $user)
+    public function getJWTIdentifier()
     {
-        $this->api_token = Str::random(60);
-        $this->save();
-
-        return $this->api_token;
+        return $this->getKey();
     }
 
-    public function Uptime_Summary()
+    public function getJWTCustomClaims()
     {
-        return $this->hasMany(UptimeReport::class, UptimeSummary::ATTRIBUTE_UPTIME_REPORT_ID);
-    }
-
-    public function Frontend_Performance()
-    {
-        return $this->hasMany(Frontend::class, Frontend::ATTRIBUTE_USER_ID);
+        return [];
     }
 }
