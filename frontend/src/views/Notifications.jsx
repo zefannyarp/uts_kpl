@@ -25,17 +25,25 @@ class Dashboard extends React.Component {
     }
     handleClick = event => {
         event.preventDefault();
-        let labels = [];
-        let chartValues = [];
+        let labels = this.state.chartData.data.labels;
+        let chartValues = this.state.chartData.data.datasets[0].data;
+        const accessToken = localStorage.getItem("accessToken");
+        console.log(accessToken);
+        this.setState({ accessToken });
         let url = "http://127.0.0.1:8000/api/frontend";
+
         axios
-            .get(url, { headers: { "Content-Type": "application/json" } })
+            .get(url, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "bearer " + accessToken
+                }
+            })
             .then(fedata => {
-                console.log(fedata.data);
-                fedata.data.map(fe => {
-                    labels.push(fe.date_time);
-                    chartValues.push(parseFloat(fe.avgPageLoadTime));
-                });
+                this.setState({ chartData: null });
+                labels.push(fedata.data.end_date);
+                chartValues.push(parseFloat(fedata.data.avgPageLoadTime));
+
                 const FEPerformanceData = {
                     data: {
                         labels: labels,
@@ -56,6 +64,17 @@ class Dashboard extends React.Component {
                         legend: {
                             display: false,
                             position: "top"
+                        },
+                        scales: {
+                            yAxes: [
+                                {
+                                    ticks: {
+                                        beginAtZero: true,
+                                        max: 15,
+                                        stepSize: 5
+                                    }
+                                }
+                            ]
                         }
                     }
                 };
@@ -68,13 +87,20 @@ class Dashboard extends React.Component {
         let config = { crossDomain: true };
         let labels = [];
         let chartValues = [];
-        let url = "http://127.0.0.1:8000/api/frontend/history";
+        const accessToken = localStorage.getItem("accessToken");
+        console.log(accessToken);
+        this.setState({ accessToken });
+        let url_frontend = "http://127.0.0.1:8000/api/frontend/history";
         axios
-            .get(url, { headers: { "Content-Type": "application/json" } })
+            .get(url_frontend, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "bearer " + accessToken
+                }
+            })
             .then(fedata => {
-                console.log(fedata.data);
                 fedata.data.map(fe => {
-                    labels.push(fe.date_time);
+                    labels.push(fe.end_date);
                     chartValues.push(parseFloat(fe.avgPageLoadTime));
                 });
 
@@ -120,34 +146,44 @@ class Dashboard extends React.Component {
         return (
             this.state.chartData && (
                 <div className="content">
-                    <Row>
-                        <Col md="12">
-                            <Card className="card-chart">
-                                <CardHeader>
-                                    <CardTitle tag="h5">NASDAQ: AAPL</CardTitle>
-                                    <p className="card-category">
-                                        Line Chart with Points
-                                    </p>
-                                </CardHeader>
-                                <CardBody>
-                                    {this.state.chartData ? (
-                                        <Line
-                                            data={this.state.chartData.data}
-                                            options={
-                                                this.state.chartData.options
-                                            }
-                                            width={400}
-                                            height={100}
-                                        />
-                                    ) : null}
-                                </CardBody>
-                                <CardFooter>
-                                    <div className="chart-legend">
-                                        <i className="fa fa-circle text-info" />{" "}
-                                        Frontend Performance{" "}
-                                    </div>
-                                    <hr />
-                                    <Link to={"/admin/frontend-performance"}>
+                    <div class="card">
+                        <ul class="list-group list-group-flush">
+                            <li className="list-group-item">PIC : Gino</li>
+                            <li className="list-group-item">
+                                Target: under 7 seconds
+                            </li>
+                        </ul>
+                    </div>
+                    <div className="content">
+                        <Row>
+                            <Col md="12">
+                                <Card className="card-chart">
+                                    <CardHeader>
+                                        <CardTitle tag="h5">
+                                            Frontend Performance
+                                        </CardTitle>
+                                        <p className="card-category">
+                                            Garasi.Id
+                                        </p>
+                                    </CardHeader>
+                                    <CardBody>
+                                        {this.state.chartData ? (
+                                            <Line
+                                                data={this.state.chartData.data}
+                                                options={
+                                                    this.state.chartData.options
+                                                }
+                                                width={400}
+                                                height={100}
+                                            />
+                                        ) : null}
+                                    </CardBody>
+                                    <CardFooter>
+                                        <div className="chart-legend">
+                                            <i className="fa fa-circle text-info" />{" "}
+                                            Frontend Performance{" "}
+                                        </div>
+                                        <hr />
                                         <button
                                             type="button"
                                             class="btn btn-primary btn-lg"
@@ -155,11 +191,11 @@ class Dashboard extends React.Component {
                                         >
                                             Generate
                                         </button>
-                                    </Link>
-                                </CardFooter>
-                            </Card>
-                        </Col>
-                    </Row>
+                                    </CardFooter>
+                                </Card>
+                            </Col>
+                        </Row>
+                    </div>
                 </div>
             )
         );

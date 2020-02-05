@@ -17,6 +17,8 @@ import Register from "views/Register";
 import Loginadmin from "views/Loginadmin";
 import AdminMenu from "views/AdminMenu";
 import UserManage from "views/UserManage";
+import Add from "views/Add";
+import Edit from "views/Edit";
 
 const hist = createBrowserHistory();
 const options = {
@@ -40,6 +42,8 @@ ReactDOM.render(
                 path="/adminmenu"
                 render={props => <AdminMenu {...props} />}
             />
+            <Route path="/edit" render={props => <Edit {...props} />} />
+            <Route path="/add" render={props => <Add {...props} />} />
             <Route
                 path="/usermanage"
                 render={props => <UserManage {...props} />}

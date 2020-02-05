@@ -10,6 +10,8 @@ import Register from "views/Register.jsx";
 import Loginadmin from "views/Loginadmin";
 import AdminMenu from "views/AdminMenu";
 import UserManage from "views/UserManage";
+import Add from "views/Add";
+import Edit from "views/Edit";
 
 var routes = [
     {
@@ -88,6 +90,16 @@ var routes = [
         path: "/usermanage",
         name: "User Manage ",
         component: UserManage
+    },
+    {
+        path: "/add",
+        name: "Add ",
+        component: Add
+    },
+    {
+        path: "/edit/:id",
+        name: " Edit ",
+        component: Edit
     }
 
     // {

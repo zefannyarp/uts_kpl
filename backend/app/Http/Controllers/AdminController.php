@@ -13,15 +13,18 @@ class AdminController extends Controller
 {
     public function addUser(Request $request, User $user)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $password = $request->input('password');
+        // $validator = Validator::make($request->all(), [
+        //     'name' => 'required|string|max:255',
+        //     'email' => 'required|string|email|max:255|unique:users',
+        //     'password' => 'required|string|min:6|confirmed',
+        // ]);
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors()->toJson(), 400);
-        }
+        // if ($validator->fails()) {
+        //     return response()->json($validator->errors()->toJson(), 400);
+        // }
 
 //        $user = User::create([
 //            'name' => $request->get('name'),
@@ -29,10 +32,15 @@ class AdminController extends Controller
 //            'password' => Hash::make($request->get('password')),
 //        ]);
 
-        $user->setAttribute(User::ATTRIBUTE_NAME, $request->get('name'));
-        $user->setAttribute(User::ATTRIBUTE_EMAIL, $request->get('email'));
-        $user->setAttribute(User::ATTRIBUTE_PASSWORD, Hash::make($request->get('password')));
-        $user->save();
+        // $user->setAttribute(User::ATTRIBUTE_NAME, $request->get('name'));
+        // $user->setAttribute(User::ATTRIBUTE_EMAIL, $request->get('email'));
+        // $user->setAttribute(User::ATTRIBUTE_PASSWORD, Hash::make($request->get('password')));
+        // $user->save();
+
+        $user->setAttribute(User::ATTRIBUTE_NAME, $name);
+                $user->setAttribute(User::ATTRIBUTE_EMAIL, $email);
+                $user->setAttribute(User::ATTRIBUTE_PASSWORD, Hash::make($password));
+                $user->save();
 
         $token = JWTAuth::fromUser($user);
 
@@ -54,26 +62,25 @@ class AdminController extends Controller
         $name = $request->input('name');
         $email = $request->input('email');
         $password = $request->input('password');
-
+     
         $user = User::findOrFail($id);
         $user->update([
                 $user->setAttribute(User::ATTRIBUTE_NAME, $name),
                 $user->setAttribute(User::ATTRIBUTE_EMAIL, $email),
-                $user->setAttribute(User::ATTRIBUTE_PASSWORD, $password)
+                $user->setAttribute(User::ATTRIBUTE_PASSWORD, Hash::make($password))
             ]);
-
         return response()->json([
             'message' => 'user has been updated'
         ], 200);
-    }
-
-    public function getUser()
-    {
-        return User::all();
     }
 
     public function showUser($id)
     {
         return User::findOrFail($id);
     }
+    
+    public function getUser()
+{
+    return User::all();
+}
 }

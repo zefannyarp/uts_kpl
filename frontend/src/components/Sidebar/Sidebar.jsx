@@ -52,11 +52,7 @@ class Sidebar extends React.Component {
                         <li>
                             <NavLink to="/admin/uptime-menu">Uptime</NavLink>
                         </li>
-                        <li>
-                            <NavLink to="/admin/backend-coverage">
-                                Backend Coverage
-                            </NavLink>
-                        </li>
+
                         <li>
                             <NavLink to="/admin/frontend-performance">
                                 Frontend Performance

@@ -32,14 +32,24 @@ class Tables extends React.Component {
     }
     componentWillMount() {
         let config = { crossDomain: true };
+        const accessToken = localStorage.getItem("accessToken");
+        console.log(accessToken);
+        this.setState({ accessToken });
         let url = "http://127.0.0.1:8000/api/history";
         axios
-            .get(url, { headers: { "Content-Type": "application/json" } })
+            .get(url, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "bearer " + accessToken
+                }
+            })
             .then(users => {
                 this.setState({
                     users: users.data
                 });
-                console.log(users);
+            })
+            .catch(error => {
+                this.props.history.push("/login");
             });
     }
     render() {

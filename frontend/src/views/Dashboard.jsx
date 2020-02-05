@@ -29,14 +29,25 @@ class Dashboard extends React.Component {
             end_date: null,
             downtime: null,
             id: null,
-            total_error: null
+            total_error: null,
+            accessToken: null
         };
     }
-    componentWillMount() {
-        let config = { crossDomain: true };
-        let url = "http://127.0.0.1:8000/api/history";
+
+    componentDidMount() {
+        // console.log(localStorage.getItem('accessToken'));
+        const accessToken = localStorage.getItem("accessToken");
+        console.log(accessToken);
+        this.setState({ accessToken });
+
+        let url_uptime = "http://127.0.0.1:8000/api/history";
         axios
-            .get(url, { headers: { "Content-Type": "application/json" } })
+            .get(url_uptime, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "bearer " + accessToken
+                }
+            })
             .then(users => {
                 this.setState({
                     users: users.data
@@ -45,151 +56,66 @@ class Dashboard extends React.Component {
             .catch(error => {
                 this.props.history.push("/login");
             });
+        let labels = [];
+        let chartValues = [];
+        let url_frontend = "http://127.0.0.1:8000/api/frontend/history";
+        axios
+            .get(url_frontend, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "bearer " + accessToken
+                }
+            })
+            .then(fedata => {
+                fedata.data.map(fe => {
+                    labels.push(fe.end_date);
+                    chartValues.push(parseFloat(fe.avgPageLoadTime));
+                });
+
+                const FEPerformanceData = {
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                data: chartValues,
+                                fill: false,
+                                borderColor: "#51CACF",
+                                backgroundColor: "transparent",
+                                pointBorderColor: "#51CACF",
+                                pointRadius: 4,
+                                pointHoverRadius: 4,
+                                pointBorderWidth: 8
+                            }
+                        ]
+                    },
+                    options: {
+                        legend: {
+                            display: false,
+                            position: "top"
+                        },
+                        scales: {
+                            yAxes: [
+                                {
+                                    ticks: {
+                                        beginAtZero: true,
+                                        max: 15,
+                                        stepSize: 5
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                };
+
+                this.setState({ chartData: FEPerformanceData });
+            });
     }
+
     render() {
         const { users } = this.state;
         return (
             <>
                 <div className="content">
-                    {/* <Row>
-            <Col lg="3" md="6" sm="6">
-              <Card className="card-stats">
-                <CardBody>
-                  <Row>
-                    <Col md="4" xs="5">
-                      <div className="icon-big text-center icon-warning">
-                        <i className="nc-icon nc-globe text-warning" />
-                      </div>
-                    </Col>
-                    <Col md="8" xs="7">
-                      <div className="numbers">
-                        <p className="card-category">Capacity</p>
-                        <CardTitle tag="p">150GB</CardTitle>
-                        <p />
-                      </div>
-                    </Col>
-                  </Row>
-                </CardBody>
-                <CardFooter>
-                  <hr />
-                  <div className="stats">
-                    <i className="fas fa-sync-alt" /> Update Now
-                  </div>
-                </CardFooter>
-              </Card>
-            </Col>
-            <Col lg="3" md="6" sm="6">
-              <Card className="card-stats">
-                <CardBody>
-                  <Row>
-                    <Col md="4" xs="5">
-                      <div className="icon-big text-center icon-warning">
-                        <i className="nc-icon nc-money-coins text-success" />
-                      </div>
-                    </Col>
-                    <Col md="8" xs="7">
-                      <div className="numbers">
-                        <p className="card-category">Revenue</p>
-                        <CardTitle tag="p">$ 1,345</CardTitle>
-                        <p />
-                      </div>
-                    </Col>
-                  </Row>
-                </CardBody>
-                <CardFooter>
-                  <hr />
-                  <div className="stats">
-                    <i className="far fa-calendar" /> Last day
-                  </div>
-                </CardFooter>
-              </Card>
-            </Col>
-            <Col lg="3" md="6" sm="6">
-              <Card className="card-stats">
-                <CardBody>
-                  <Row>
-                    <Col md="4" xs="5">
-                      <div className="icon-big text-center icon-warning">
-                        <i className="nc-icon nc-vector text-danger" />
-                      </div>
-                    </Col>
-                    <Col md="8" xs="7">
-                      <div className="numbers">
-                        <p className="card-category">Errors</p>
-                        <CardTitle tag="p">23</CardTitle>
-                        <p />
-                      </div>
-                    </Col>
-                  </Row>
-                </CardBody>
-                <CardFooter>
-                  <hr />
-                  <div className="stats">
-                    <i className="far fa-clock" /> In the last hour
-                  </div>
-                </CardFooter>
-              </Card>
-            </Col>
-            <Col lg="3" md="6" sm="6">
-              <Card className="card-stats">
-                <CardBody>
-                  <Row>
-                    <Col md="4" xs="5">
-                      <div className="icon-big text-center icon-warning">
-                        <i className="nc-icon nc-favourite-28 text-primary" />
-                      </div>
-                    </Col>
-                    <Col md="8" xs="7">
-                      <div className="numbers">
-                        <p className="card-category">Followers</p>
-                        <CardTitle tag="p">+45K</CardTitle>
-                        <p />
-                      </div>
-                    </Col>
-                  </Row>
-                </CardBody>
-                <CardFooter>
-                  <hr />
-                  <div className="stats">
-                    <i className="fas fa-sync-alt" /> Update now
-                  </div>
-                </CardFooter>
-              </Card>
-            </Col>
-          </Row> */}
-                    {/* <Row>
-                        <Col md="12">
-                            <Card>
-                                <CardHeader>
-                                    <CardTitle tag="h5">
-                                        Users Behavior
-                                    </CardTitle>
-                                    <p className="card-category">
-                                        24 Hours performance
-                                    </p>
-                                </CardHeader>
-                                <CardBody>
-                                    <Line
-                                        data={
-                                            dashboard24HoursPerformanceChart.data
-                                        }
-                                        options={
-                                            dashboard24HoursPerformanceChart.options
-                                        }
-                                        width={400}
-                                        height={100}
-                                    />
-                                </CardBody>
-                                <CardFooter>
-                                    <hr />
-                                    <div className="stats">
-                                        <i className="fa fa-history" /> Updated
-                                        3 minutes ago
-                                    </div>
-                                </CardFooter>
-                            </Card>
-                        </Col>
-                    </Row> */}
                     <Row>
                         <Col md="12">
                             <Card>
@@ -207,7 +133,6 @@ class Dashboard extends React.Component {
                                                 <th scope="col">End</th>
                                                 <th scope="col">Total Error</th>
                                                 <th scope="col">Down Time</th>
-                                                <th scope="col">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -232,72 +157,31 @@ class Dashboard extends React.Component {
                             </Card>
                         </Col>
                     </Row>
-                    {/* <Row>
-                        <Col md="4">
-                            <Card>
-                                <CardHeader>
-                                    <CardTitle tag="h5">
-                                        Email Statistics
-                                    </CardTitle>
-                                    <p className="card-category">
-                                        Last Campaign Performance
-                                    </p>
-                                </CardHeader>
-                                <CardBody>
-                                    <Pie
-                                        data={
-                                            dashboardEmailStatisticsChart.data
-                                        }
-                                        options={
-                                            dashboardEmailStatisticsChart.options
-                                        }
-                                    />
-                                </CardBody>
-                                <CardFooter>
-                                    <div className="legend">
-                                        <i className="fa fa-circle text-primary" />{" "}
-                                        Opened{" "}
-                                        <i className="fa fa-circle text-warning" />{" "}
-                                        Read{" "}
-                                        <i className="fa fa-circle text-danger" />{" "}
-                                        Deleted{" "}
-                                        <i className="fa fa-circle text-gray" />{" "}
-                                        Unopened
-                                    </div>
-                                    <hr />
-                                    <div className="stats">
-                                        <i className="fa fa-calendar" /> Number
-                                        of emails sent
-                                    </div>
-                                </CardFooter>
-                            </Card>
-                        </Col> */}
                     <Row>
                         <Col md="12">
                             <Card className="card-chart">
                                 <CardHeader>
-                                    <CardTitle tag="h5">NASDAQ: AAPL</CardTitle>
-                                    <p className="card-category">
-                                        Line Chart with Points
-                                    </p>
+                                    <CardTitle tag="h5">
+                                        Frontend Performance
+                                    </CardTitle>
+                                    <p className="card-category">Garasi.Id</p>
                                 </CardHeader>
                                 <CardBody>
-                                    <Line
-                                        data={dashboardNASDAQChart.data}
-                                        options={dashboardNASDAQChart.options}
-                                        width={400}
-                                        height={100}
-                                    />
+                                    {this.state.chartData ? (
+                                        <Line
+                                            data={this.state.chartData.data}
+                                            options={
+                                                this.state.chartData.options
+                                            }
+                                            width={400}
+                                            height={100}
+                                        />
+                                    ) : null}
                                 </CardBody>
                                 <CardFooter>
                                     <div className="chart-legend">
                                         <i className="fa fa-circle text-info" />{" "}
                                         Frontend Performance{" "}
-                                    </div>
-                                    <hr />
-                                    <div className="card-stats">
-                                        <i className="fa fa-check" /> Data
-                                        information certified
                                     </div>
                                 </CardFooter>
                             </Card>

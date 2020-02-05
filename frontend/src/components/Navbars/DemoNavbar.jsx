@@ -45,6 +45,11 @@ class Header extends React.Component {
             isOpen: !this.state.isOpen
         });
     }
+
+    handleClick() {
+        localStorage.clear();
+    }
+
     dropdownToggle(e) {
         this.setState({
             dropdownOpen: !this.state.dropdownOpen
@@ -136,7 +141,11 @@ class Header extends React.Component {
                     </NavbarToggler>
                     <form>
                         <Link to={`/Login`}>
-                            <button type="button" class="btn btn-outline-dark">
+                            <button
+                                type="button"
+                                class="btn btn-outline-dark"
+                                onClick={this.handleClick}
+                            >
                                 Logout
                             </button>
                         </Link>

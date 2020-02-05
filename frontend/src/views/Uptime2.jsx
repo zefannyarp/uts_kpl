@@ -35,10 +35,18 @@ class Uptime2 extends React.Component {
         let { match } = this.props;
         console.log(match.params.id);
         const { id } = this.props.match.params;
+        const accessToken = localStorage.getItem("accessToken");
+        console.log(accessToken);
+        this.setState({ accessToken });
         let url = `http://127.0.0.1:8000/api/uptime/${id}`;
 
         axios
-            .get(url, { headers: { "Content-Type": "application/json" } })
+            .get(url, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "bearer " + accessToken
+                }
+            })
             .then(users => {
                 this.setState({
                     users: users.data

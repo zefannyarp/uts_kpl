@@ -10,9 +10,28 @@ class Login extends React.Component {
         this.state = {
             users: [],
             email: null,
-            password: null
+            password: null,
+            access_token: null,
+            record: null,
+            role: null
         };
     }
+
+    isAdmin() {
+        if (localStorage.getItem("role") === "admin") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    componentWillMount() {
+        if ("accessToken" in localStorage && this.isAdmin()) {
+            this.props.history.push("/adminmenu");
+        } else if ("accessToken" in localStorage && this.isAdmin()) {
+            this.props.history.push("/admin/dashboard");
+        }
+    }
+
     handleChange = event => {
         this.setState({ email: event.target.value });
         this.setState({ password: event.target.value });
@@ -20,17 +39,33 @@ class Login extends React.Component {
 
     handleClick = event => {
         event.preventDefault();
+        console.log(this.props);
         axios
-            .post("http://127.0.0.1:8000/api/login", {
-                email: String(this.state.email),
-                password: String(this.state.password)
+            .post("http://127.0.0.1:8000/api/auth/login", {
+                email: this.state.email,
+                password: this.state.password
             })
             .then(response => {
+                // this.setState({ record: response.data });
+                console.log(response);
                 if (response.status && response.status === 200) {
-                    this.props.history.push("/admin/dashboard");
-                    // if (response.status && response.status > 200) {
-                    //     this.props.history.push("/admin/dashboard");
+                    localStorage.setItem(
+                        "accessToken",
+                        response.data.access_token
+                    );
+                    localStorage.setItem("role", response.data.role);
+                    if (response.data.role === "admin") {
+                        this.props.history.push("/adminmenu");
+                    } else {
+                        this.props.history.push("/admin/dashboard");
+                    }
+                    axios.defaults.headers.common["Authorization"] =
+                        response.data.access_token;
+                    // this.props.history.push("/admin/dashboard");
                 }
+            })
+            .catch(error => {
+                alert("wrong email or password");
             });
     };
 
@@ -108,10 +143,6 @@ class Login extends React.Component {
                                         Sign in
                                     </button>
                                 </form>
-                                <div className="dropdown-divider"></div>
-                                <a className="dropdown-item" href="/loginadmin">
-                                    Admin?
-                                </a>
                             </CardBody>
                         </Card>
                     </Col>

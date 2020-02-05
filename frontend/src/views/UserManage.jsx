@@ -20,60 +20,114 @@ class UserManage extends React.Component {
             users: [],
             name: null,
             id: null,
-            email: null
+            email: null,
+            role: null
         };
+
+        this.handleClick = this.handleClick.bind(this);
     }
 
     componentWillMount() {
         let config = { crossDomain: true };
-        let url = "http://127.0.0.1:8000/api/admin/user";
+        const accessToken = localStorage.getItem("accessToken");
+        console.log(accessToken);
+        this.setState({ accessToken });
+        let url = "http://127.0.0.1:8000/api/admin/users";
         axios
-            .get(url, { headers: { "Content-Type": "application/json" } })
+            .get(url, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "bearer " + accessToken
+                }
+            })
             .then(users => {
                 this.setState({
                     users: users.data
                 });
-                console.log(users);
+            })
+            .catch(error => {
+                this.props.history.push("/login");
             });
     }
 
-    handleClick = event => {
-        event.preventDefault();
-        axios
-            .post("http://127.0.0.1:8000/api/uptime", {
-                start_date: new Date(this.state.start_date)
-                    .getTime()
-                    .toString(),
-                end_date: new Date(this.state.end_date).getTime().toString()
-            })
-            .then(response => {
-                console.log(response);
-                this.setState({ record: response.data });
-            })
-            .catch(err => console.log(err));
+    handleChange = event => {
+        this.setState({ id: event.target.value });
     };
+
+    handleLogout() {
+        localStorage.clear();
+    }
+
+    handleClick(id) {
+        const accessToken = localStorage.getItem("accessToken");
+        console.log(accessToken);
+        this.setState({ accessToken });
+        var result = window.confirm("Want to delete?");
+        if (result) {
+            axios
+                .post(
+                    `http://127.0.0.1:8000/api/admin/delete/${id}`,
+                    {},
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: "bearer " + accessToken
+                        }
+                    }
+                )
+                .then(response => {
+                    window.location.reload();
+                })
+                .catch(error => {
+                    this.props.history.push("/login");
+                });
+        }
+    }
     render() {
         const { users } = this.state;
         return (
             <>
-                <div className="content">
+                <form>
+                    <Link to={`/Login`}>
+                        <button
+                            type="button"
+                            class="btn btn-outline-dark"
+                            style={{
+                                marginTop: "2%",
+                                marginLeft: "90%"
+                            }}
+                            onClick={this.handleLogout}
+                        >
+                            Logout
+                        </button>
+                    </Link>
+                </form>
+                <div
+                    className="container"
+                    style={{
+                        marginTop: "90px",
+                        marginBottom: "5%"
+                    }}
+                >
                     <Row>
                         <Col md="12">
                             <Card>
                                 <CardHeader>
                                     <CardTitle tag="h4">
-                                        User Manage
-                                        <button
-                                            className="btn btn-primary"
-                                            style={{
-                                                position: "absolute",
-                                                right: "35%",
-                                                top: "6%",
-                                                fontSize: "0.875em"
-                                            }}
-                                        >
-                                            Add User
-                                        </button>
+                                        User Management
+                                        <Link to={`/Add`}>
+                                            <button
+                                                className="btn btn-primary btn-sm"
+                                                style={{
+                                                    position: "absolute",
+                                                    right: "25%",
+                                                    top: "6%",
+                                                    fontSize: "0.875em"
+                                                }}
+                                            >
+                                                Add User
+                                            </button>
+                                        </Link>
                                     </CardTitle>
                                 </CardHeader>
                                 <CardBody>
@@ -82,7 +136,7 @@ class UserManage extends React.Component {
                                             <tr>
                                                 <th scope="col">Name</th>
                                                 <th scope="col">Email</th>
-
+                                                <th scope="col">Role</th>
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
@@ -92,17 +146,25 @@ class UserManage extends React.Component {
                                                     <tr key={index}>
                                                         <td>{user.name}</td>
                                                         <td>{user.email}</td>
+                                                        <td>{user.role}</td>
 
                                                         <Link
-                                                            to={`/admin/details-uptime/${user.id}`}
+                                                            to={`/edit/${user.id}`}
                                                         >
                                                             <button className="btn btn-primary">
                                                                 Edit
                                                             </button>
-                                                            <button className="btn btn-danger">
-                                                                Delete
-                                                            </button>
                                                         </Link>
+                                                        <button
+                                                            className="btn btn-danger"
+                                                            onClick={() =>
+                                                                this.handleClick(
+                                                                    user.id
+                                                                )
+                                                            }
+                                                        >
+                                                            Delete
+                                                        </button>
                                                     </tr>
                                                 );
                                             })}

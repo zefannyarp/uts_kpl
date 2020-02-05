@@ -21,8 +21,8 @@ class Loginadmin extends React.Component {
         event.preventDefault();
         axios
             .post("http://127.0.0.1:8000/api/login", {
-                email: new String("admin"),
-                password: new String(this.state.password)
+                // email: new String("admin"),
+                // password: new String(this.state.password)
             })
             .then(response => {
                 if (response.status && response.status === 201) {
@@ -63,12 +63,13 @@ class Loginadmin extends React.Component {
                                             type="email"
                                             className="form-control"
                                             id="exampleDropdownFormEmail1"
-                                            placeholder="admin"
+                                            placeholder=""
                                             onChange={e => {
                                                 this.setState({
                                                     email: e.target.value
                                                 });
                                             }}
+                                            value="admin"
                                             disabled
                                         ></input>
                                     </div>

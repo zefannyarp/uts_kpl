@@ -3,40 +3,69 @@ import axios from "axios";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { CardHeader, CardBody, CardTitle, Row, Col, Card } from "reactstrap";
 
-class Add extends React.Component {
+class Edit extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            errors: {},
+            users: [],
             name: null,
             email: null,
             password: null,
-            password_comfimation: null
+            id: null,
+            confirmpass: null
         };
+    }
+
+    componentDidMount() {
+        let { location } = this.props;
+        let pathURLArray = location.pathname.split("/");
+        let config = { crossDomain: true };
+        let id = pathURLArray[pathURLArray.length - 1];
+        const accessToken = localStorage.getItem("accessToken");
+        console.log(accessToken);
+        this.setState({ accessToken });
+        let url = `http://127.0.0.1:8000/api/admin/user/${id}`;
+        axios
+            .get(url, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "bearer " + accessToken
+                }
+            })
+            .then(users => {
+                this.setState({
+                    users: users.data,
+                    name: users.data.name,
+                    email: users.data.email
+                });
+            })
+            .catch(error => {
+                this.props.history.push("/login");
+            });
     }
 
     handleChange = event => {
         this.setState({ name: event.target.value });
         this.setState({ email: event.target.value });
         this.setState({ password: event.target.value });
-        this.setState({ password_comfimation: event.target.value });
     };
+
     handleClick = event => {
         event.preventDefault();
-        const { password, password_comfimation } = this.state;
+        const { password, confirmpass } = this.state;
         const accessToken = localStorage.getItem("accessToken");
         console.log(accessToken);
         this.setState({ accessToken });
-        // perform all neccassary validations
-        if (password !== password_comfimation) {
+        if (password !== confirmpass) {
             alert("Passwords don't match");
         } else {
             axios
                 .post(
-                    "http://127.0.0.1:8000/api/admin/add",
+                    "http://127.0.0.1:8000/api/admin/update",
                     {
-                        name: new String(this.state.name),
-                        email: new String(this.state.email),
+                        name: this.state.name,
+                        email: this.state.email,
+                        id: this.state.users.id,
                         password: new String(this.state.password)
                     },
                     {
@@ -46,12 +75,9 @@ class Add extends React.Component {
                         }
                     }
                 )
-
                 .then(response => {
-                    if (response.status && response.status === 201) {
+                    if (response.status && response.status === 200) {
                         this.props.history.push("/usermanage");
-                    } else {
-                        window.location.reload();
                     }
                 })
                 .catch(error => {
@@ -61,6 +87,7 @@ class Add extends React.Component {
     };
 
     render() {
+        // const { users } = this.state;
         return (
             <div
                 className="container"
@@ -73,7 +100,7 @@ class Add extends React.Component {
                     <Col md="12">
                         <Card>
                             <CardHeader>
-                                <CardTitle tag="h5"> Add User</CardTitle>
+                                <CardTitle tag="h5"> Edit User</CardTitle>
                             </CardHeader>
                             <CardBody>
                                 <form className="px-4 py-3">
@@ -91,6 +118,7 @@ class Add extends React.Component {
                                                     name: e.target.value
                                                 });
                                             }}
+                                            value={this.state.name}
                                         ></input>
                                     </div>
                                     <div className="form-group">
@@ -107,6 +135,7 @@ class Add extends React.Component {
                                                     email: e.target.value
                                                 });
                                             }}
+                                            value={this.state.email}
                                         ></input>
                                     </div>
                                     <div className="form-group">
@@ -125,6 +154,7 @@ class Add extends React.Component {
                                             }}
                                         ></input>
                                     </div>
+
                                     <div className="form-group">
                                         <label for="exampleDropdownFormPassword1">
                                             Confirm Password
@@ -136,8 +166,7 @@ class Add extends React.Component {
                                             placeholder="Confirm Password"
                                             onChange={e => {
                                                 this.setState({
-                                                    password_comfimation:
-                                                        e.target.value
+                                                    confirmpass: e.target.value
                                                 });
                                             }}
                                         ></input>
@@ -148,7 +177,7 @@ class Add extends React.Component {
                                         className="btn btn-primary"
                                         onClick={this.handleClick}
                                     >
-                                        Add User
+                                        Edit user
                                     </button>
                                 </form>
                             </CardBody>
@@ -160,4 +189,4 @@ class Add extends React.Component {
     }
 }
 
-export default Add;
+export default Edit;

@@ -15,6 +15,7 @@ class Generate extends React.Component {
             id: null,
             total_error: null,
             dateRange: false,
+            accessToken: null,
             record: null
         };
 
@@ -47,18 +48,33 @@ class Generate extends React.Component {
 
     handleClick = event => {
         event.preventDefault();
+        const accessToken = localStorage.getItem("accessToken");
+        console.log(accessToken);
+        this.setState({ accessToken });
+        let url = "http://127.0.0.1:8000/api/uptime";
         axios
-            .post("http://127.0.0.1:8000/api/uptime", {
-                start_date: new Date(this.state.start_date)
-                    .getTime()
-                    .toString(),
-                end_date: new Date(this.state.end_date).getTime().toString()
-            })
+            .post(
+                url,
+                {
+                    start_date: new Date(this.state.start_date)
+                        .getTime()
+                        .toString(),
+                    end_date: new Date(this.state.end_date).getTime().toString()
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "bearer " + accessToken
+                    }
+                }
+            )
             .then(response => {
                 console.log(response);
                 this.setState({ record: response.data });
             })
-            .catch(err => console.log(err));
+            .catch(error => {
+                this.props.history.push("/login");
+            });
     };
 
     toggleDateRange() {
@@ -250,7 +266,7 @@ class Generate extends React.Component {
                                             type="button"
                                             class="btn btn-primary btn-lg"
                                         >
-                                            Go
+                                            see report
                                         </button>
                                     </Link>
                                 </CardBody>
