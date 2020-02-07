@@ -19,12 +19,6 @@ class FrontendPerformanceController extends Controller
 {
     public function getAveragePageLoadTime(Frontend $frontend, User $user)
     {
-        // if (!Auth::check()) {
-        //     return response()->json([
-        //         'unauthorized' => 'gaboleh ah'
-        //     ], 401);
-        // }
-    
         // Use the developers console and download your service account
         // credentials in JSON format. Place them in this directory or
         // change the key file location if necessary.
@@ -60,30 +54,29 @@ class FrontendPerformanceController extends Controller
         $body->setReportRequests(array($request));
 
         $response = $analytics->reports->batchGet($body);
-        $wakwaw = $response['reports'];
-        $wikwiw = $wakwaw['0'];
-        $wekwew = $wikwiw['data'];
-        $wukwuw = $wekwew['totals'];
-        $huhu = $wukwuw['0'];
-        $wokwow = $huhu['values'];
-        $hehe = $wokwow['0'];
+        $reports = $response['reports'];
+        $zero = $reports['0'];
+        $data = $zero['data'];
+        $totals = $data['totals'];
+        $total = $totals['0'];
+        $values = $total['values'];
+        $avgPageLoadTime = $values['0'];
 
         $start_date = Carbon::parse($dateRange->startDate)->format('Y-m-d H:i:s');
         $end_date = Carbon::parse($dateRange->endDate)->format('Y-m-d H:i:s');
 
         $frontend->setAttribute(Frontend::ATTRIBUTE_START_DATE, $start_date);
         $frontend->setAttribute(Frontend::ATTRIBUTE_END_DATE, $end_date);
-        $frontend->setAttribute(Frontend::ATTRIBUTE_AVERAGE_PAGE_LOAD_TIME, $hehe);
+        $frontend->setAttribute(Frontend::ATTRIBUTE_AVERAGE_PAGE_LOAD_TIME, $avgPageLoadTime);
         $frontend->save();
 
-        $rispinsi = [
+        $frontend_performance = [
             'id' => $frontend->getAttribute(Frontend::ATTRIBUTE_ID),
             'start_date' => $frontend->getAttribute(Frontend::ATTRIBUTE_START_DATE),
             'end_date' => $frontend->getAttribute(Frontend::ATTRIBUTE_END_DATE),
             'avgPageLoadTime' => $frontend->getAttribute(Frontend::ATTRIBUTE_AVERAGE_PAGE_LOAD_TIME)
         ];
-        return response()->json($rispinsi);
-        
+        return response()->json($frontend_performance);
     }
 
     public function ShowFrontendPerformanceHistory()

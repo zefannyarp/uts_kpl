@@ -186,8 +186,6 @@ class UptimeController extends Controller
         ];
 
         return response()->json($response);
-
-        return response()->json($response);
     }
 
     public function getUptimeDetails($id, UptimeDetail $uptimeDetail)

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
-class UsirController extends Controller
+class UserController extends Controller
 {
     public function authenticate(Request $request)
     {
@@ -40,12 +40,6 @@ class UsirController extends Controller
             return response()->json($validator->errors()->toJson(), 400);
         }
 
-//        $user = User::create([
-//            'name' => $request->get('name'),
-//            'email' => $request->get('email'),
-//            'password' => Hash::make($request->get('password')),
-//        ]);
-
         $user->setAttribute(User::ATTRIBUTE_NAME, $request->get('name'));
         $user->setAttribute(User::ATTRIBUTE_EMAIL, $request->get('email'));
         $user->setAttribute(User::ATTRIBUTE_PASSWORD, Hash::make($request->get('password')));
@@ -68,12 +62,6 @@ class UsirController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
-
-//        $user = User::create([
-//            'name' => $request->get('name'),
-//            'email' => $request->get('email'),
-//            'password' => Hash::make($request->get('password')),
-//        ]);
 
         $user->setAttribute(User::ATTRIBUTE_NAME, $request->get('name'));
         $user->setAttribute(User::ATTRIBUTE_EMAIL, $request->get('email'));

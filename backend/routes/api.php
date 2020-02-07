@@ -1,4 +1,5 @@
 <?php
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -9,7 +10,9 @@
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
 use Illuminate\Support\Facades\Route;
+
 Route::group(['middleware' => 'jwt.verify'], function () {
     Route::post('uptime', 'UptimeController@getUptimeSummary');
     Route::get('uptime/{id}', 'UptimeController@getUptimeDetails');
@@ -22,17 +25,10 @@ Route::group(['middleware' => 'jwt.verify'], function () {
     Route::get('admin/user/{id}', 'AdminController@showUser');
     Route::get('admin/users', 'AdminController@getUser');
 });
+
 Route::group(['middleware' => 'api', 'prefix' => 'auth' ], function () {
     Route::post('login', 'AuthController@login');
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
-});
-Route::post('register-admin', 'UsirController@registerAdmin');
-Route::post('register', 'UsirController@register');
-Route::post('login', 'UsirController@authenticate');
-Route::get('open', 'DataController@open');
-Route::group(['middleware' => ['jwt.verify']], function() {
-    Route::get('user', 'UsirController@getAuthenticatedUser');
-    Route::get('closed', 'DataController@closed');
 });

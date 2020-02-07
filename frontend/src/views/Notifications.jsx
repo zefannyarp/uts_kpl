@@ -181,7 +181,7 @@ class Dashboard extends React.Component {
                                     <CardFooter>
                                         <div className="chart-legend">
                                             <i className="fa fa-circle text-info" />{" "}
-                                            Frontend Performance{" "}
+                                            Average Page Load Time{" "}
                                         </div>
                                         <hr />
                                         <button
