@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
 use App\Frontend;
-use App\FrontendDatasource;
-use App\User;
 use Carbon\Carbon;
 use Google_Client;
 use Google_Service_AnalyticsReporting;
@@ -14,11 +12,10 @@ use Google_Service_AnalyticsReporting_DateRange;
 use Google_Service_AnalyticsReporting_GetReportsRequest;
 use Google_Service_AnalyticsReporting_Metric;
 use Google_Service_AnalyticsReporting_ReportRequest;
-use Illuminate\Http\Request;
 
 class FrontendPerformanceController extends Controller
 {
-    public function getAveragePageLoadTime(Frontend $frontend, User $user)
+    public function getAveragePageLoadTime(Frontend $frontend)
     {
         // Use the developers console and download your service account
         // credentials in JSON format. Place them in this directory or
@@ -113,7 +110,7 @@ class FrontendPerformanceController extends Controller
 //        return response()->json($response);
 //    }
 
-    public function getData(Frontend $frontend, FrontendDatasource $frontendDatasource){
+    public function getData(Frontend $frontend){
         $date = Carbon::now();
 
         $random = rand(5, 9);

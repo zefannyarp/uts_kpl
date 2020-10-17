@@ -6,8 +6,6 @@ use App\BackendCoverage;
 use App\ScheduleJobs;
 use App\ScheduleJobsDatasource;
 use App\Sentry;
-use App\UptimeDetail;
-use App\UptimeReport;
 use App\UptimeSummary;
 use Illuminate\Http\Request;
 
@@ -18,7 +16,7 @@ class ScheduleJobsController extends Controller
         return ScheduleJobs::all();
     }
 
-    public function getData(Request $request, ScheduleJobs $scheduleJobs, ScheduleJobsDatasource $scheduleJobsDatasource)
+    public function getData(Request $request, ScheduleJobs $scheduleJobs)
     {
         $start_date = $request->input('date');
         $start_date = substr($start_date, 0, -3); // to cut the milli
@@ -71,7 +69,7 @@ class ScheduleJobsController extends Controller
         ], 200);
     }
 
-    public function deleteUptime(UptimeReport $uptimeReport, UptimeSummary $uptimeSummary, UptimeDetail $uptimeDetail, $id)
+    public function deleteUptime($id)
     {
         $uptimeSummary = UptimeSummary::findOrFail($id);
         $uptimeSummary->delete();

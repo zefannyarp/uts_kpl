@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AdminController extends Controller
@@ -46,7 +44,7 @@ class AdminController extends Controller
         return response()->json(compact('user', 'token'), 201);
     }
 
-    public function deleteUser(User $user, $id)
+    public function deleteUser($id)
     {
         $user = User::findOrFail($id);
         $user->delete();
@@ -55,7 +53,7 @@ class AdminController extends Controller
         ], 200);
     }
 
-    public function updateUser(Request $request, User $user)
+    public function updateUser(Request $request)
     {
         $id = $request->input('id');
         $name = $request->input('name');

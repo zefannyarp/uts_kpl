@@ -2,20 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\BackendCoverageDatasource;
 use App\BackendResponseTime;
 use App\BackendResponseTimeDatasource;
-use App\User;
 use Illuminate\Http\Request;
 
 class BackendResponseTimeController extends Controller
 {
-    public function showBackendResponseTimeData(BackendResponseTimeDatasource $backendResponseTimeDatasource) {
+    public function showBackendResponseTimeData() {
         $u = BackendResponseTime::all();
         return $u;
     }
 
-    public function getData(Request $request, BackendResponseTime $backendResponseTime, BackendResponseTimeDatasource $backendResponseTimeDatasource) {
+    public function getData(Request $request, BackendResponseTime $backendResponseTime) {
         $date = $request->input('date');
         $date = substr($date, 0, -3); // to cut the milli
         $date = date('Y-m-d', $date);
@@ -24,7 +22,7 @@ class BackendResponseTimeController extends Controller
         if ($backendResponseTimeDatasource) {
             $backendResponseTimeDatasource = $backendResponseTimeDatasource->toArray();
         }
-        dd($backendResponseTimeDatasource);
+
         $id = $backendResponseTimeDatasource->id;
         $date = $backendResponseTimeDatasource->date;
         $vehicles_short_id = $backendResponseTimeDatasource->vehicles_short_id;
@@ -42,7 +40,7 @@ class BackendResponseTimeController extends Controller
 
         return response()->json($backendResponseTime);
     }
-    public function deleteBackendResponseTime(BackendResponseTime $backendResponseTime, $id)
+    public function deleteBackendResponseTime($id)
     {
         $backendResponseTime = BackendResponseTime::findOrFail($id);
         $backendResponseTime->delete();

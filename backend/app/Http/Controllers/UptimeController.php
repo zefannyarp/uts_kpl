@@ -2,20 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Sentry;
-use App\SentryDatasource;
 use App\UptimeDatasource;
 use App\UptimeReport;
 use App\UptimeDetail;
 use App\UptimeSummary;
-use App\User;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class UptimeController extends Controller
 {
-    public function getUptimeSummary(Request $request, UptimeReport $uptimeReport, UptimeDetail $uptimeDetail, UptimeSummary $uptimeSummary)
+    public function getUptimeSummary(Request $request, UptimeReport $uptimeReport)
     {
         $start_date = $request->input('start_date');
         $end_date = $request->input('end_date');
@@ -192,7 +189,7 @@ class UptimeController extends Controller
 //       return response()->json($response);
     }
 
-    public function getData(Request $request, UptimeSummary $uptimeSummary, UptimeDatasource $uptimeDatasource) {
+    public function getData(Request $request, UptimeSummary $uptimeSummary) {
         $start_date = $request->input('start_date');
         $end_date = $request->input('end_date');
 
@@ -217,7 +214,7 @@ class UptimeController extends Controller
         return response()->json($uptimeSummary);
     }
 
-    public function getUptimeDetails($id, UptimeDetail $uptimeDetail)
+    public function getUptimeDetails($id)
     {
         return UptimeDetail::where(UptimeDetail::ATTRIBUTE_UPTIME_REPORT_ID, $id)->get();
     }
@@ -227,7 +224,7 @@ class UptimeController extends Controller
         return UptimeSummary::all();
     }
 
-    public function deleteUptime(UptimeReport $uptimeReport, UptimeSummary $uptimeSummary, UptimeDetail $uptimeDetail, $id)
+    public function deleteUptime($id)
     {
         $uptimeSummary = UptimeSummary::findOrFail($id);
         $uptimeSummary->delete();

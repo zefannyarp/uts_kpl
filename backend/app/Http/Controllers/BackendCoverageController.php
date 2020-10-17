@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\BackendCoverage;
 use App\BackendCoverageDatasource;
 use App\ScheduleJobs;
-use App\User;
 use Illuminate\Http\Request;
 
 class BackendCoverageController extends Controller
@@ -36,7 +35,7 @@ class BackendCoverageController extends Controller
         ]);
     }
 
-    public function getData(Request $request, BackendCoverage $backendCoverage, BackendCoverageDatasource $backendCoverageDatasource) {
+    public function getData(Request $request, BackendCoverage $backendCoverage) {
         $date = $request->input('date');
         $date = substr($date, 0, -3); // to cut the milli
         $date = date('Y-m-d', $date);
@@ -47,7 +46,6 @@ class BackendCoverageController extends Controller
         }
 
         $id = $backendCoverageDatasource['id'];
-        $test_finished = $backendCoverageDatasource['test_finished'];
         $total_coverage = $backendCoverageDatasource['total_coverage'];
         $loc = $backendCoverageDatasource['loc'];
         $ncloc = $backendCoverageDatasource['ncloc'];
@@ -99,7 +97,7 @@ class BackendCoverageController extends Controller
         return response()->json($response);
     }
 
-    public function deleteBackendCoverage(BackendCoverage $backendCoverage, $id)
+    public function deleteBackendCoverage($id)
     {
         $backendCoverage = BackendCoverage::findOrFail($id);
         $backendCoverage->delete();
@@ -108,7 +106,7 @@ class BackendCoverageController extends Controller
         ], 200);
     }
 
-    public function bodo(BackendCoverage $backendCoverage, $id)
+    public function bodo($id)
     {
         $backendCoverage = BackendCoverage::findOrFail($id);
         $backendCoverage->delete();
@@ -117,7 +115,7 @@ class BackendCoverageController extends Controller
         ], 200);
     }
 
-    public function deleteSJ(ScheduleJobs $scheduleJobs, $id)
+    public function deleteSJ($id)
     {
         $scheduleJobs = ScheduleJobs::findOrFail($id);
         $scheduleJobs->delete();

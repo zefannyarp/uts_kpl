@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\BackendCoverageDatasource;
-use App\ScheduleJobs;
 use App\Sentry;
 use App\SentryDatasource;
-use App\User;
 use Illuminate\Http\Request;
 
 class SentryController extends Controller
@@ -15,7 +12,7 @@ class SentryController extends Controller
         return Sentry::all();
     }
 
-    public function getData(Request $request, Sentry $sentry, SentryDatasource $sentryDatasource) {
+    public function getData(Request $request, Sentry $sentry) {
         $date = $request->input('date');
         $date = substr($date, 0, -3); // to cut the milli
         $date = date('Y-m-d', $date);
@@ -47,7 +44,7 @@ class SentryController extends Controller
         return response()->json($response);
     }
 
-    public function hehe(Sentry $sentry, $id)
+    public function hehe($id)
     {
         $sentry = Sentry::findOrFail($id);
         $sentry->delete();
