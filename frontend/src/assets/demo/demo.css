@@ -3,7 +3,7 @@
 }
 
 .tim-white-buttons {
-    background-color: #777777;
+    background-color: #777;
 }
 
 .typography-line {
@@ -25,10 +25,6 @@
     position: absolute;
     width: 260px;
     text-transform: none;
-}
-
-.tim-row {
-    padding-top: 60px;
 }
 
 .tim-row h3 {
@@ -71,7 +67,7 @@
 .demo-icons body {
     font-size: 1.6rem;
     font-family: sans-serif;
-    color: #333333;
+    color: #333;
     background: white;
 }
 

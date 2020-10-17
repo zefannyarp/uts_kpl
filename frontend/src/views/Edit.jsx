@@ -66,7 +66,7 @@ class Edit extends React.Component {
                         name: this.state.name,
                         email: this.state.email,
                         id: this.state.users.id,
-                        password: new String(this.state.password)
+                        password: String(this.state.password)
                     },
                     {
                         headers: {

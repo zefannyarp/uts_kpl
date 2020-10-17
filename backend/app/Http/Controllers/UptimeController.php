@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\UptimeDatasource;
-use App\UptimeReport;
 use App\UptimeDetail;
+use App\UptimeReport;
 use App\UptimeSummary;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -189,7 +189,8 @@ class UptimeController extends Controller
 //       return response()->json($response);
     }
 
-    public function getData(Request $request, UptimeSummary $uptimeSummary) {
+    public function getData(Request $request, UptimeSummary $uptimeSummary)
+    {
         $start_date = $request->input('start_date');
         $end_date = $request->input('end_date');
 

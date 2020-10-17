@@ -28,34 +28,34 @@ const options = {
     transition: transitions.SCALE
 };
 const Root = () => (
-    <AlertProvider template={AlertTemplate} {...options}>
+    <AlertProvider; template={AlertTemplate}; {...options}>
         <Login />
-    </AlertProvider>
-);
+    </AlertProvider>;
+)
 
 ReactDOM.render(
-    <Router history={hist}>
+    <Router; history={hist}>
         <Switch>
-            <Route path="/admin" render={props => <AdminLayout {...props} />} />
-            <Route path="/login" render={props => <Login {...props} />} />
-            <Route
-                path="/adminmenu"
-                render={props => <AdminMenu {...props} />}
+            <Route; path="/admin"; render={props; => <AdminLayout; {...props} />} />
+            <Route; path="/login"; render={props; => <Login; {...props} />} />
+            <Route;
+                path="/adminmenu";
+                render={props; => <AdminMenu; {...props} />};
             />
-            <Route path="/edit" render={props => <Edit {...props} />} />
-            <Route path="/add" render={props => <Add {...props} />} />
-            <Route
-                path="/usermanage"
-                render={props => <UserManage {...props} />}
+            <Route; path="/edit"; render={props; => <Edit; {...props} />} />
+            <Route; path="/add"; render={props; => <Add; {...props} />} />
+            <Route;
+                path="/usermanage";
+                render={props; => <UserManage; {...props} />};
             />
-            <Route path="/register" render={props => <Register {...props} />} />
-            <Route
-                path="/loginadmin"
-                render={props => <Loginadmin {...props} />}
+            <Route; path="/register"; render={props; => <Register; {...props} />} />
+            <Route;
+                path="/loginadmin";
+                render={props; => <Loginadmin; {...props} />};
             />
-            <Redirect to="/login" />
+            <Redirect; to="/login" />
             <Root />
         </Switch>
-    </Router>,
-    document.getElementById("root")
-);
+    </Router>,;
+    document.getElementById("root");
+)

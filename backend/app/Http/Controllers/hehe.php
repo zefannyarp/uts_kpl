@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 
 class hehe extends Controller
 {
-    public function showBackendResponseTimeData(BackendResponseTime $backendResponseTime) {
+    public function showBackendResponseTimeData(BackendResponseTime $backendResponseTime)
+    {
         $response = [
             'id' => $backendResponseTime->getAttribute(BackendResponseTime::ATTRIBUTE_ID),
             'date' => $backendResponseTime->getAttribute(BackendResponseTime::ATTRIBUTE_DATE),
@@ -21,7 +22,8 @@ class hehe extends Controller
         return response()->json($response);
     }
 
-    public function getData(Request $request, BackendResponseTime $backendResponseTime) {
+    public function getData(Request $request, BackendResponseTime $backendResponseTime)
+    {
         $date = $request->input('date');
         $date = substr($date, 0, -3); // to cut the milli
         $date = date('Y-m-d', $date);
@@ -57,6 +59,7 @@ class hehe extends Controller
 
         return response()->json($response);
     }
+
     public function deleteBackendResponseTime($id)
     {
         $backendResponseTime = BackendResponseTime::findOrFail($id);

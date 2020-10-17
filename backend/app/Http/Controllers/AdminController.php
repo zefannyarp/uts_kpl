@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -35,9 +35,9 @@ class AdminController extends Controller
         // $user->setAttribute(User::ATTRIBUTE_PASSWORD, Hash::make($request->get('password')));
         // $user->save();
         $user->setAttribute(User::ATTRIBUTE_NAME, $name);
-                $user->setAttribute(User::ATTRIBUTE_EMAIL, $email);
-                $user->setAttribute(User::ATTRIBUTE_PASSWORD, Hash::make($password));
-                $user->save();
+        $user->setAttribute(User::ATTRIBUTE_EMAIL, $email);
+        $user->setAttribute(User::ATTRIBUTE_PASSWORD, Hash::make($password));
+        $user->save();
 
         $token = JWTAuth::fromUser($user);
 
@@ -59,13 +59,13 @@ class AdminController extends Controller
         $name = $request->input('name');
         $email = $request->input('email');
         $password = $request->input('password');
-     
+
         $user = User::findOrFail($id);
         $user->update([
-                $user->setAttribute(User::ATTRIBUTE_NAME, $name),
-                $user->setAttribute(User::ATTRIBUTE_EMAIL, $email),
-                $user->setAttribute(User::ATTRIBUTE_PASSWORD, Hash::make($password))
-            ]);
+            $user->setAttribute(User::ATTRIBUTE_NAME, $name),
+            $user->setAttribute(User::ATTRIBUTE_EMAIL, $email),
+            $user->setAttribute(User::ATTRIBUTE_PASSWORD, Hash::make($password))
+        ]);
         return response()->json([
             'message' => 'user has been updated'
         ], 200);
@@ -75,9 +75,9 @@ class AdminController extends Controller
     {
         return User::findOrFail($id);
     }
-    
+
     public function getUser()
-{
-    return User::all();
-}
+    {
+        return User::all();
+    }
 }

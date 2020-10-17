@@ -48,10 +48,10 @@ class Add extends React.Component {
                 .post(
                     "http://127.0.0.1:8000/api/admin/add",
                     {
-                        name: new String(this.state.name),
-                        email: new String(this.state.email),
-                        password: new String(this.state.password),
-                        role: new String(this.state.role)
+                        name: String(this.state.name),
+                        email: String(this.state.email),
+                        password: String(this.state.password),
+                        role: String(this.state.role)
                     },
                     {
                         headers: {

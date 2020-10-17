@@ -23,9 +23,9 @@ class Register extends React.Component {
         event.preventDefault();
         axios
             .post("http://127.0.0.1:8000/api/register", {
-                name: new String(this.state.name),
-                email: new String(this.state.email),
-                password: new String(this.state.password)
+                name: String(this.state.name),
+                email: String(this.state.email),
+                password: String(this.state.password)
             })
             .then(response => {
                 if (response.status && response.status === 201) {

@@ -9,11 +9,13 @@ use Illuminate\Http\Request;
 
 class BackendCoverageController extends Controller
 {
-    public function showBackendCoverage() {
+    public function showBackendCoverage()
+    {
         return BackendCoverageDatasource::all();
     }
 
-    public function getDaasdta(Request $request) {
+    public function getDaasdta(Request $request)
+    {
         $date = $request->input('date');
 
         BackendCoverageDatasource::where(BackendCoverageDatasource::ATTRIBUTE_TEST_FINISHED, $date)([
@@ -35,7 +37,8 @@ class BackendCoverageController extends Controller
         ]);
     }
 
-    public function getData(Request $request, BackendCoverage $backendCoverage) {
+    public function getData(Request $request, BackendCoverage $backendCoverage)
+    {
         $date = $request->input('date');
         $date = substr($date, 0, -3); // to cut the milli
         $date = date('Y-m-d', $date);

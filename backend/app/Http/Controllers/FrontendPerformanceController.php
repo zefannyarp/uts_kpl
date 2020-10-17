@@ -110,7 +110,8 @@ class FrontendPerformanceController extends Controller
 //        return response()->json($response);
 //    }
 
-    public function getData(Frontend $frontend){
+    public function getData(Frontend $frontend)
+    {
         $date = Carbon::now();
 
         $random = rand(5, 9);
@@ -120,6 +121,7 @@ class FrontendPerformanceController extends Controller
 
         return response()->json($frontend);
     }
+
     public function ShowFrontendPerformanceHistory()
     {
         return Frontend::all();

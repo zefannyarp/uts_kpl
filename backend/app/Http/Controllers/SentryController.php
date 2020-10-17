@@ -8,11 +8,13 @@ use Illuminate\Http\Request;
 
 class SentryController extends Controller
 {
-    public function showSentry() {
+    public function showSentry()
+    {
         return Sentry::all();
     }
 
-    public function getData(Request $request, Sentry $sentry) {
+    public function getData(Request $request, Sentry $sentry)
+    {
         $date = $request->input('date');
         $date = substr($date, 0, -3); // to cut the milli
         $date = date('Y-m-d', $date);
@@ -35,11 +37,11 @@ class SentryController extends Controller
         $sentry->save();
 
         $response = [
-          'id' => $sentry->getAttribute(Sentry::ATTRIBUTE_ID),
-          'date' => $sentry->getAttribute(Sentry::ATTRIBUTE_DATE),
-          'total' => $sentry->getAttribute(Sentry::ATTRIBUTE_TOTAL),
-          'new' => $sentry->getAttribute(Sentry::ATTRIBUTE_NEW),
-          'high' => $sentry->getAttribute(Sentry::ATTRIBUTE_HIGH)
+            'id' => $sentry->getAttribute(Sentry::ATTRIBUTE_ID),
+            'date' => $sentry->getAttribute(Sentry::ATTRIBUTE_DATE),
+            'total' => $sentry->getAttribute(Sentry::ATTRIBUTE_TOTAL),
+            'new' => $sentry->getAttribute(Sentry::ATTRIBUTE_NEW),
+            'high' => $sentry->getAttribute(Sentry::ATTRIBUTE_HIGH)
         ];
         return response()->json($response);
     }
