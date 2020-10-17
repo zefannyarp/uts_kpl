@@ -1,24 +1,11 @@
 import React from "react";
 // react plugin used to create charts
-import { Line, Pie } from "react-chartjs-2";
+import {Line} from "react-chartjs-2";
 import axios from "axios";
 
-import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardFooter,
-    CardTitle,
-    Row,
-    Col,
-    Table
-} from "reactstrap";
+import {Card, CardBody, CardFooter, CardHeader, CardTitle, Col, Row, Table} from "reactstrap";
+
 // core components
-import {
-    dashboard24HoursPerformanceChart,
-    dashboardEmailStatisticsChart,
-    dashboardNASDAQChart
-} from "variables/charts.jsx";
 
 class Dashboard extends React.Component {
     constructor(props) {
@@ -39,7 +26,7 @@ class Dashboard extends React.Component {
         // console.log(localStorage.getItem('accessToken'));
         const accessToken = localStorage.getItem("accessToken");
         console.log(accessToken);
-        this.setState({ accessToken });
+        this.setState({accessToken});
 
         let url_uptime = "http://127.0.0.1:8000/api/schedulejobs";
         axios
@@ -108,49 +95,49 @@ class Dashboard extends React.Component {
                     }
                 };
 
-                this.setState({ chartData: FEPerformanceData });
+                this.setState({chartData: FEPerformanceData});
             });
     }
 
     render() {
-        const { users } = this.state;
+        const {users} = this.state;
         return (
             <>
                 <div className="content">
                     <Row>
-                    <Col md="12">
+                        <Col md="12">
                             <Card>
                                 <CardHeader>
                                     <CardTitle tag="h4">
-                                        Schedule Jobs 
+                                        Schedule Jobs
                                     </CardTitle>
                                 </CardHeader>
                                 <CardBody>
                                     <Table responsive>
                                         <thead className="text-primary">
-                                            <tr>
-                                                <th scope="col">Start</th>
-                                                <th scope="col">End</th>
-                                                <th scope="col">Failed Jobs</th>
-                                                <th scope="col">Note</th>
-                                                
-                                            </tr>
+                                        <tr>
+                                            <th scope="col">Start</th>
+                                            <th scope="col">End</th>
+                                            <th scope="col">Failed Jobs</th>
+                                            <th scope="col">Note</th>
+
+                                        </tr>
                                         </thead>
                                         <tbody>
-                                            {users.map((user, index) => {
-                                                return (
-                                                    <tr key={index}>
-                                                        <td>{user.start}</td>
-                                                        <td>{user.end}</td>
-                                                        <td>
-                                                            {user.failed_jobs}
-                                                        </td>
-                                                        <td>{user.note}</td>
-                                                      
-                                                        
-                                                    </tr>
-                                                );
-                                            })}
+                                        {users.map((user, index) => {
+                                            return (
+                                                <tr key={index}>
+                                                    <td>{user.start}</td>
+                                                    <td>{user.end}</td>
+                                                    <td>
+                                                        {user.failed_jobs}
+                                                    </td>
+                                                    <td>{user.note}</td>
+
+
+                                                </tr>
+                                            );
+                                        })}
                                         </tbody>
                                     </Table>
                                 </CardBody>
@@ -180,7 +167,7 @@ class Dashboard extends React.Component {
                                 </CardBody>
                                 <CardFooter>
                                     <div className="chart-legend">
-                                        <i className="fa fa-circle text-info" />{" "}
+                                        <i className="fa fa-circle text-info"/>{" "}
                                         Frontend Performance{" "}
                                     </div>
                                 </CardFooter>

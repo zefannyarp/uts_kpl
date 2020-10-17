@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
-import { CardHeader, CardBody, CardTitle, Row, Col, Card } from "reactstrap";
+import {Card, CardBody, CardHeader, CardTitle, Col, Row} from "reactstrap";
 
 class Loginadmin extends React.Component {
     constructor(props) {
@@ -12,9 +11,10 @@ class Loginadmin extends React.Component {
             password: null
         };
     }
+
     handleChange = event => {
-        this.setState({ email: event.target.value });
-        this.setState({ password: event.target.value });
+        this.setState({email: event.target.value});
+        this.setState({password: event.target.value});
     };
 
     handleClick = event => {

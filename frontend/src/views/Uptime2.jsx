@@ -1,18 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import axios from "axios";
 import PaginacionTabla from "./User.jsx";
-
 // reactstrap components
-import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardTitle,
-    Table,
-    Row,
-    Col
-} from "reactstrap";
+import {Card, CardBody, CardHeader, CardTitle, Col, Row, Table} from "reactstrap";
 
 class Uptime2 extends React.Component {
     constructor() {
@@ -32,12 +23,12 @@ class Uptime2 extends React.Component {
     }
 
     componentDidMount() {
-        let { match } = this.props;
+        let {match} = this.props;
         console.log(match.params.id);
-        const { id } = this.props.match.params;
+        const {id} = this.props.match.params;
         const accessToken = localStorage.getItem("accessToken");
         console.log(accessToken);
-        this.setState({ accessToken });
+        this.setState({accessToken});
         let url = `http://127.0.0.1:8000/api/uptime/${id}`;
 
         axios
@@ -55,7 +46,7 @@ class Uptime2 extends React.Component {
     }
 
     render() {
-        const { users } = this.state;
+        const {users} = this.state;
         return (
             <>
                 <div className="content">
@@ -70,12 +61,12 @@ class Uptime2 extends React.Component {
                                 <CardBody>
                                     <Table responsive>
                                         <thead className="text-primary">
-                                            <tr>
-                                                <th scope="col">Id</th>
-                                                <th scope="col">Date/Time</th>
+                                        <tr>
+                                            <th scope="col">Id</th>
+                                            <th scope="col">Date/Time</th>
 
-                                                <th scope="col">Request</th>
-                                            </tr>
+                                            <th scope="col">Request</th>
+                                        </tr>
                                         </thead>
                                         <PaginacionTabla
                                             itemsperpage={
@@ -100,7 +91,7 @@ class Uptime2 extends React.Component {
                                             pagesspan={3}
                                         />
                                         <tbody>
-                                            {/* {users.map((user, index) => {
+                                        {/* {users.map((user, index) => {
                                                 return (
                                                     <tr key={index}>
                                                         <td scope="col">
@@ -134,4 +125,5 @@ class Uptime2 extends React.Component {
         );
     }
 }
+
 export default Uptime2;

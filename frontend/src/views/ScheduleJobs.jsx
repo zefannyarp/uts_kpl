@@ -1,17 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
-
 // reactstrap components
-import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardTitle,
-    Table,
-    Row,
-    Col,
-} from "reactstrap";
+import {Card, CardBody, CardHeader, CardTitle, Col, Row, Table,} from "reactstrap";
 
 class ScheduledJobs extends React.Component {
     constructor(props) {
@@ -24,11 +14,12 @@ class ScheduledJobs extends React.Component {
             note: null,
         };
     }
+
     componentWillMount() {
-        let config = { crossDomain: true };
+        let config = {crossDomain: true};
         const accessToken = localStorage.getItem("accessToken");
         console.log(accessToken);
-        this.setState({ accessToken });
+        this.setState({accessToken});
         let url = "http://127.0.0.1:8000/api/schedulejobs";
         axios
             .get(url, {
@@ -45,13 +36,14 @@ class ScheduledJobs extends React.Component {
             .catch(error => {
                 this.props.history.push("/login");
             })
-            ;
-            
+        ;
+
     }
+
     handleClick(id) {
         const accessToken = localStorage.getItem("accessToken");
         console.log(accessToken);
-        this.setState({ accessToken });
+        this.setState({accessToken});
         var result = window.confirm("Want to delete?");
         if (result) {
             axios
@@ -68,13 +60,14 @@ class ScheduledJobs extends React.Component {
                 .then(response => {
                     window.location.reload();
                 })
-                // .catch(error => {
-                //     this.props.history.push("/login");
-                // });
+            // .catch(error => {
+            //     this.props.history.push("/login");
+            // });
         }
     }
+
     render() {
-        const { users } = this.state;
+        const {users} = this.state;
         console.log(users);
         return (
             <>
@@ -102,44 +95,44 @@ class ScheduledJobs extends React.Component {
                                 <CardBody>
                                     <Table responsive>
                                         <thead className="text-primary">
-                                            <tr>
-                                                <th scope="col">Start</th>
-                                                <th scope="col">End</th>
-                                                <th scope="col">Failed Jobs</th>
-                                                <th scope="col">Note</th>
-                                                <th scope="col">Action</th>
-                                            </tr>
+                                        <tr>
+                                            <th scope="col">Start</th>
+                                            <th scope="col">End</th>
+                                            <th scope="col">Failed Jobs</th>
+                                            <th scope="col">Note</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
                                         </thead>
                                         <tbody>
-                                            {users.map((user, index) => {
-                                                return (
-                                                    <tr key={index}>
-                                                        <td>{user.start}</td>
-                                                        <td>{user.end}</td>
-                                                        <td>
-                                                            {user.failed_jobs}
-                                                        </td>
-                                                        <td>{user.note}</td>
-                                                        {/* <Link
+                                        {users.map((user, index) => {
+                                            return (
+                                                <tr key={index}>
+                                                    <td>{user.start}</td>
+                                                    <td>{user.end}</td>
+                                                    <td>
+                                                        {user.failed_jobs}
+                                                    </td>
+                                                    <td>{user.note}</td>
+                                                    {/* <Link
                                                             to={`/admin/details-uptime/${user.id}`}
                                                         >
                                                             <button className="btn btn-primary">
                                                                 Details
                                                             </button>
                                                         </Link> */}
-                                                          <button
-                                                            className="btn btn-danger"
-                                                            onClick={() =>
-                                                                this.handleClick(
-                                                                    user.id
-                                                                )
-                                                            }
-                                                        >
-                                                            Delete
-                                                        </button>
-                                                    </tr>
-                                                );
-                                            })}
+                                                    <button
+                                                        className="btn btn-danger"
+                                                        onClick={() =>
+                                                            this.handleClick(
+                                                                user.id
+                                                            )
+                                                        }
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                </tr>
+                                            );
+                                        })}
                                         </tbody>
                                     </Table>
                                 </CardBody>

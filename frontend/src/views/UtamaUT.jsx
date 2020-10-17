@@ -1,8 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
-
+import {Link} from "react-router-dom";
 // reactstrap components
-import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
+import {Card, CardBody, CardHeader, CardTitle, Col, Row} from "reactstrap";
 
 class UtamaUT extends React.Component {
     constructor() {
@@ -16,6 +15,7 @@ class UtamaUT extends React.Component {
             title: null
         };
     }
+
     render() {
         return (
             <div className="content">
@@ -27,26 +27,26 @@ class UtamaUT extends React.Component {
                             </CardHeader>
                             <CardBody>
                                 <thead>
-                                    <tr className="text-primary">
-                                        <Link to={"/admin/uptime"}>
-                                            <button
-                                                type="button"
-                                                className="btn btn-primary btn-lg btn-block"
-                                            >
-                                                Report
-                                            </button>
-                                        </Link>
-                                    </tr>
-                                    <tr className="text-primary">
-                                        <Link to={"/admin/generate"}>
-                                            <button
-                                                type="button"
-                                                className="btn btn-primary btn-lg btn-block"
-                                            >
-                                                Generate Report
-                                            </button>
-                                        </Link>
-                                    </tr>
+                                <tr className="text-primary">
+                                    <Link to={"/admin/uptime"}>
+                                        <button
+                                            type="button"
+                                            className="btn btn-primary btn-lg btn-block"
+                                        >
+                                            Report
+                                        </button>
+                                    </Link>
+                                </tr>
+                                <tr className="text-primary">
+                                    <Link to={"/admin/generate"}>
+                                        <button
+                                            type="button"
+                                            className="btn btn-primary btn-lg btn-block"
+                                        >
+                                            Generate Report
+                                        </button>
+                                    </Link>
+                                </tr>
                                 </thead>
                             </CardBody>
                         </Card>

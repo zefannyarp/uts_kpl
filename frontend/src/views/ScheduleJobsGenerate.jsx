@@ -1,21 +1,21 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import axios from "axios";
 // reactstrap components
-import { Card, CardBody, Table, Row, Col } from "reactstrap";
+import {Card, CardBody, Col, Row, Table} from "reactstrap";
 
 class ScheduleJobsGenerate extends React.Component {
     constructor() {
         super();
         this.state = {
             users: [],
-            start_date:null,
+            start_date: null,
             date: null,
             end_date: null,
             id: null,
             failed_jobs: null,
             note: null,
-            
+
         };
 
         this.toggleDateRange = this.toggleDateRange.bind(this);
@@ -39,7 +39,7 @@ class ScheduleJobsGenerate extends React.Component {
     }
 
     handleChange = event => {
-        this.setState({ start: event.target.value });
+        this.setState({start: event.target.value});
     };
 
     handleClick = event => {
@@ -65,28 +65,28 @@ class ScheduleJobsGenerate extends React.Component {
             )
             .then(response => {
                 console.log(response);
-                this.setState({ record: response.data });
+                this.setState({record: response.data});
             })
-            // .catch(error => {
-            //     this.props.history.push("/login");
-            // });
+        // .catch(error => {
+        //     this.props.history.push("/login");
+        // });
     };
 
     toggleDateRange() {
-        this.setState({ dateRange: !this.state.dateRange });
+        this.setState({dateRange: !this.state.dateRange});
     }
 
     handleTypeChange(e) {
         if (e.target.value === "sevendays") {
             this.setDefaultDate();
-            this.setState({ dateRange: false });
+            this.setState({dateRange: false});
         } else {
-            this.setState({ dateRange: true });
+            this.setState({dateRange: true});
         }
     }
 
     render() {
-        const { user } = this.state;
+        const {user} = this.state;
         console.log(this.state);
         return (
             <div className="content">
@@ -167,7 +167,7 @@ class ScheduleJobsGenerate extends React.Component {
                                                     onChange={e => {
                                                         this.setState({
                                                             date:
-                                                                e.target.value
+                                                            e.target.value
                                                         });
                                                     }}
                                                 ></input>
@@ -192,7 +192,7 @@ class ScheduleJobsGenerate extends React.Component {
                                                     onChange={e => {
                                                         this.setState({
                                                             end_date:
-                                                                e.target.value
+                                                            e.target.value
                                                         });
                                                     }}
                                                 ></input>
@@ -227,43 +227,43 @@ class ScheduleJobsGenerate extends React.Component {
                                     <Table className="tablesorter" responsive>
                                         <thead className="text-primary">
                                         <tr>
-                                        <th scope="col">Start</th>
+                                            <th scope="col">Start</th>
                                             <th scope="col">end</th>
                                             <th scope="col">Failed Jobs</th>
                                             <th scope="col">HIGH</th>
-                                            </tr>
+                                        </tr>
                                         </thead>
                                         <tbody>
-                                        
-                                                    <tr >
-                                                    <td scope="col">
-                                                    {
-                                                        this.state.record
-                                                            .start_date
-                                                    }
-                                                </td>
-                                                <td scope="col">
-                                                    {this.state.record.end_date}
-                                                </td>
-                                                <td scope="col">
-                                                    {
-                                                        this.state.record
-                                                            .failed_jobs
-                                                    }
-                                                </td>
-                                                <td scope="col">
-                                                    {this.state.record.note}
-                                                </td>
-                                                        
-                                                        {/* <Link
+
+                                        <tr>
+                                            <td scope="col">
+                                                {
+                                                    this.state.record
+                                                        .start_date
+                                                }
+                                            </td>
+                                            <td scope="col">
+                                                {this.state.record.end_date}
+                                            </td>
+                                            <td scope="col">
+                                                {
+                                                    this.state.record
+                                                        .failed_jobs
+                                                }
+                                            </td>
+                                            <td scope="col">
+                                                {this.state.record.note}
+                                            </td>
+
+                                            {/* <Link
                                                             to={`/admin/details-uptime/${user.id}`}
                                                         >
                                                             <button className="btn btn-primary">
                                                                 Details
                                                             </button>
                                                         </Link> */}
-                                                    </tr>
-                                                
+                                        </tr>
+
                                         </tbody>
                                     </Table>
                                     <Link to={`/admin/Schedule-jobs`}>
@@ -283,4 +283,5 @@ class ScheduleJobsGenerate extends React.Component {
         );
     }
 }
+
 export default ScheduleJobsGenerate;

@@ -1,8 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import axios from "axios";
 // reactstrap components
-import { Card, CardBody, Table, Row, Col } from "reactstrap";
+import {Card, CardBody, Col, Row, Table} from "reactstrap";
 
 class BackendCoverageGenerate extends React.Component {
     constructor() {
@@ -15,15 +15,15 @@ class BackendCoverageGenerate extends React.Component {
             ncloc: null,
             classes: null,
             method: null,
-            statements:null,
-            namespace:null,
-            ignored_namespace:null,
-            target_namespace:null,
-            target_below_90pct:null,
-            target_coverage:null,
-            target_below_95pct:null,
-            target_below_95pctplus:null,
-            
+            statements: null,
+            namespace: null,
+            ignored_namespace: null,
+            target_namespace: null,
+            target_below_90pct: null,
+            target_coverage: null,
+            target_below_95pct: null,
+            target_below_95pctplus: null,
+
         };
 
         this.toggleDateRange = this.toggleDateRange.bind(this);
@@ -47,7 +47,7 @@ class BackendCoverageGenerate extends React.Component {
     }
 
     handleChange = event => {
-        this.setState({ date: event.target.value });
+        this.setState({date: event.target.value});
     };
 
     handleClick = event => {
@@ -73,28 +73,28 @@ class BackendCoverageGenerate extends React.Component {
             )
             .then(response => {
                 console.log(response);
-                this.setState({ record: response.data });
+                this.setState({record: response.data});
             })
-            // .catch(error => {
-            //     this.props.history.push("/login");
-            // });
+        // .catch(error => {
+        //     this.props.history.push("/login");
+        // });
     };
 
     toggleDateRange() {
-        this.setState({ dateRange: !this.state.dateRange });
+        this.setState({dateRange: !this.state.dateRange});
     }
 
     handleTypeChange(e) {
         if (e.target.value === "sevendays") {
             this.setDefaultDate();
-            this.setState({ dateRange: false });
+            this.setState({dateRange: false});
         } else {
-            this.setState({ dateRange: true });
+            this.setState({dateRange: true});
         }
     }
 
     render() {
-        const { user } = this.state;
+        const {user} = this.state;
         console.log(this.state);
         return (
             <div className="content">
@@ -175,7 +175,7 @@ class BackendCoverageGenerate extends React.Component {
                                                     onChange={e => {
                                                         this.setState({
                                                             date:
-                                                                e.target.value
+                                                            e.target.value
                                                         });
                                                     }}
                                                 ></input>
@@ -235,57 +235,57 @@ class BackendCoverageGenerate extends React.Component {
                                     <Table className="tablesorter" responsive>
                                         <thead className="text-primary">
                                         <tr>
-                                                <th scope="col">
-                                                    Test Finished
-                                                </th>
-                                                <th scope="col">
-                                                    Total Coverage
-                                                </th>
-                                                <th scope="col">LOC</th>
-                                                <th scope="col">NCLOC</th>
-                                                <th scope="col">Classes%</th>
-                                                <th scope="col">Method%</th>
-                                                <th scope="col">Statements%</th>
-                                                <th scope="col">Namespace</th>
-                                                <th scope="col">Ignored Namespace</th>
-                                                <th scope="col">Target Namespace</th>
-                                                <th scope="col">Target Below 90%</th>
-                                                <th scope="col">Target Coverage</th>
-                                                <th scope="col">Target Below 95%</th>
-                                                <th scope="col">Target Coverage 95%+</th>
-                                            </tr>
+                                            <th scope="col">
+                                                Test Finished
+                                            </th>
+                                            <th scope="col">
+                                                Total Coverage
+                                            </th>
+                                            <th scope="col">LOC</th>
+                                            <th scope="col">NCLOC</th>
+                                            <th scope="col">Classes%</th>
+                                            <th scope="col">Method%</th>
+                                            <th scope="col">Statements%</th>
+                                            <th scope="col">Namespace</th>
+                                            <th scope="col">Ignored Namespace</th>
+                                            <th scope="col">Target Namespace</th>
+                                            <th scope="col">Target Below 90%</th>
+                                            <th scope="col">Target Coverage</th>
+                                            <th scope="col">Target Below 95%</th>
+                                            <th scope="col">Target Coverage 95%+</th>
+                                        </tr>
                                         </thead>
                                         <tbody>
-                                        
-                                                    <tr >
-                                                        <td scope="col">
-                                                            {this.state.record.test_finished}
-                                                        </td>
-                                                        <td scope="col">
-                                                            {this.state.record.total_coverage}
-                                                        </td>
-                                                        <td scope="col">{this.state.record.loc}</td>
-                                                        <td scope="col">{this.state.record.ncloc}</td>
-                                                        <td scope="col">{this.state.record.classes}</td>
-                                                        <td scope="col">{this.state.record.method}</td>
-                                                        <td scope="col">{this.state.record.statements}</td>
-                                                        <td scope="col">{this.state.record.namespace}</td>
-                                                        <td scope="col">{this.state.record.ignored_namespace}</td>
-                                                        <td scope="col">{this.state.record.target_namespace}</td>
-                                                        <td scope="col">{this.state.record.target_below_90pct}</td>
-                                                        <td scope="col">{this.state.record.target_coverage}</td>
-                                                        <td scope="col"> {this.state.record.target_below_95pct}</td>
-                                                        <td scope="col">{this.state.record.target_coverage_95pctplus}</td>
-                                                        
-                                                        {/* <Link
+
+                                        <tr>
+                                            <td scope="col">
+                                                {this.state.record.test_finished}
+                                            </td>
+                                            <td scope="col">
+                                                {this.state.record.total_coverage}
+                                            </td>
+                                            <td scope="col">{this.state.record.loc}</td>
+                                            <td scope="col">{this.state.record.ncloc}</td>
+                                            <td scope="col">{this.state.record.classes}</td>
+                                            <td scope="col">{this.state.record.method}</td>
+                                            <td scope="col">{this.state.record.statements}</td>
+                                            <td scope="col">{this.state.record.namespace}</td>
+                                            <td scope="col">{this.state.record.ignored_namespace}</td>
+                                            <td scope="col">{this.state.record.target_namespace}</td>
+                                            <td scope="col">{this.state.record.target_below_90pct}</td>
+                                            <td scope="col">{this.state.record.target_coverage}</td>
+                                            <td scope="col"> {this.state.record.target_below_95pct}</td>
+                                            <td scope="col">{this.state.record.target_coverage_95pctplus}</td>
+
+                                            {/* <Link
                                                             to={`/admin/details-uptime/${user.id}`}
                                                         >
                                                             <button className="btn btn-primary">
                                                                 Details
                                                             </button>
                                                         </Link> */}
-                                                    </tr>
-                                                
+                                        </tr>
+
                                         </tbody>
                                     </Table>
                                     <Link to={`/admin/backend-coverage`}>
@@ -305,4 +305,5 @@ class BackendCoverageGenerate extends React.Component {
         );
     }
 }
+
 export default BackendCoverageGenerate;

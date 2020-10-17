@@ -1,17 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import axios from "axios";
-
 // reactstrap components
-import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardTitle,
-    Table,
-    Row,
-    Col
-} from "reactstrap";
+import {Card, CardBody, CardHeader, CardTitle, Col, Row, Table} from "reactstrap";
 
 class Tables extends React.Component {
     constructor(props) {
@@ -30,11 +21,12 @@ class Tables extends React.Component {
             // title: null
         };
     }
+
     componentWillMount() {
-        let config = { crossDomain: true };
+        let config = {crossDomain: true};
         const accessToken = localStorage.getItem("accessToken");
         console.log(accessToken);
-        this.setState({ accessToken });
+        this.setState({accessToken});
         let url = "http://127.0.0.1:8000/api/history";
         axios
             .get(url, {
@@ -52,8 +44,9 @@ class Tables extends React.Component {
                 this.props.history.push("/login");
             });
     }
+
     render() {
-        const { users } = this.state;
+        const {users} = this.state;
         console.log(users);
         return (
             <>
@@ -81,38 +74,38 @@ class Tables extends React.Component {
                                 <CardBody>
                                     <Table responsive>
                                         <thead className="text-primary">
-                                            <tr>
-                                                <th scope="col">Id</th>
-                                                <th scope="col">Start</th>
-                                                <th scope="col">End</th>
-                                                <th scope="col">Total Error</th>
-                                                <th scope="col">Down Time</th>
-                                                <th scope="col">Action</th>
-                                            </tr>
+                                        <tr>
+                                            <th scope="col">Id</th>
+                                            <th scope="col">Start</th>
+                                            <th scope="col">End</th>
+                                            <th scope="col">Total Error</th>
+                                            <th scope="col">Down Time</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
                                         </thead>
                                         <tbody>
-                                            {users.map((user, index) => {
-                                                return (
-                                                    <tr key={index}>
-                                                        <td>{user.id}</td>
-                                                        <td>
-                                                            {user.start_date}
-                                                        </td>
-                                                        <td>{user.end_date}</td>
-                                                        <td>
-                                                            {user.total_error}
-                                                        </td>
-                                                        <td>{user.downtime}</td>
-                                                        <Link
-                                                            to={`/admin/details-uptime/${user.id}`}
-                                                        >
-                                                            <button className="btn btn-primary">
-                                                                Details
-                                                            </button>
-                                                        </Link>
-                                                    </tr>
-                                                );
-                                            })}
+                                        {users.map((user, index) => {
+                                            return (
+                                                <tr key={index}>
+                                                    <td>{user.id}</td>
+                                                    <td>
+                                                        {user.start_date}
+                                                    </td>
+                                                    <td>{user.end_date}</td>
+                                                    <td>
+                                                        {user.total_error}
+                                                    </td>
+                                                    <td>{user.downtime}</td>
+                                                    <Link
+                                                        to={`/admin/details-uptime/${user.id}`}
+                                                    >
+                                                        <button className="btn btn-primary">
+                                                            Details
+                                                        </button>
+                                                    </Link>
+                                                </tr>
+                                            );
+                                        })}
                                         </tbody>
                                     </Table>
                                 </CardBody>

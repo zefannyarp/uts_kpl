@@ -1,8 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import axios from "axios";
 // reactstrap components
-import { Card, CardBody, Table, Row, Col } from "reactstrap";
+import {Card, CardBody, Col, Row, Table} from "reactstrap";
 
 class Generate extends React.Component {
     constructor() {
@@ -42,15 +42,15 @@ class Generate extends React.Component {
     }
 
     handleChange = event => {
-        this.setState({ start_date: event.target.value });
-        this.setState({ end_date: event.target.value });
+        this.setState({start_date: event.target.value});
+        this.setState({end_date: event.target.value});
     };
 
     handleClick = event => {
         event.preventDefault();
         const accessToken = localStorage.getItem("accessToken");
         console.log(accessToken);
-        this.setState({ accessToken });
+        this.setState({accessToken});
         let url = "http://127.0.0.1:8000/api/uptime";
         axios
             .post(
@@ -70,7 +70,7 @@ class Generate extends React.Component {
             )
             .then(response => {
                 console.log(response);
-                this.setState({ record: response.data });
+                this.setState({record: response.data});
             })
             .catch(error => {
                 this.props.history.push("/login");
@@ -78,20 +78,20 @@ class Generate extends React.Component {
     };
 
     toggleDateRange() {
-        this.setState({ dateRange: !this.state.dateRange });
+        this.setState({dateRange: !this.state.dateRange});
     }
 
     handleTypeChange(e) {
         if (e.target.value === "sevendays") {
             this.setDefaultDate();
-            this.setState({ dateRange: false });
+            this.setState({dateRange: false});
         } else {
-            this.setState({ dateRange: true });
+            this.setState({dateRange: true});
         }
     }
 
     render() {
-        const { user } = this.state;
+        const {user} = this.state;
         console.log(this.state);
         return (
             <div className="content">
@@ -172,7 +172,7 @@ class Generate extends React.Component {
                                                     onChange={e => {
                                                         this.setState({
                                                             start_date:
-                                                                e.target.value
+                                                            e.target.value
                                                         });
                                                     }}
                                                 ></input>
@@ -197,7 +197,7 @@ class Generate extends React.Component {
                                                     onChange={e => {
                                                         this.setState({
                                                             end_date:
-                                                                e.target.value
+                                                            e.target.value
                                                         });
                                                     }}
                                                 ></input>
@@ -231,34 +231,34 @@ class Generate extends React.Component {
                                 <CardBody>
                                     <Table responsive>
                                         <thead className="text-primary">
-                                            <tr>
-                                                <th scope="col">START</th>
-                                                <th scope="col">END</th>
-                                                <th scope="col">TOTAL ERROR</th>
-                                                <th scope="col">DOWNTIME</th>
-                                            </tr>
+                                        <tr>
+                                            <th scope="col">START</th>
+                                            <th scope="col">END</th>
+                                            <th scope="col">TOTAL ERROR</th>
+                                            <th scope="col">DOWNTIME</th>
+                                        </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td scope="col">
-                                                    {
-                                                        this.state.record
-                                                            .start_date
-                                                    }
-                                                </td>
-                                                <td scope="col">
-                                                    {this.state.record.end_date}
-                                                </td>
-                                                <td scope="col">
-                                                    {
-                                                        this.state.record
-                                                            .total_error
-                                                    }
-                                                </td>
-                                                <td scope="col">
-                                                    {this.state.record.downtime}
-                                                </td>
-                                            </tr>
+                                        <tr>
+                                            <td scope="col">
+                                                {
+                                                    this.state.record
+                                                        .start_date
+                                                }
+                                            </td>
+                                            <td scope="col">
+                                                {this.state.record.end_date}
+                                            </td>
+                                            <td scope="col">
+                                                {
+                                                    this.state.record
+                                                        .total_error
+                                                }
+                                            </td>
+                                            <td scope="col">
+                                                {this.state.record.downtime}
+                                            </td>
+                                        </tr>
                                         </tbody>
                                     </Table>
                                     <Link to={`/admin/uptime`}>
@@ -278,4 +278,5 @@ class Generate extends React.Component {
         );
     }
 }
+
 export default Generate;

@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
-import { CardHeader, CardBody, CardTitle, Row, Col, Card } from "reactstrap";
+import {Card, CardBody, CardHeader, CardTitle, Col, Row} from "reactstrap";
 
 class Edit extends React.Component {
     constructor(props) {
@@ -17,13 +16,13 @@ class Edit extends React.Component {
     }
 
     componentDidMount() {
-        let { location } = this.props;
+        let {location} = this.props;
         let pathURLArray = location.pathname.split("/");
-        let config = { crossDomain: true };
+        let config = {crossDomain: true};
         let id = pathURLArray[pathURLArray.length - 1];
         const accessToken = localStorage.getItem("accessToken");
         console.log(accessToken);
-        this.setState({ accessToken });
+        this.setState({accessToken});
         let url = `http://127.0.0.1:8000/api/admin/user/${id}`;
         axios
             .get(url, {
@@ -39,23 +38,23 @@ class Edit extends React.Component {
                     email: users.data.email
                 });
             })
-            // .catch(error => {
-            //     this.props.history.push("/login");
-            // });
+        // .catch(error => {
+        //     this.props.history.push("/login");
+        // });
     }
 
     handleChange = event => {
-        this.setState({ name: event.target.value });
-        this.setState({ email: event.target.value });
-        this.setState({ password: event.target.value });
+        this.setState({name: event.target.value});
+        this.setState({email: event.target.value});
+        this.setState({password: event.target.value});
     };
 
     handleClick = event => {
         event.preventDefault();
-        const { password, confirmpass } = this.state;
+        const {password, confirmpass} = this.state;
         const accessToken = localStorage.getItem("accessToken");
         console.log(accessToken);
-        this.setState({ accessToken });
+        this.setState({accessToken});
         if (password !== confirmpass) {
             alert("Passwords don't match");
         } else {

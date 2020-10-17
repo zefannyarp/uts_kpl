@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
-import { CardHeader, CardBody, CardTitle, Row, Col, Card } from "reactstrap";
+import {Card, CardBody, CardHeader, CardTitle, Col, Row} from "reactstrap";
 
 class Add extends React.Component {
     constructor(props) {
@@ -16,62 +15,65 @@ class Add extends React.Component {
             errors: {}
         };
     }
- 
+
     handleChange = event => {
-        this.setState({ name: event.target.value });
-        this.setState({ email: event.target.value });
-        this.setState({ password: event.target.value });
-        this.setState({ password_comfimation: event.target.value });
-        this.setState({ role: event.target.value });
+        this.setState({name: event.target.value});
+        this.setState({email: event.target.value});
+        this.setState({password: event.target.value});
+        this.setState({password_comfimation: event.target.value});
+        this.setState({role: event.target.value});
     };
     handleClick = event => {
-        
+
         event.preventDefault();
-        const { password, password_comfimation, name, email} = this.state;
+        const {password, password_comfimation, name, email} = this.state;
         const accessToken = localStorage.getItem("accessToken");
         console.log(accessToken);
-        this.setState({ accessToken });
+        this.setState({accessToken});
         // perform all neccassary validations
         if (name == null) {
             alert("Silahkan mengisi kolom nama");
         } else {
             if (email == null) {
                 alert("Silahkan mengisi kolom email");
-             } else {
-                    if (password == null) {
-                        alert("Silahkan mengisi kolom password");
             } else {
-        if (password !== password_comfimation) {
-            alert("Password harus sama");
-        } else {
-            axios
-                .post(
-                    "http://127.0.0.1:8000/api/admin/add",
-                    {
-                        name: String(this.state.name),
-                        email: String(this.state.email),
-                        password: String(this.state.password),
-                        role: String(this.state.role)
-                    },
-                    {
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: "bearer " + accessToken
-                        }
-                    }
-                )
-
-                .then(response => {
-                    if (response.status && response.status === 201) {
-                        this.props.history.push("/usermanage");
+                if (password == null) {
+                    alert("Silahkan mengisi kolom password");
+                } else {
+                    if (password !== password_comfimation) {
+                        alert("Password harus sama");
                     } else {
-                        window.location.reload();
+                        axios
+                            .post(
+                                "http://127.0.0.1:8000/api/admin/add",
+                                {
+                                    name: String(this.state.name),
+                                    email: String(this.state.email),
+                                    password: String(this.state.password),
+                                    role: String(this.state.role)
+                                },
+                                {
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                        Authorization: "bearer " + accessToken
+                                    }
+                                }
+                            )
+
+                            .then(response => {
+                                if (response.status && response.status === 201) {
+                                    this.props.history.push("/usermanage");
+                                } else {
+                                    window.location.reload();
+                                }
+                            })
+                        // .catch(error => {
+                        //     this.props.history.push("/login");
+                        // });
                     }
-                })
-                // .catch(error => {
-                //     this.props.history.push("/login");
-                // });
-        }}}}
+                }
+            }
+        }
     };
 
     render() {
@@ -90,7 +92,7 @@ class Add extends React.Component {
                                 <CardTitle tag="h5"> Add User</CardTitle>
                             </CardHeader>
                             <CardBody>
-                                <form className="px-4 py-3" >
+                                <form className="px-4 py-3">
                                     <div className="form-group">
                                         <label for="exampleDropdownFormEmail1">
                                             Name
@@ -151,7 +153,7 @@ class Add extends React.Component {
                                             onChange={e => {
                                                 this.setState({
                                                     password_comfimation:
-                                                        e.target.value
+                                                    e.target.value
                                                 });
                                             }}
                                         ></input>

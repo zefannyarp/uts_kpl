@@ -1,17 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
-
 // reactstrap components
-import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardTitle,
-    Table,
-    Row,
-    Col,
-} from "reactstrap";
+import {Card, CardBody, CardHeader, CardTitle, Col, Row, Table,} from "reactstrap";
 
 class Sentry extends React.Component {
     constructor(props) {
@@ -24,11 +14,12 @@ class Sentry extends React.Component {
             high: null,
         };
     }
+
     componentWillMount() {
-        let config = { crossDomain: true };
+        let config = {crossDomain: true};
         const accessToken = localStorage.getItem("accessToken");
         console.log(accessToken);
-        this.setState({ accessToken });
+        this.setState({accessToken});
         let url = "http://127.0.0.1:8000/api/sentry";
         axios
             .get(url, {
@@ -46,8 +37,9 @@ class Sentry extends React.Component {
                 this.props.history.push("/login");
             });
     }
+
     render() {
-        const { users } = this.state;
+        const {users} = this.state;
         console.log(users);
         return (
             <>

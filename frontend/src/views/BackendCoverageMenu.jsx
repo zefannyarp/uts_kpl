@@ -1,16 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import {
-    Alert,
-    UncontrolledAlert,
-    Button,
-    Card,
-    CardHeader,
-    CardBody,
-    CardTitle,
-    Row,
-    Col,
-} from "reactstrap";
+import {Link} from "react-router-dom";
+import {Button, Card, CardBody, CardHeader, CardTitle, Col, Row,} from "reactstrap";
 
 // reactstrap components
 
@@ -26,6 +16,7 @@ class BackendCoverageMenu extends React.Component {
             title: null,
         };
     }
+
     render() {
         return (
             <div className="content">

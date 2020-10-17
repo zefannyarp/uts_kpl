@@ -1,16 +1,7 @@
 import React from "react";
-import { Line, Pie } from "react-chartjs-2";
+import {Line} from "react-chartjs-2";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardFooter,
-    CardTitle,
-    Row,
-    Col
-} from "reactstrap";
+import {Card, CardBody, CardFooter, CardHeader, CardTitle, Col, Row} from "reactstrap";
 
 class Dashboard extends React.Component {
     constructor(props) {
@@ -23,13 +14,14 @@ class Dashboard extends React.Component {
             chartData: null
         };
     }
+
     handleClick = event => {
         event.preventDefault();
         let labels = this.state.chartData.data.labels;
         let chartValues = this.state.chartData.data.datasets[0].data;
         const accessToken = localStorage.getItem("accessToken");
         console.log(accessToken);
-        this.setState({ accessToken });
+        this.setState({accessToken});
         let url = "http://127.0.0.1:8000/api/frontend";
 
         axios
@@ -40,7 +32,7 @@ class Dashboard extends React.Component {
                 }
             })
             .then(fedata => {
-                this.setState({ chartData: null });
+                this.setState({chartData: null});
                 labels.push(fedata.data.end_date);
                 chartValues.push(parseFloat(fedata.data.avgPageLoadTime));
 
@@ -79,17 +71,17 @@ class Dashboard extends React.Component {
                     }
                 };
 
-                this.setState({ chartData: FEPerformanceData });
+                this.setState({chartData: FEPerformanceData});
             });
     };
 
     componentDidMount() {
-        let config = { crossDomain: true };
+        let config = {crossDomain: true};
         let labels = [];
         let chartValues = [];
         const accessToken = localStorage.getItem("accessToken");
         console.log(accessToken);
-        this.setState({ accessToken });
+        this.setState({accessToken});
         let url_frontend = "http://127.0.0.1:8000/api/frontend/history";
         axios
             .get(url_frontend, {
@@ -139,9 +131,10 @@ class Dashboard extends React.Component {
                     }
                 };
 
-                this.setState({ chartData: FEPerformanceData });
+                this.setState({chartData: FEPerformanceData});
             });
     }
+
     render() {
         return (
             this.state.chartData && (
@@ -180,10 +173,10 @@ class Dashboard extends React.Component {
                                     </CardBody>
                                     <CardFooter>
                                         <div className="chart-legend">
-                                            <i className="fa fa-circle text-info" />{" "}
+                                            <i className="fa fa-circle text-info"/>{" "}
                                             Average Page Load Time{" "}
                                         </div>
-                                        <hr />
+                                        <hr/>
                                         <button
                                             type="button"
                                             class="btn btn-primary btn-lg"
