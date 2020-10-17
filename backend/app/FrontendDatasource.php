@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Frontend extends Model
+class FrontendDatasource extends Model
 {
-    public $table = 'frontend_performance';
+    public $table = 'frontend_datasource';
 
     const ATTRIBUTE_ID = 'id';
     const ATTRIBUTE_DATE = 'date';

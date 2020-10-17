@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
-use Auth;
 use App\Frontend;
+use App\FrontendDatasource;
 use App\User;
 use Carbon\Carbon;
 use Google_Client;
@@ -14,6 +14,7 @@ use Google_Service_AnalyticsReporting_DateRange;
 use Google_Service_AnalyticsReporting_GetReportsRequest;
 use Google_Service_AnalyticsReporting_Metric;
 use Google_Service_AnalyticsReporting_ReportRequest;
+use Illuminate\Http\Request;
 
 class FrontendPerformanceController extends Controller
 {
@@ -79,6 +80,49 @@ class FrontendPerformanceController extends Controller
         return response()->json($frontend_performance);
     }
 
+//    public function getData(Request $request, Frontend $frontend, FrontendDatasource $frontendDatasource) {
+//        $start_date = $request->input('start_date');
+//        $start_date = substr($start_date, 0, -3); // to cut the milli
+//        $start_date = date('Y-m-d', $start_date);
+//        $end_date = $request->input('end_date');
+//        $end_date = substr($end_date, 0, -3); // to cut the milli
+//        $end_date = date('Y-m-d', $end_date);
+//
+//        $frontendDatasource = $frontendDatasource::where(FrontendDatasource::ATTRIBUTE_START_DATE, $start_date)->first();
+//        if ($frontendDatasource) {
+//            $frontendDatasource = $frontendDatasource->toArray();
+//        }
+//        $id = $frontendDatasource['id'];
+//        $start_date = $frontendDatasource['start_date'];
+//        $end_date = $frontendDatasource['end_date'];
+//        $avgPageLoadTime = $frontendDatasource['avgPageLoadTime'];
+//
+//        $frontend->setAttribute(Frontend::ATTRIBUTE_ID, $id);
+//        $frontend->setAttribute(Frontend::ATTRIBUTE_START_DATE, $start_date);
+//        $frontend->setAttribute(Frontend::ATTRIBUTE_END_DATE, $end_date);
+//        $frontend->setAttribute(Frontend::ATTRIBUTE_AVERAGE_PAGE_LOAD_TIME, $avgPageLoadTime);
+//        $frontend->save();
+//
+//        $response = [
+//            'id' => $frontend->getAttribute(Frontend::ATTRIBUTE_ID),
+//            'start_date' => $frontend->getAttribute(Frontend::ATTRIBUTE_START_DATE),
+//            'end_total' => $frontend->getAttribute(Frontend::ATTRIBUTE_END_DATE),
+//            'new' => $frontend->getAttribute(Frontend::ATTRIBUTE_AVERAGE_PAGE_LOAD_TIME),
+//        ];
+//
+//        return response()->json($response);
+//    }
+
+    public function getData(Frontend $frontend, FrontendDatasource $frontendDatasource){
+        $date = Carbon::now();
+
+        $random = rand(5, 9);
+        $frontend->setAttribute(Frontend::ATTRIBUTE_DATE, $date);
+        $frontend->setAttribute(Frontend::ATTRIBUTE_AVERAGE_PAGE_LOAD_TIME, $random);
+        $frontend->save();
+
+        return response()->json($frontend);
+    }
     public function ShowFrontendPerformanceHistory()
     {
         return Frontend::all();

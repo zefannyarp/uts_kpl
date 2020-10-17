@@ -36,7 +36,6 @@ class AdminController extends Controller
         // $user->setAttribute(User::ATTRIBUTE_EMAIL, $request->get('email'));
         // $user->setAttribute(User::ATTRIBUTE_PASSWORD, Hash::make($request->get('password')));
         // $user->save();
-
         $user->setAttribute(User::ATTRIBUTE_NAME, $name);
                 $user->setAttribute(User::ATTRIBUTE_EMAIL, $email);
                 $user->setAttribute(User::ATTRIBUTE_PASSWORD, Hash::make($password));

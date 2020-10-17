@@ -10,8 +10,8 @@
     "require": {
         "php": "^7.2",
         "ext-json": "*",
+        "asm89/stack-cors": "^2.0",
         "fideloper/proxy": "^4.0",
-        "fruitcake/laravel-cors": "^1.0",
         "google/apiclient": "^2.0",
         "guzzlehttp/guzzle": "^6.5",
         "laravel/framework": "^6.2",

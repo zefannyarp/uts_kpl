@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Sentry;
+use App\SentryDatasource;
+use App\UptimeDatasource;
 use App\UptimeReport;
 use App\UptimeDetail;
 use App\UptimeSummary;
+use App\User;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -170,22 +174,47 @@ class UptimeController extends Controller
                 $downtime = $downtime + 1;
         }
 
-        $uptimeSummary->setAttribute(UptimeSummary::ATTRIBUTE_UPTIME_REPORT_ID, $uptimeReport->getAttribute('id'));
+//        $uptimeSummary->setAttribute(UptimeSummary::ATTRIBUTE_UPTIME_REPORT_ID, $uptimeReport->getAttribute('id'));
+//        $uptimeSummary->setAttribute(UptimeSummary::ATTRIBUTE_START_DATE, $start_date);
+//        $uptimeSummary->setAttribute(UptimeSummary::ATTRIBUTE_END_DATE, $end_date);
+//        $uptimeSummary->setAttribute(UptimeSummary::ATTRIBUTE_TOTAL_ERROR, $total_hits);
+//        $uptimeSummary->setAttribute(UptimeSummary::ATTRIBUTE_DOWNTIME, $downtime);
+//        $uptimeSummary->save();
+
+//        $response = [
+//            'id' => $uptimeSummary->getAttribute(UptimeSummary::ATTRIBUTE_ID),
+//            'start_date' => $uptimeSummary->getAttribute(UptimeSummary::ATTRIBUTE_START_DATE),
+//            'end_date' => $uptimeSummary->getAttribute(UptimeSummary::ATTRIBUTE_END_DATE),
+//            'total_error' => $uptimeSummary->getAttribute(UptimeSummary::ATTRIBUTE_TOTAL_ERROR),
+//            'downtime' => $uptimeSummary->getAttribute(UptimeSummary::ATTRIBUTE_DOWNTIME),
+//        ];
+
+//       return response()->json($response);
+    }
+
+    public function getData(Request $request, UptimeSummary $uptimeSummary, UptimeDatasource $uptimeDatasource) {
+        $start_date = $request->input('start_date');
+        $end_date = $request->input('end_date');
+
+        $start_date = substr($start_date, 0, -3); // to cut the milli
+        $end_date = substr($end_date, 0, -3);
+        $start_date = date('Y-m-d', $start_date);
+        $end_date = date('Y-m-d', $end_date);
+
+        $first = UptimeDatasource::where(UptimeDatasource::ATTRIBUTE_START_DATE, $start_date)->first();
+        $id = $first->id;
+        $end = $first->end_date;
+        $total = $first->total_error;
+        $downtime = $first->downtime;
+
+        $uptimeSummary->setAttribute(UptimeSummary::ATTRIBUTE_ID, $id);
         $uptimeSummary->setAttribute(UptimeSummary::ATTRIBUTE_START_DATE, $start_date);
-        $uptimeSummary->setAttribute(UptimeSummary::ATTRIBUTE_END_DATE, $end_date);
-        $uptimeSummary->setAttribute(UptimeSummary::ATTRIBUTE_TOTAL_ERROR, $total_hits);
+        $uptimeSummary->setAttribute(UptimeSummary::ATTRIBUTE_END_DATE, $end);
+        $uptimeSummary->setAttribute(UptimeSummary::ATTRIBUTE_TOTAL_ERROR, $total);
         $uptimeSummary->setAttribute(UptimeSummary::ATTRIBUTE_DOWNTIME, $downtime);
         $uptimeSummary->save();
 
-        $response = [
-            'id' => $uptimeSummary->getAttribute(UptimeSummary::ATTRIBUTE_ID),
-            'start_date' => $uptimeSummary->getAttribute(UptimeSummary::ATTRIBUTE_START_DATE),
-            'end_date' => $uptimeSummary->getAttribute(UptimeSummary::ATTRIBUTE_END_DATE),
-            'total_error' => $uptimeSummary->getAttribute(UptimeSummary::ATTRIBUTE_TOTAL_ERROR),
-            'downtime' => $uptimeSummary->getAttribute(UptimeSummary::ATTRIBUTE_DOWNTIME),
-        ];
-
-        return response()->json($response);
+        return response()->json($uptimeSummary);
     }
 
     public function getUptimeDetails($id, UptimeDetail $uptimeDetail)
@@ -196,5 +225,14 @@ class UptimeController extends Controller
     public function getUptimeHistory()
     {
         return UptimeSummary::all();
+    }
+
+    public function deleteUptime(UptimeReport $uptimeReport, UptimeSummary $uptimeSummary, UptimeDetail $uptimeDetail, $id)
+    {
+        $uptimeSummary = UptimeSummary::findOrFail($id);
+        $uptimeSummary->delete();
+        return response()->json([
+            'message' => 'user has been deleted'
+        ], 200);
     }
 }

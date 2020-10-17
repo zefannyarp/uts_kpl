@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
-class UserController extends Controller
+class UsirController extends Controller
 {
     public function authenticate(Request $request)
     {
@@ -23,7 +23,7 @@ class UserController extends Controller
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
 
-        return response()->json(compact('token'));
+        return response()->json(compact('user', 'token'), 201);
     }
 
 
@@ -51,6 +51,38 @@ class UserController extends Controller
 
         return response()->json(compact('user', 'token'), 201);
     }
+
+    public function tolol(Request $request, User $user)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+            'role' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+
+//        $user = User::create([
+//            'name' => $request->get('name'),
+//            'email' => $request->get('email'),
+//            'password' => Hash::make($request->get('password')),
+//        ]);
+
+        $user->setAttribute(User::ATTRIBUTE_NAME, $request->get('name'));
+        $user->setAttribute(User::ATTRIBUTE_EMAIL, $request->get('email'));
+        $user->setAttribute(User::ATTRIBUTE_PASSWORD, Hash::make($request->get('password')));
+        $user->setAttribute(User::ATTRIBUTE_ROLE, 'admin');
+
+        $user->save();
+
+        $token = JWTAuth::fromUser($user);
+
+        return response()->json(compact('user', 'token'), 201);
+    }
+
     public function register(Request $request, User $user)
     {
         $validator = Validator::make($request->all(), [

@@ -4,19 +4,23 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Frontend extends Model
+class Sentry extends Model
 {
-    public $table = 'frontend_performance';
+    public $table = 'sentry';
 
     const ATTRIBUTE_ID = 'id';
     const ATTRIBUTE_DATE = 'date';
-    const ATTRIBUTE_AVERAGE_PAGE_LOAD_TIME = 'avgPageLoadTime';
+    const ATTRIBUTE_TOTAL = 'total';
+    const ATTRIBUTE_NEW = 'new';
+    const ATTRIBUTE_HIGH = 'high';
 
     protected $guarded;
 
     protected $fillable = [
         self::ATTRIBUTE_ID,
         self::ATTRIBUTE_DATE,
-        self::ATTRIBUTE_AVERAGE_PAGE_LOAD_TIME
+        self::ATTRIBUTE_TOTAL,
+        self::ATTRIBUTE_NEW,
+        self::ATTRIBUTE_HIGH
     ];
 }

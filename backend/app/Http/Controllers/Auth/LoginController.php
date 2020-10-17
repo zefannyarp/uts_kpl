@@ -24,16 +24,22 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-//    public function logiin(Request $request)
-//    {
-//        $this->validate($request, [
-//            'email' => 'required|email',
-//            'password' => 'required|min:8',
-//        ]);
-//
-//        if(Auth::attempt($request->only('email', 'password'))) {
-//            $currentUser = auth()->user();
-//            Auth::login($currentUser);
+    public function login(Request $request)
+    {
+
+        $credentials = request(['email', 'password']);
+
+        if (Auth::attempt($credentials)) {
+            $currentUser = auth()->user();
+            Auth::login($currentUser);
+            $token = auth()->attempt($credentials);
+            $role = $currentUser['role'];
+            $response = [
+                'token' => $token,
+                'role' => $role
+            ];
+
+            return response()->json($response, 201);
 //            return (new UserResource($currentUser))->additional([
 //                'meta' => [
 //                    'token' => $currentUser->api_token,
@@ -46,7 +52,7 @@ class LoginController extends Controller
 //        return response()->json([
 //            'error' => 'Your credentials does not match',
 //        ], 401);
-//    }
+        }
 
 //    public function logout() {
 //        JWTAuth::invalidate($token);
@@ -56,4 +62,5 @@ class LoginController extends Controller
 //            'message' => 'logout'
 //        ], 200);
 //    }
-}
+    }}
+

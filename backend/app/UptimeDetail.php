@@ -8,7 +8,7 @@ class UptimeDetail extends Model
 {
     protected $guarded;
 
-    const ATTRIBUTE_UPTIME_REPORT_ID = 'uptime_report_id';
+    const ATTRIBUTE_UPTIME_REPORT_ID = 'uptime_summary_id';
     const ATTRIBUTE_DATE_TIME = 'date_time';
     const ATTRIBUTE_REQUEST_NAME = 'request_name';
 
@@ -18,7 +18,7 @@ class UptimeDetail extends Model
         self::ATTRIBUTE_UPTIME_REPORT_ID,
     ];
 
-    public $table = 'uptime_details';
+    public $table = 'uptime_detail';
 
     public function uptime_report()
     {
