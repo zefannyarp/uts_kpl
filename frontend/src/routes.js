@@ -1,5 +1,5 @@
 import Frontendperformance from "views/Notifications";
-import Backendcoverage from "views/Typography.jsx";
+// import Backendcoverage from "views/Typography.jsx";
 import Tables from "views/Tables.jsx";
 import Uptime2 from "views/Uptime2.jsx";
 import UtamaUT from "views/UtamaUT.jsx";
@@ -12,7 +12,13 @@ import AdminMenu from "views/AdminMenu";
 import UserManage from "views/UserManage";
 import Add from "views/Add";
 import Edit from "views/Edit";
-
+import BackendCoverage from "./views/BackendCoverage";
+import Sentry from "./views/Sentry";
+import ScheduleJobs from "./views/ScheduleJobs";
+import ScheduleJobsMenu from "views/ScheduleJobsMenu";
+import ScheduleJobsGenerate from "views/ScheduleJobsGenerate";
+import BackendCoverageMenu from "views/BackendCoverageMenu";
+import BackendCoverageGenerate from "views/BackendCoverageGenerate";
 var routes = [
     {
         path: "/dashboard",
@@ -26,7 +32,7 @@ var routes = [
         path: "/backend-coverage",
         name: "Backend coverage",
         icon: "nc-icon nc-caps-small",
-        component: Backendcoverage,
+        component: BackendCoverage,
         layout: "/admin"
     },
     {
@@ -100,7 +106,43 @@ var routes = [
         path: "/edit/:id",
         name: " Edit ",
         component: Edit
-    }
+    },
+    {
+        path: "/schedule-jobs",
+        name: " ScheduleJobs ",
+        component: ScheduleJobs,
+        layout: "/admin"
+    },
+    {
+        path: "/sentry",
+        name: " Sentry ",
+        component: Sentry,
+        layout: "/admin"
+    },
+    {
+        path: "/schedulejobs-menu",
+        name: " Schedule Jobs Menu ",
+        component: ScheduleJobsMenu,
+        layout: "/admin"
+    },
+    {
+        path: "/schedulejobs-generate",
+        name: " Schedule Jobs Generate ",
+        component: ScheduleJobsGenerate,
+        layout: "/admin",
+    },
+    {
+        path: "/backendcoverage-menu",
+        name: " Backend Coverage Menu ",
+        component: BackendCoverageMenu,
+        layout: "/admin",
+    },
+    {
+        path: "/backendcoverage-generate",
+        name: " Backend Coverage Generate ",
+        component: BackendCoverageGenerate,
+        layout: "/admin",
+    },
 
     // {
     //   path: "/icons",

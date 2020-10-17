@@ -49,15 +49,24 @@ class Sidebar extends React.Component {
                         <li>
                             <NavLink to="/admin/dashboard">Main Menu</NavLink>
                         </li>
-                        <li>
-                            <NavLink to="/admin/uptime-menu">Uptime</NavLink>
-                        </li>
+                        
 
                         <li>
                             <NavLink to="/admin/frontend-performance">
                                 Frontend Performance
                             </NavLink>
                         </li>
+                        <li>
+                            <NavLink to="/admin/backendcoverage-menu">
+                                Backend coverage
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/admin/schedulejobs-menu">
+                                Schedule jobs
+                            </NavLink>
+                        </li>
+                       
                         {/* {this.props.routes.map((prop, key) => {
               return (
                 

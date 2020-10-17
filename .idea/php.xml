@@ -10,7 +10,6 @@
       <path value="$PROJECT_DIR$/backend/vendor/monolog/monolog" />
       <path value="$PROJECT_DIR$/backend/vendor/league/commonmark" />
       <path value="$PROJECT_DIR$/backend/vendor/league/flysystem" />
-      <path value="$PROJECT_DIR$/backend/vendor/league/commonmark-ext-table" />
       <path value="$PROJECT_DIR$/backend/vendor/jakub-onderka/php-console-highlighter" />
       <path value="$PROJECT_DIR$/backend/vendor/laravel/tinker" />
       <path value="$PROJECT_DIR$/backend/vendor/laravel/framework" />
@@ -62,7 +61,6 @@
       <path value="$PROJECT_DIR$/backend/vendor/symfony/console" />
       <path value="$PROJECT_DIR$/backend/vendor/sebastian/resource-operations" />
       <path value="$PROJECT_DIR$/backend/vendor/sebastian/recursion-context" />
-      <path value="$PROJECT_DIR$/backend/vendor/fruitcake/laravel-cors" />
       <path value="$PROJECT_DIR$/backend/vendor/sebastian/version" />
       <path value="$PROJECT_DIR$/backend/vendor/sebastian/type" />
       <path value="$PROJECT_DIR$/backend/vendor/sebastian/global-state" />
@@ -114,6 +112,7 @@
       <path value="$PROJECT_DIR$/backend/vendor/symfony/polyfill-php56" />
       <path value="$PROJECT_DIR$/backend/vendor/lcobucci/jwt" />
       <path value="$PROJECT_DIR$/backend/vendor/laravel/ui" />
+      <path value="$PROJECT_DIR$/backend/vendor/symfony/polyfill-php80" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />

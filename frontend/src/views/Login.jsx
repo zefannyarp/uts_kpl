@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { CardHeader, CardBody, CardTitle, Row, Col, Card } from "reactstrap";
 import { useAlert } from "react-alert";
+// import "./App.css";
 
 class Login extends React.Component {
     constructor(props) {
@@ -13,7 +14,7 @@ class Login extends React.Component {
             password: null,
             access_token: null,
             record: null,
-            role: null
+            role: null,
         };
     }
 
@@ -32,20 +33,20 @@ class Login extends React.Component {
         }
     }
 
-    handleChange = event => {
+    handleChange = (event) => {
         this.setState({ email: event.target.value });
         this.setState({ password: event.target.value });
     };
 
-    handleClick = event => {
+    handleClick = (event) => {
         event.preventDefault();
         console.log(this.props);
         axios
             .post("http://127.0.0.1:8000/api/auth/login", {
                 email: this.state.email,
-                password: this.state.password
+                password: this.state.password,
             })
-            .then(response => {
+            .then((response) => {
                 // this.setState({ record: response.data });
                 console.log(response);
                 if (response.status && response.status === 200) {
@@ -64,7 +65,7 @@ class Login extends React.Component {
                     // this.props.history.push("/admin/dashboard");
                 }
             })
-            .catch(error => {
+            .catch((error) => {
                 alert("wrong email or password");
             });
     };
@@ -82,10 +83,33 @@ class Login extends React.Component {
                     left: "50%",
                     height: "30%",
                     width: "50%",
-                    margin: "-15% 0 0 -25%"
+                    margin: "-15% 0 0 -25%",
                 }}
             >
                 <Row>
+                    <Col md="12">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle
+                                    tag="h2"
+                                    style={{
+                                        textAlign: "center",
+                                    }}
+                                >
+                                    SELAMAT DATANG DI KPI DASHBOARD
+                                </CardTitle>
+                                <img
+                                    src="/garasi.png"
+                                    fluid
+                                    style={{
+                                        widht: "45px",
+                                        height: "45px",
+                                        marginLeft: "45%",
+                                    }}
+                                ></img>
+                            </CardHeader>
+                        </Card>
+                    </Col>
                     <Col md="12">
                         <Card>
                             <CardHeader>
@@ -102,9 +126,9 @@ class Login extends React.Component {
                                             className="form-control"
                                             id="exampleDropdownFormEmail1"
                                             placeholder="example@gmail.com"
-                                            onChange={e => {
+                                            onChange={(e) => {
                                                 this.setState({
-                                                    email: e.target.value
+                                                    email: e.target.value,
                                                 });
                                             }}
                                         ></input>
@@ -118,9 +142,9 @@ class Login extends React.Component {
                                             className="form-control"
                                             id="exampleDropdownFormPassword1"
                                             placeholder="Password"
-                                            onChange={e => {
+                                            onChange={(e) => {
                                                 this.setState({
-                                                    password: e.target.value
+                                                    password: e.target.value,
                                                 });
                                             }}
                                         ></input>

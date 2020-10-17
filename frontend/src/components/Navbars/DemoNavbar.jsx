@@ -48,6 +48,8 @@ class Header extends React.Component {
 
     handleClick() {
         localStorage.clear();
+        
+        
     }
 
     dropdownToggle(e) {

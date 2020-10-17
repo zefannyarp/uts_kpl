@@ -25,9 +25,10 @@ class Dashboard extends React.Component {
         super(props);
         this.state = {
             users: [],
-            start_date: null,
-            end_date: null,
-            downtime: null,
+            start: null,
+            end: null,
+            failed_jobs: null,
+            note: null,
             id: null,
             total_error: null,
             accessToken: null
@@ -40,7 +41,7 @@ class Dashboard extends React.Component {
         console.log(accessToken);
         this.setState({ accessToken });
 
-        let url_uptime = "http://127.0.0.1:8000/api/history";
+        let url_uptime = "http://127.0.0.1:8000/api/schedulejobs";
         axios
             .get(url_uptime, {
                 headers: {
@@ -117,37 +118,36 @@ class Dashboard extends React.Component {
             <>
                 <div className="content">
                     <Row>
-                        <Col md="12">
+                    <Col md="12">
                             <Card>
                                 <CardHeader>
                                     <CardTitle tag="h4">
-                                        Uptime Dashboard
+                                        Schedule Jobs 
                                     </CardTitle>
                                 </CardHeader>
                                 <CardBody>
                                     <Table responsive>
                                         <thead className="text-primary">
                                             <tr>
-                                                <th scope="col">Id</th>
                                                 <th scope="col">Start</th>
                                                 <th scope="col">End</th>
-                                                <th scope="col">Total Error</th>
-                                                <th scope="col">Down Time</th>
+                                                <th scope="col">Failed Jobs</th>
+                                                <th scope="col">Note</th>
+                                                
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {users.map((user, index) => {
                                                 return (
                                                     <tr key={index}>
-                                                        <td>{user.id}</td>
+                                                        <td>{user.start}</td>
+                                                        <td>{user.end}</td>
                                                         <td>
-                                                            {user.start_date}
+                                                            {user.failed_jobs}
                                                         </td>
-                                                        <td>{user.end_date}</td>
-                                                        <td>
-                                                            {user.total_error}
-                                                        </td>
-                                                        <td>{user.downtime}</td>
+                                                        <td>{user.note}</td>
+                                                      
+                                                        
                                                     </tr>
                                                 );
                                             })}

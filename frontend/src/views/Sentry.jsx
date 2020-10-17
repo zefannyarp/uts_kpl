@@ -10,24 +10,18 @@ import {
     CardTitle,
     Table,
     Row,
-    Col
+    Col,
 } from "reactstrap";
 
-class Tables extends React.Component {
+class Sentry extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             users: [],
-            start_date: null,
-            end_date: null,
-            downtime: null,
-            id: null,
-            total_error: null
-            // name: null,
-            // username: null,
-            // body: null,
-            // id: null,
-            // title: null
+            date: null,
+            total: null,
+            new: null,
+            high: null,
         };
     }
     componentWillMount() {
@@ -35,7 +29,7 @@ class Tables extends React.Component {
         const accessToken = localStorage.getItem("accessToken");
         console.log(accessToken);
         this.setState({ accessToken });
-        let url = "http://127.0.0.1:8000/api/history";
+        let url = "http://127.0.0.1:8000/api/sentry";
         axios
             .get(url, {
                 headers: {
@@ -66,7 +60,7 @@ class Tables extends React.Component {
                             </li>
                             <li className="list-group-item">
                                 Legends : Down Time is 50x count at one minutes
-                                more than 100 or garasi.id is not accessible by public{" "}
+                                > 100 or garasi.id is not accessible by public{" "}
                             </li>
                         </ul>
                     </div>
@@ -81,38 +75,31 @@ class Tables extends React.Component {
                                 <CardBody>
                                     <Table responsive>
                                         <thead className="text-primary">
-                                            <tr>
-                                                <th scope="col">Id</th>
-                                                <th scope="col">Start</th>
-                                                <th scope="col">End</th>
-                                                <th scope="col">Total Error</th>
-                                                <th scope="col">Down Time</th>
-                                                <th scope="col">Action</th>
-                                            </tr>
+                                        <tr>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Total</th>
+                                            <th scope="col">New</th>
+                                            <th scope="col">HIGH</th>
+                                        </tr>
                                         </thead>
                                         <tbody>
-                                            {users.map((user, index) => {
-                                                return (
-                                                    <tr key={index}>
-                                                        <td>{user.id}</td>
-                                                        <td>
-                                                            {user.start_date}
-                                                        </td>
-                                                        <td>{user.end_date}</td>
-                                                        <td>
-                                                            {user.total_error}
-                                                        </td>
-                                                        <td>{user.downtime}</td>
-                                                        <Link
+                                        {users.map((user, index) => {
+                                            return (
+                                                <tr key={index}>
+                                                    <td>{user.date}</td>
+                                                    <td>{user.total}</td>
+                                                    <td>{user.new}</td>
+                                                    <td>{user.high}</td>
+                                                    {/* <Link
                                                             to={`/admin/details-uptime/${user.id}`}
                                                         >
                                                             <button className="btn btn-primary">
                                                                 Details
                                                             </button>
-                                                        </Link>
-                                                    </tr>
-                                                );
-                                            })}
+                                                        </Link> */}
+                                                </tr>
+                                            );
+                                        })}
                                         </tbody>
                                     </Table>
                                 </CardBody>
@@ -125,4 +112,4 @@ class Tables extends React.Component {
     }
 }
 
-export default Tables;
+export default Sentry;

@@ -39,9 +39,9 @@ class Edit extends React.Component {
                     email: users.data.email
                 });
             })
-            .catch(error => {
-                this.props.history.push("/login");
-            });
+            // .catch(error => {
+            //     this.props.history.push("/login");
+            // });
     }
 
     handleChange = event => {

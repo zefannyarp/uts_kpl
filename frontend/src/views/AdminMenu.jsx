@@ -14,7 +14,7 @@ class AdminMenu extends React.Component {
     }
 
     render() {
-        if (localStorage.getItem("role") === "admin") {
+        // if (localStorage.getItem("role") === "admin") {
             return (
                 <>
                     <form>
@@ -79,9 +79,9 @@ class AdminMenu extends React.Component {
                     </div>
                 </>
             );
-        } else {
-            return <Redirect to="/admin/dashboard"></Redirect>;
-        }
+        // } else {
+        //     return <Redirect to="/admin/dashboard"></Redirect>;
+        // }
     }
 }
 

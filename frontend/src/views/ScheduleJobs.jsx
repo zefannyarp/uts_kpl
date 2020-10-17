@@ -10,29 +10,26 @@ import {
     CardTitle,
     Table,
     Row,
-    Col
+    Col,
 } from "reactstrap";
 
-class UserManage extends React.Component {
+class ScheduledJobs extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             users: [],
-            name: null,
-            id: null,
-            email: null,
-            role: null
+            start: null,
+            end: null,
+            failed_jobs: null,
+            note: null,
         };
-
-        this.handleClick = this.handleClick.bind(this);
     }
-
     componentWillMount() {
         let config = { crossDomain: true };
         const accessToken = localStorage.getItem("accessToken");
         console.log(accessToken);
         this.setState({ accessToken });
-        let url = "http://127.0.0.1:8000/api/admin/users";
+        let url = "http://127.0.0.1:8000/api/schedulejobs";
         axios
             .get(url, {
                 headers: {
@@ -47,17 +44,10 @@ class UserManage extends React.Component {
             })
             .catch(error => {
                 this.props.history.push("/login");
-            });
+            })
+            ;
+            
     }
-
-    handleChange = event => {
-        this.setState({ id: event.target.value });
-    };
-
-    handleLogout() {
-        localStorage.clear();
-    }
-
     handleClick(id) {
         const accessToken = localStorage.getItem("accessToken");
         console.log(accessToken);
@@ -66,7 +56,7 @@ class UserManage extends React.Component {
         if (result) {
             axios
                 .post(
-                    `http://127.0.0.1:8000/api/admin/delete/${id}`,
+                    `http://127.0.0.1:8000/api/delete_sj/${id}`,
                     {},
                     {
                         headers: {
@@ -85,58 +75,38 @@ class UserManage extends React.Component {
     }
     render() {
         const { users } = this.state;
+        console.log(users);
         return (
             <>
-                <form>
-                    <Link to={`/Login`}>
-                        <button
-                            type="button"
-                            class="btn btn-outline-dark"
-                            style={{
-                                marginTop: "2%",
-                                marginLeft: "90%"
-                            }}
-                            onClick={this.handleLogout}
-                        >
-                            Logout
-                        </button>
-                    </Link>
-                </form>
-                <div
-                    className="container"
-                    style={{
-                        marginTop: "90px",
-                        marginBottom: "5%"
-                    }}
-                >
+                <div className="content">
+                    {/* <div class="card">
+                        <ul class="list-group list-group-flush">
+                            <li className="list-group-item">PIC : Tiara</li>
+                            <li className="list-group-item">
+                                KPI : 99,9% 6 bulan
+                            </li>
+                            <li className="list-group-item">
+                                Legends : Down Time is 50x count at one minutes
+                                100 or garasi.id is not accessible by public{" "}
+                            </li>
+                        </ul>
+                    </div> */}
                     <Row>
                         <Col md="12">
                             <Card>
                                 <CardHeader>
                                     <CardTitle tag="h4">
-                                        User Management
-                                        <Link to={`/Add`}>
-                                            <button
-                                                className="btn btn-primary btn-sm"
-                                                style={{
-                                                    position: "absolute",
-                                                    right: "25%",
-                                                    top: "6%",
-                                                    fontSize: "0.875em"
-                                                }}
-                                            >
-                                                Add User
-                                            </button>
-                                        </Link>
+                                        Uptime Dashboard
                                     </CardTitle>
                                 </CardHeader>
                                 <CardBody>
-                                    <Table>
+                                    <Table responsive>
                                         <thead className="text-primary">
                                             <tr>
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Email</th>
-                                                <th scope="col">Role</th>
+                                                <th scope="col">Start</th>
+                                                <th scope="col">End</th>
+                                                <th scope="col">Failed Jobs</th>
+                                                <th scope="col">Note</th>
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
@@ -144,18 +114,20 @@ class UserManage extends React.Component {
                                             {users.map((user, index) => {
                                                 return (
                                                     <tr key={index}>
-                                                        <td>{user.name}</td>
-                                                        <td>{user.email}</td>
-                                                        <td>{user.role}</td>
-
-                                                        <Link
-                                                            to={`/edit/${user.id}`}
+                                                        <td>{user.start}</td>
+                                                        <td>{user.end}</td>
+                                                        <td>
+                                                            {user.failed_jobs}
+                                                        </td>
+                                                        <td>{user.note}</td>
+                                                        {/* <Link
+                                                            to={`/admin/details-uptime/${user.id}`}
                                                         >
                                                             <button className="btn btn-primary">
-                                                                Edit
+                                                                Details
                                                             </button>
-                                                        </Link>
-                                                        <button
+                                                        </Link> */}
+                                                          <button
                                                             className="btn btn-danger"
                                                             onClick={() =>
                                                                 this.handleClick(
@@ -180,4 +152,4 @@ class UserManage extends React.Component {
     }
 }
 
-export default UserManage;
+export default ScheduledJobs;

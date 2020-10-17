@@ -20,7 +20,6 @@
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/fideloper/proxy" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/filp/whoops" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/firebase/php-jwt" />
-      <excludeFolder url="file://$MODULE_DIR$/backend/vendor/fruitcake/laravel-cors" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/fzaninotto/faker" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/google/apiclient" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/google/apiclient-services" />
@@ -36,7 +35,6 @@
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/laravel/ui" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/lcobucci/jwt" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/league/commonmark" />
-      <excludeFolder url="file://$MODULE_DIR$/backend/vendor/league/commonmark-ext-table" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/league/flysystem" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/mockery/mockery" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/monolog/monolog" />
@@ -105,6 +103,7 @@
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/symfony/polyfill-php56" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/symfony/polyfill-php72" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/symfony/polyfill-php73" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/vendor/symfony/polyfill-php80" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/symfony/polyfill-util" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/symfony/process" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/symfony/routing" />
