@@ -16,7 +16,7 @@ class FrontendResources extends JsonResource
      * @param  Request  $request
      * @return array
      */
-    public function toArray($request)
+    public function toArray()
     {
         return [
             'id' => Frontend::ATTRIBUTE_ID,

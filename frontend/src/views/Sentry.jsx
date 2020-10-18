@@ -40,7 +40,6 @@ class Sentry extends React.Component {
 
     render() {
         const {users} = this.state;
-        console.log(users);
         return (
             <>
                 <div className="content">
