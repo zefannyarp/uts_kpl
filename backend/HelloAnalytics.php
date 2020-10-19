@@ -23,8 +23,7 @@ function initializeAnalytics()
 
     // Create and configure a new client object.
     $client = new Google_Client();
-    $client->setApplicationName("Hello Analytics Reporting");
-    var_dump(CLIENT_SECRET_PATH);
+    $client->setApplicationName("Hello Analytics Reporting");;
     $client->setAuthConfig($KEY_FILE_LOCATION);
     $client->setScopes(['https://www.googleapis.com/auth/analytics.readonly']);
     $analytics = new Google_Service_AnalyticsReporting($client);

@@ -15,7 +15,7 @@ class Authenticate
         $this->auth = $auth;
     }
 
-    public function handle($request, Closure $next, $guard = null, $field = null)
+    public function handle($request, Closure $next)
     {
         if (!Auth::check()){
         return redirect(route('login'));

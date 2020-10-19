@@ -16,7 +16,7 @@ class UptimeSummaryResources extends JsonResource
      * @param  Request  $request
      * @return array
      */
-    public function toArray($request)
+    public function toArray()
     {
         return [
             'id' => UptimeSummary::ATTRIBUTE_ID,
